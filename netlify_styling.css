@@ -26,7 +26,7 @@ button, a, input, i{
 }
 
 #homepage-hero-img{
-    background-image: url('https://aus01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fintgroup.sharepoint.com%2F%3Ai%3A%2Fr%2Fsites%2Fperformanceteam%2FShared%2520Documents%2FTeam%2520Request%2520Files%2FWe_are_Programmed___Get_to_know_us_AdobeExpress.gif%3Fcsf%3D1%26web%3D1%26e%3D1qWDBO&data=05%7C01%7CMike.Doan%40programmed.com.au%7C7fbf4292e732425246fd08db2c15bdb5%7C81a424a51d034bcba40ad102f21e35da%7C0%7C0%7C638152244109750566%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=7qOkJDg9qudUBnzPcUUbyzsyNdytap9g%2Bjl9CqowFKs%3D&reserved=0');
+    background-image: url('resources/hero-page-gif.gif');
     background-size: cover;
     height: 80%;
     min-height: 550px;
