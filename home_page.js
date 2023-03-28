@@ -3,6 +3,7 @@ const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         //console.log(entry);
         entry.isIntersecting ? entry.target.classList.add('show') : entry.target.classList.remove('show');
+        //entry.isIntersecting ? console.log('seen') : console.log('out of sight');
     });
 });
 
@@ -35,13 +36,13 @@ _render_service_div_animation();
 $(document).ready(function(){
     $('div[name=service-div]').each(function (idx) {
         var this_elem_transition_delay = transition_delay - (idx * 50);
-        console.log('idx: ' + idx + '--' + $(this).find('h6').text() + ', delayed: ' + this_elem_transition_delay + ' ms');
+        //console.log('idx: ' + idx + '--' + $(this).find('h6').text() + ', delayed: ' + this_elem_transition_delay + ' ms');
     });
     $('#rohin-art-work-txt-subst').append("I’d like to begin by acknowledging the Traditional Owners of the land on which we meet today, the (people) of the (nation) and pay my respects to Elders past and present.<br><br>---- Programmed artwork by Rohin Kickett ----");
     $(document).on('mouseover', '.extra-service-offer-container', function(e){
         $('div[name=service-div]').each(function(){
-            $(this).children().eq(0).css('transition', '.3s ease-in-out');
-            $(this).css('transition', '.3s ease-in-out');
+            $(this).children().eq(0).css('transition', '.3s ease-in-out !important');
+            $(this).css('transition', '.3s ease-in-out !important');
         });
     });
     $(document).on('mouseleave', '.extra-service-offer-container', function(e){

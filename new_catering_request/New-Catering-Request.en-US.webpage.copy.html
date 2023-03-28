@@ -1,0 +1,166 @@
+<!--head-->
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<!--Custom font-->
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/univers-next-pro" rel="stylesheet">
+<!--End of custom font-->
+
+<link rel='stylesheet' href='catering_stylings.css'>         
+
+<!--CDN scripts-->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src='https://code.jquery.com/jquery-3.6.1.min.js' 
+          integrity='sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ='
+          crossorigin='anonymous'>
+</script>
+<script src='https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+
+<!--Bootstrap templates-->
+<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65' crossorigin='anonymous'>
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js' integrity='sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4' crossorigin='anonymous'></script>
+
+<!--FontAwesome-->
+<script src='https://kit.fontawesome.com/b593de632a.js' crossorigin='anonymous'></script>
+<link href='https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css' rel='stylesheet'>
+
+<!--Google Material Icon Pack-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+<!---->
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 100,
+  'GRAD' -25,
+  'opsz' 48
+}
+</style>
+<!--/head--><!--head-->
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <!--Custom font-->
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/univers-next-pro" rel="stylesheet">
+  <!--End of custom font-->      
+
+  <!--CDN scripts-->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src='https://code.jquery.com/jquery-3.6.1.min.js' 
+            integrity='sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ='
+            crossorigin='anonymous'>
+  </script>
+  <script src='https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js'></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+
+  <!--Bootstrap templates-->
+  <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65' crossorigin='anonymous'>
+  <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js' integrity='sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4' crossorigin='anonymous'></script>
+
+  <!--FontAwesome-->
+  <script src='https://kit.fontawesome.com/b593de632a.js' crossorigin='anonymous'></script>
+  <link href='https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css' rel='stylesheet'>
+
+  <!--Google Material Icon Pack-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <!---->
+  <style>
+  .material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 100,
+    'GRAD' -25,
+    'opsz' 48
+  }
+  </style>
+<!--/head-->
+
+<div hidden class="row sectionBlockLayout" style="display: flex; flex-wrap: wrap; padding: 8px; margin: 0px; min-height: 15px; background: rgb(193, 255, 15);"></div>
+<div hidden class="row sectionBlockLayout text-left" style="display: flex; flex-wrap: wrap; margin: 0px; min-height: auto; padding: 8px;">
+  <div class="container" style="display: flex; flex-wrap: wrap;">
+    <div class="page-header"><h2>New Catering Request</h2></div>
+  </div>
+</div>
+<div hidden class="row sectionBlockLayout text-left" style="display: flex; flex-wrap: wrap; margin: 0px; min-height: auto; padding: 8px;">
+  <div hidden class="container" style="padding: 0px; display: flex; flex-wrap: wrap;">
+    <div class="col-md-12 columnBlockLayout" style="flex-grow: 1; display: flex; flex-direction: column; min-width: 300px;">
+      <h3>Select Menu and Items</h3>
+      <ul>
+        <li>Function Deliveries 24 Hours notice</li>
+        <li>Priority - Cyclone Food Deliveries 48 Hours notice</li>
+        <li>Consumable Deliveries 24 Hours notice</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div hidden class="row sectionBlockLayout text-left" style="display: flex; flex-wrap: wrap; margin: 0px; min-height: auto; padding: 8px;">
+  <div hidden class="container" style="padding: 0px; display: flex; flex-wrap: wrap;">
+    <div class="col-md-12 columnBlockLayout" style="flex-grow: 1; display: flex; flex-direction: column; min-width: 300px;">
+      <h3>Menus</h3>
+      {% include 'entity_list' key: 'Catering Menu Lookup View' %}
+    </div>
+  </div>
+</div>
+<br><br><br>
+<div hidden class='menu-desc'>
+</div>
+<section class='menu-offer-section'>
+  <div class='menu-grid-display' name='weekly-specials-container'>
+    <div class='menu-desc'>
+    </div>
+    <div class='background-img-container right hidden' id='weekly-menu-container'>
+    </div>
+  </div>
+</section>
+<br><br><br>
+
+<section class='menu-offer-section regular-menu' name='regular-item-menu-section'>
+  <!--<div class='quick-menu-display' name='consumable-quick-menu-display'>
+    <h1>Let's grab some <span class='special-txt'>light</span> and <span class='special-txt'>quick</span> snacks</h1>
+    <div class='menu-desc-text'>
+      <h6>Whether you're looking for a quick snack or a full meal, our consumable food products are the perfect choice for satisfying hunger and providing sustained energy throughout the day</h6>
+    </div><br>
+    <div class='menu-item-container bottom hidden snap-inline' name='consumable-item-container-menu'>-->
+      <!--<div hidden name='consumable-item-card' class='item-container'>
+        <p hidden name='item-id'>9a7cb85-49c-ed11-aad1-000d3acb5309</p>
+        <div class='item-img-container'>
+          <img src='resources/cashew-butter-dark-background.webp'>
+        </div>
+        <div class='menu-item-desc'>
+          <h6 class='menu-item-title'>Peanut Butter - Smooth - Jar (750gm)</h6>
+          <h6>$10.53</h6>
+        </div>
+        <div class='item-input-container'>
+          <div>
+            <input class='item-quantity-input' placeholder='0'>
+            <i class='input-err-msg'>Must be at least</i>
+            <p hidden>1</p>
+          </div>
+        </div>
+        <button type='button' class='btn btn-primary' name='add-to-cart-btn' confirm='Are your sure?' id='add-to-cart-btn'>Add to cart</button>
+      </div>-->
+    <!--</div><br>
+    <div class='card-menu-swiper' name='card-menu-swiper'>
+      <button class='card-menu-swipe-btn' name='consumable-swipe-prev-btn'>
+        <span class='material-symbols-outlined'>arrow_back_ios</span>
+      </button>
+      <button class='card-menu-swipe-btn' name='consumable-swipe-next-btn'>
+        <span class='material-symbols-outlined'>arrow_back_ios</span>
+      </button>
+    </div><br>
+    <a><h5>View all</h5></a>
+  </div>-->
+</section>
+
+<br><br>
+<script type='text/javascript' src='util_functions.js'></script>
+<script defer type='text/javascript' src='catering.js'></script>
