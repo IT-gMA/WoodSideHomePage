@@ -40,7 +40,10 @@ button, a, input, i{
 
 .text-white h1{
     font-weight: bold !important;
-    color: #c2de80 !important;
+}
+
+.text-white h1 span{
+    color: #a2cd40 !important;
 }
 
 .hero-img-container .mask{
