@@ -389,20 +389,19 @@ section{
 }
 
 .quick-menu-display a h5{
-    text-decoration: underline;
-    color: #84BD00;
+    text-decoration: underline !important;
 }
 
 .quick-menu-display a:hover > *{
-    color: #c2de80;
+    color: #c2de80 !important;
 }
 
 .quick-menu-display a:active > *, .quick-menu-display a:focus > *{
-    color: #a2cd40;
+    color: #a2cd40 !important;
 }
 
 .material-symbols-outlined.pfm-yellow{
-    color: #FFCD00;
+    color: #FFCD00 !important;
 }
 
 /*Dropdown*/
@@ -426,7 +425,7 @@ section{
 
 #info-icon{
     font-weight: bold !important;
-    color: #3D3935 !important;
+    color: #3D3935;
     opacity: .8 !important;
 }
 
@@ -435,7 +434,7 @@ section{
 }
 
 #info-icon:focus, #info-icon:active, #info-icon::after{
-    color: #84BD00;
+    color: #84BD00 !important;
 }
 
 .popup-content.item-info-popup-content{
@@ -447,6 +446,10 @@ section{
 
 /* styling for grid on mobile */
 @media (max-width: 767px) {
+    body{
+        overflow-x: hidden !important;
+    }
+
     button{
         font-size: x-small !important;
     }
@@ -457,7 +460,7 @@ section{
     .background-img-container img{
         max-width: 100% !important;
         
-        transform: translate(30% , 8.5vw);
+        transform: translate(30% , 10vw);
         opacity: 1 !important;
     }
 
