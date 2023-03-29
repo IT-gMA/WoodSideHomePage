@@ -116,32 +116,74 @@ button, a, input, i{
 }
 .tri-nav-icons{
     display: grid !important;
-    grid-template-columns: auto auto auto !important;
-    grid-gap: 85px !important;
+    /*grid-template-columns: auto auto auto !important;
+    grid-gap: 85px !important;*/
+
+    --spacer: 2rem;
+    padding: 10px var(--spacer) var(--spacer);
+    gap: var(--spacer);
+    grid-auto-flow: column;
+    grid-auto-columns: 29.5%;
+
+    overflow-x: scroll;
+    overscroll-behavior-inline: contain;
+    height: max-content;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
 }
 
 .nav-container{
-    display: flex !important;
+    /*display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
+    align-items: center !important;*/
+    display: flex;
+    /*padding: 20px;*/
+    padding: 10px !important;
     align-items: center !important;
-    padding: 20px !important;
 
-    border: solid transparent !important;
-    border-radius: 20px !important;
+    border: solid transparent;
+    /*border-radius: 20px !important;*/
+    border-radius: 50px 0px 0px 50px !important;
+    border-width: .95px !important;
 
     box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px 0px !important;
     
-    color: #3D3935 !important;
+    background-color: white;
+    color: #3D3935;
     cursor: pointer !important;
 }
 
+.nav-container div:nth-child(1){
+    flex: 1 !important;
+}
+.nav-container div:nth-child(2){
+    flex: 2 !important;
+    margin-left: 1% !important;
+    text-align: left !important;
+    padding: 2px !important;
+}
+
+
+.nav-container div img{
+    max-height: 50px;
+    min-height: 48px;
+    width: auto;
+    aspect-ratio: 1/1 !important;
+}
+
+.nav-container h6{
+    font-size: large !important;
+}
+
 .nav-container:hover, .nav-container:active, .nav-container:focus{
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 15px 0px !important;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px !important;
+    border: solid #84BD00;
 }
 
 .nav-container span, .nav-container h6{
-    color: #3D3935 !important;
+    color: #3D3935;
 }
 
 .nav-container span{
@@ -150,15 +192,19 @@ button, a, input, i{
     height: auto !important;
 }
 
-.nav-container:hover > h6, .nav-container:hover > span{
-    color: #a2cd40 !important;
+/*.nav-container:hover > h6, .nav-container:hover > span, .nav-container:hover > .nav-container div:nth-child(1) h6{
+    color: #a2cd40;
+}*/
+
+.nav-container:hover > *{
+    color: #a2cd40;
 }
 
 .nav-section-container{
     width: 100% !important;
     display: flex !important;
     flex-direction: column !important;
-    max-width: 980px !important;
+    max-width: 1080px !important;
 }
 
 .extra-service-offer-container{
