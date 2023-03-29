@@ -256,7 +256,7 @@ const HYPOTHETICAL_JSON_DATA = [{
     'name': 'Consumables',
     'url': 'https://wsservicemanagementuat.powerappsportals.com/Requests/Catering-Order/?id=85f8652d-5f64-ed11-9561-000d3acc166b',
     'title': "<h1>Let's grab some <span class='special-txt'>light</span> and <span class='special-txt'>quick</span> snacks</h1>",
-    'sub-title': "<h6>Whether you're looking for a quick snack or a full meal, our consumable food products are the perfect choice for satisfying hunger and providing sustained energy throughout the day</h6>",
+    'sub-title': "<h6>Whether you're looking for a quick snack or a full meal, our consumable food products are the <span class='special-txt'>perfect choice</span> for satisfying hunger and providing sustained energy throughout the day</h6>",
     'html_name': 'consumable',
     'is_regular_menu': true,
     'is_emergency': false,
@@ -336,7 +336,7 @@ const HYPOTHETICAL_JSON_DATA = [{
     'name': 'Priority Catering - Cyclone Shelter Catering',
     'url': 'https://wsservicemanagementuat.powerappsportals.com/Requests/Catering-Order/?id=fe298b2a-5f64-ed11-9561-000d3aca76e9',
     'title': "<h1>Priority Catering - <span class='special-txt'>Cyclone Shelter</span> Catering</h1>",
-    'sub-title': "<h6>Don't let hunger be a concern during a cyclone, choose priority food for cyclone shelter</h6><span class='material-symbols-outlined'>warning</span>",
+    'sub-title': "<h6>Don't let hunger be a <span class='special-txt'>concern</span> during a cyclone, choose priority food for cyclone shelter</h6><span class='material-symbols-outlined'>warning</span>",
     'html_name': 'priority',
     'is_regular_menu': false,
     'is_emergency': true,
@@ -358,7 +358,7 @@ const WEEKLY_MENU_JSON = HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type
 const PRIORITY_MENU_JSON = HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type['is_regular_menu'] && menu_type['is_emergency']);
 
 function _query_nth_week_of_the_month(){
-    const today = new Date(); // get the current date
+    const today = new Date();
     const nth_week = parseInt(Math.ceil(today.getDate() / 7) - 1);
     //console.log(`Today is in week ${nth_week - 1} of the month.`);
     if (nth_week < 1){
@@ -411,7 +411,10 @@ function _render_weekly_menu(weekly_menu_json){
     $('div[name=weekly-specials-container]').find('.background-img-container').append(_background_img_img_markup);
 }
 function _render_regular_menus(regular_menu_list){
+    var _item_idx = 0;
     regular_menu_list.forEach((regular_menu) => {
+        const _hz_separating_line = _item_idx % 2 == 0 ? "<hr class='hz-separating-line'>" : "<hr class='hz-separating-line' style='transform: translateX(-30%);'>";
+
         const _html_name =  regular_menu['html_name'];
         const _containing_section = $('section[name=regular-item-menu-section]');
         const _display_render_container_name = _html_name + "-quick-menu-display";
@@ -457,10 +460,12 @@ function _render_regular_menus(regular_menu_list){
         _markup += "</div><br>";
         // Link to menu content page
         _markup += "<a href='" + regular_menu['url'] + "'><h5>View all</h5></a>";
-        _markup += "</div><br><br>";
+        //_markup += "<hr class='hz-seperating-line'>";
+        _markup += "</div>" + _hz_separating_line + "<br><br>";
         $('section[name=regular-item-menu-section]').append(_markup);
 
         _render_card_swipe_btns(_preview_item_card_menu_prev_btn_attr, _preview_item_card_menu_nxt_btn_attr, _preview_item_card_menu_prev_btn, _preview_item_card_menu_nxt_btn, _preview_item_card_menu_div_attr);
+        _item_idx++;
     });
 }
 
@@ -558,10 +563,8 @@ $(document).ready(function () {
         const _item_name = _parent_div.children().eq(2).children().eq(0).text();
         const _menu_type = _parent_div.children().eq(5).text();
         const _item_price = parseFloat(_input_div.children().eq(3).text());
-
-        console.log(_selected_quantity);
-        console.log(_item_name);
-
+        //console.log(_selected_quantity);
+        //console.log(_item_name);
         _add_to_cart(_item_name, _item_id, _menu_type, _item_price, _selected_quantity);
         _input_div.children().eq(0).val(null);
         MY_CART.forEach((cart_item) => {console.log(cart_item)});
