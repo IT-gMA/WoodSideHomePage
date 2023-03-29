@@ -123,9 +123,9 @@ section{
     margin-top: 14px !important;
     width: 45% !important;
     z-index: 10 !important;
-    background-color: rgba(255,255,255,0.2) !important;
+    /*background-color: rgba(255,255,255,0.2) !important;
     backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;*/
 
     padding: 20px 0px 20px 80px !important;
     color: #3D3935 !important;
@@ -468,7 +468,10 @@ section{
         transform: translateX(5%);
         width: 60% !important;
         padding: 24px !important;
+        background-color: rgba(255,255,255,0.2) !important;
+        backdrop-filter: blur(8px) !important;
         box-shadow: 0 1px 12px rgba(0, 0, 0, 0.08) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
 
         border: solid none !important;
         border-radius: 16px;
