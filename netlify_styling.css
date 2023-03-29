@@ -44,7 +44,8 @@ button, a, input, i{
 
 .text-white h1 span{
     text-decoration: underline !important;
-    text-decoration-color: #a2cd40 !important;
+    text-decoration-thickness: 2.5px !important;
+    text-decoration-color: #84BD00 !important;
 }
 
 .hero-img-container .mask{
