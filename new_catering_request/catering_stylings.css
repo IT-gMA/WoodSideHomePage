@@ -492,6 +492,7 @@ section{
         --spacer: .5rem !important;
         padding: 5px var(--spacer) var(--spacer) !important;
         gap: var(--spacer) !important;
+        padding-bottom: 30px !important;
     }
 
     .menu-offer-section.regular-menu{
