@@ -435,7 +435,11 @@ function _render_card_swipe_btns(preview_item_card_menu_prev_btn_attr, preview_i
 function _render_weekly_menu(weekly_menu_json){
     // since the html for this special menu type has already been written in the calling html document
     // here only its corresponding menu type content is added
-    const _foreground_markup = weekly_menu_json['title'] + "<br>" + weekly_menu_json['sub-title'] + "<br>" + "<a href='" + weekly_menu_json['url'] + "'><button type='button' class='btn btn-primary' name='explore-menu-btn' confirm='Are your sure?' id='explore-menu-btn'>Explore now</button></a></div>";
+    const _foreground_markup = `${weekly_menu_json['title']}<br>
+                            ${weekly_menu_json['sub-title']}<br>
+                            <a href='${weekly_menu_json['url']}'>
+                                <button type='button' class='btn btn-primary' name='explore-menu-btn' id='explore-menu-btn'>Explore now</button>
+                            </a>`;
     $('div[name=weekly-specials-container]').find('.menu-desc').append(_foreground_markup);
     const _background_img_img_markup = "<img src='" + weekly_menu_json['img_url'] + "'>"
     $('div[name=weekly-specials-container]').find('.background-img-container').append(_background_img_img_markup);
@@ -477,25 +481,32 @@ function _render_regular_menus(regular_menu_list){
         const _preview_item_card_menu_dom_prev_btn_name = 'div' + _preview_item_card_menu_prev_btn_attr;
         const _preview_item_card_menu_prev_btn= $(_preview_item_card_menu_dom_prev_btn_name);
 
+        // even indexed item will have hz-separating-line positioned on the left and right otherwise
+        const _hz_separating_line = _item_idx % 2 == 0 ? "<hr class='hz-separating-line'>" : "<hr class='hz-separating-line' style='transform: translateX(-30%);'>";
         //console.log(_preview_item_card_container_name_attr);
         // construct main parent container for horizontal grid, nav buttons, separator and 'view-more' button
-        var _markup = "<div class='quick-menu-display' name='" + _quick_menu_display_name_attr + "'>";
+        var _markup = `<div class='quick-menu-display' name='${_quick_menu_display_name_attr}'>`;
         // Descriptive texts
-        _markup += regular_menu['title'];
-        _markup += "<div class='menu-desc-text'>" + regular_menu['sub-title'] + "</div><br>";
+        _markup += `${regular_menu['title']}
+                    <div class='menu-desc-text'>
+                        ${regular_menu['sub-title']}
+                    </div><br>`;
         // render the horizontal card menu container
         _markup += _build_preview_menu(regular_menu['quick_card_menu'], _preview_item_card_container_name_attr, _preview_item_card_menu_name_attr, _html_name);
         // card swipe buttons
-        _markup += "<div class='card-menu-swiper' name='card-menu-swiper'>";
-        _markup += "<button class='card-menu-swipe-btn' name='" + _preview_item_card_prev_btn_name_attr + "'><span class='material-symbols-outlined'>arrow_back_ios</span></button>";
-        _markup += "<button class='card-menu-swipe-btn' name='" + _preview_item_card_nxt_btn_name_attr + "'><span class='material-symbols-outlined'>arrow_back_ios</span></button>";
-        _markup += "</div><br>";
-        // Link to respective menu content page
-        _markup += "<a href='" + regular_menu['url'] + "'><h5>View all</h5></a>";
-
-        // even indexed item will have hz-separating-line positioned on the left and right otherwise
-        const _hz_separating_line = _item_idx % 2 == 0 ? "<hr class='hz-separating-line'>" : "<hr class='hz-separating-line' style='transform: translateX(-30%);'>";
-        _markup += "</div>" + _hz_separating_line + "<br><br>";
+        _markup += `<div class='card-menu-swiper' name='card-menu-swiper'>
+                        <button class='card-menu-swipe-btn' name='${_preview_item_card_prev_btn_name_attr}'>
+                            <span class='material-symbols-outlined'>arrow_back_ios</span>
+                        </button>
+                        <button class='card-menu-swipe-btn' name='${_preview_item_card_nxt_btn_name_attr}'>
+                            <span class='material-symbols-outlined'>arrow_back_ios</span>
+                        </button>
+                    </div><br>
+                    <a href='${regular_menu['url']}'>       <!--Link to respective menu content page-->
+                        <h5>View all</h5>
+                    </a>
+                </div>
+                ${_hz_separating_line}<br><br>`; 
         // render this menu type content within the section
         $('section[name=regular-item-menu-section]').append(_markup);
         // construct card swiping functionality
@@ -505,7 +516,7 @@ function _render_regular_menus(regular_menu_list){
 }
 
 function _build_preview_menu(menu_items, preview_item_card_container_name_attr, preview_item_card_menu_name_attr, menu_type){
-    var _markup = "<div class='menu-item-container bottom hidden snap-inline' name='" + preview_item_card_menu_name_attr + "'>";
+    var _markup = `<div class='menu-item-container bottom hidden snap-inline' name='${preview_item_card_menu_name_attr}'>`;
 
     // construct a card container for each item in this menu type
     menu_items.forEach((menu_item) => {
@@ -515,7 +526,7 @@ function _build_preview_menu(menu_items, preview_item_card_container_name_attr, 
         const _popup_remark = menu_item['notes'] != null && !is_whitespace(menu_item['notes']) ? 
         `<div class='dropdown dropup'>
             <a class='nav-link' id='item-info-dropdown-btn' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
-                <i class='material-symbols-outlined bold small' id='info-icon'>info</i>
+                <span class='material-symbols-outlined' id='info-icon'>info</span>
             </a>
             <ul name='item-info-drop-down' class='dropdown-menu' aria-labelledby='item-info-dropdown-btn' onclick='event.stopPropagation()' id='item-info-dropdown'>
                 <div class='popup-content item-info-popup-content' name='popup-content'>
@@ -525,7 +536,7 @@ function _build_preview_menu(menu_items, preview_item_card_container_name_attr, 
         </div>` : 
         `<div class='dropdown'>
         <a class='nav-link' id='item-info-dropdown-btn' role='button' data-bs-toggle='dropdown' aria-expanded='false' style='opacity: 0;'>
-            <i class='material-symbols-outlined bold small' id='info-icon'>info</i>
+            <span class='material-symbols-outlined' id='info-icon'>info</span>
         </a>
         <ul hidden name='item-info-drop-down' class='dropdown-menu' aria-labelledby='item-info-dropdown-btn' onclick='event.stopPropagation()' id='item-info-dropdown'>
             <div class='popup-content item-info-popup-content' name='popup-content'>
@@ -535,18 +546,35 @@ function _build_preview_menu(menu_items, preview_item_card_container_name_attr, 
         </div>`;
 
         // construct the main card body container with its corresponding menu type name given
-        _markup += "<div name='" + preview_item_card_container_name_attr + "' class='item-container'><p hidden name='item-id'>" + menu_item['id'] + "</p>"; //0
-        _markup += "<div class='item-img-container'>" + "<img id='menu-item-thbn-img' src='" + menu_item['img_url'] + "'></div>";  //1
-        // Name/description and price --> children().eq(2):: name <!--0-->; price <!--1-->
-        _markup += "<div class='menu-item-desc'><h6 id='menu-item-title' class='menu-item-title'>" + menu_item['name'] + "</h6>";
-        _markup +=  _unit_metric_markup;
-        _markup += "<h6>$" + parseFloat(menu_item['price']).toFixed(2) + "</h6>" + _popup_remark + "</div>";  //2
-
-        _markup +=  "<div class='item-input-container'><div><input name='item-quantity-input' class='item-quantity-input' placeholder='at least "+  menu_item['min_quantity'] + "'><i class='input-err-msg'>Must be at least " + menu_item['min_quantity'] + "</i><p hidden name='min-item-quantity'>" + menu_item['min_quantity'] + "</p><p hidden name='float-price'>" + parseFloat(menu_item['price']) + "</p></div></div>";    //3
-        _markup += "<button disabled type='button' class='btn btn-primary' name='add-to-cart-btn' confirm='Are your sure?' id='add-to-cart-btn'>Add to cart</button>";   //4
-        _markup += "<i hidden>" + menu_item['menu_type'] + "</i>";  //5
-        _markup += "<h6 hidden" + menu_item['notes'] + "</p>"   //6
-        _markup += "</div>";
+        _markup += `<div name='${preview_item_card_container_name_attr}' class='item-container'>
+                        <p hidden name='item-id'>${menu_item['id']}</p>     <!--0-->
+                        <div class='item-img-container'>                    
+                            <img id='menu-item-thbn-img' src='${menu_item['img_url']}'>
+                        </div>      <!--1-->
+                        <!--Name/description and price-->
+                        <div class='menu-item-desc'>
+                            <h6 id='menu-item-title' class='menu-item-title'>${menu_item['name']}</h6>      <!--0-->
+                            ${_unit_metric_markup}                                                          <!--1-->
+                            <h6>$${parseFloat(menu_item['price']).toFixed(2)}</h6>                          <!--2-->
+                            ${_popup_remark}                                                                <!--3-->
+                        </div>      <!--2-->
+                        <div class='item-input-container'>
+                            <div>
+                                <input name='item-quantity-input' 
+                                        class='item-quantity-input' 
+                                        placeholder='at least ${menu_item['min_quantity']}'>                <!--0-->
+                                <i class='input-err-msg'>Must be at least ${menu_item['min_quantity']}</i>  <!--1-->
+                                <p hidden name='min-item-quantity'>${menu_item['min_quantity']}</p>         <!--2-->
+                                <p hidden name='float-price'>${parseFloat(menu_item['price'])}</p>           <!--3-->
+                            </div>
+                        </div>      <!--3-->
+                        <button disabled type='button' class='btn btn-primary' 
+                                name='add-to-cart-btn' confirm='Are your sure?' 
+                                id='add-to-cart-btn'>Add to cart
+                        </button>   <!--4-->
+                        <i hidden>${menu_item['menu_type']}</i>     <!--5-->
+                        <h6 hidden>${menu_item['notes']}</h6>       <!--6-->
+                    </div>`;
     });
     _markup += "</div><br>";
     return _markup
