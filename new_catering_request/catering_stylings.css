@@ -457,7 +457,7 @@ section{
     .background-img-container img{
         max-width: 100% !important;
         
-        transform: translate(30% , 25%);
+        transform: translate(30% , 8.5vw);
         opacity: 1 !important;
     }
 
