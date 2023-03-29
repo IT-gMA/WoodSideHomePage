@@ -493,11 +493,14 @@ section{
     /*Card views*/
     .menu-item-container{
         grid-auto-columns: 48% !important;
+        --spacer: .5rem !important;
+        padding: 5px var(--spacer) var(--spacer) !important;
+        gap: var(--spacer) !important;
     }
 
     .menu-offer-section.regular-menu{
         margin-top: 40px !important;
-        padding: 0 10px !important;
+        padding: 0 5px !important;
     }
 
     .item-input-container div{
