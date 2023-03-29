@@ -7,6 +7,7 @@ let CONSUMABLE_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/brownes-full_cream_milk.png',      // dynamic path
         'unit': null,
+        'notes': '',
     },
     {
         'id': '927cb85-49c-ed11-aad1-000d3acb5309',
@@ -15,6 +16,7 @@ let CONSUMABLE_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/cashew-butter-dark-background.webp',      // dynamic path
         'unit': null,
+        'notes': '750 gm',
     },
     {
         'id': '9a7cb85-49c-ed11-aad1-000d3acb5309',
@@ -23,14 +25,16 @@ let CONSUMABLE_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/jam-jar-raspberry-ground-grey-surface.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
     {
         'id': '867cb8f5-f49c-ed11-aad1-000d3acb5309',
-        'name': 'Honey - Jar (500gm) ',
+        'name': 'Honey - Jar (500gm)',
         'price': 8.44,
         'min_quantity': 1,
         'img_url': 'resources/honey-dripping-from-wooden-spoon.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
     {
         'id': '877cb875-f49c-ed11-aad1-000d3acb5309',
@@ -39,6 +43,7 @@ let CONSUMABLE_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/sliced-bread-wood-white-white-table-gray-surface-side-view-space-text.webp',      // dynamic path
         'unit': null,
+        'notes': null,
     },
     {
         'id': '8f7cb8f5-f49c-ed11-aad1-000d3acb5309',
@@ -47,6 +52,7 @@ let CONSUMABLE_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/vegemite.png',      // dynamic path
         'unit': null,
+        'notes': '',
     },
 ];
 let ADHOC100_MENU_ITEMS = [
@@ -57,6 +63,7 @@ let ADHOC100_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/scorns-w-jams-n-cream.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
     {
         'id': 'fd56df49-2e33-ed11-9db1-00224892b273',
@@ -65,6 +72,7 @@ let ADHOC100_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/whole-gourmet-cake.webp',      // dynamic path
         'unit': null,
+        'notes': null,
     },
     {
         'id': 'ea377a78-f39c-ed11-aad1-0022489339ad',
@@ -73,6 +81,8 @@ let ADHOC100_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/fruit-platter.webp',      // dynamic path
         'unit': null,
+        'notes': '',
+        'notes': '',
     },
     {
         'id': 'ea377a78-f39c-ed11-aad1-0022489339ad',
@@ -81,6 +91,7 @@ let ADHOC100_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/baguette-w-assorted-fillings.webp',      // dynamic path
         'unit': null,
+        'notes': null,
     },
     {
         'id': '17c45e49-2e33-ed11-9db1-002248933ec4',
@@ -89,6 +100,7 @@ let ADHOC100_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/antipaso-platter.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
     {
         'id': 'e6377a78-139c-ed11-aad1-0022489339ad',
@@ -97,6 +109,7 @@ let ADHOC100_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/sweet-muffins.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
 ];
 let ADHOC50_MENU_ITEMS = [
@@ -107,6 +120,7 @@ let ADHOC50_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/wrap-w-assorted-fillings.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
     {
         'id': '5aa5e4b3-fe9c-ed11-aad1-000d3ad215e6',
@@ -115,6 +129,7 @@ let ADHOC50_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/ribbon-sandwiches.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
     {
         'id': 'ea377a78-f39c-ed11-aad1-0022489339ad',
@@ -123,6 +138,7 @@ let ADHOC50_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/baguette-w-assorted-fillings.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
     {
         'id': '6ea5e4b3-fe9c-ed11-aad1-000d3ad215e6',
@@ -131,6 +147,7 @@ let ADHOC50_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/cheese-platter.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
     {
         'id': '61a5e4b3-fe9c-ed11-aad1-000d3ad215e6',
@@ -139,6 +156,7 @@ let ADHOC50_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/2lt-orange-juice.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
     {
         'id': '17c45e49-2e33-ed11-9db1-002248933ec4',
@@ -147,6 +165,7 @@ let ADHOC50_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/antipaso-platter.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
 ];
 let ADHOC51_MENU_ITEMS = [
@@ -157,6 +176,7 @@ let ADHOC51_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/2lt-orange-juice.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
     {
         'id': '5ea5e4b3-fe9c-ed11-aad1-000d3ad215e6',
@@ -165,6 +185,7 @@ let ADHOC51_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/individual-gourmet-cakes.webp',      // dynamic path
         'unit': null,
+        'notes': null,
     },
     {
         'id': '17c45e49-2e33-ed11-9db1-002248933ec4',
@@ -173,6 +194,7 @@ let ADHOC51_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/antipaso-platter.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
     {
         'id': 'ea377a78-f39c-ed11-aad1-0022489339ad',
@@ -181,6 +203,7 @@ let ADHOC51_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/baguette-w-assorted-fillings.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
     {
         'id': '5aa5e4b3-fe9c-ed11-aad1-000d3ad215e6',
@@ -189,6 +212,7 @@ let ADHOC51_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/home-styled-cookies.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
     {
         'id': 'ea377a78-f39c-ed11-aad1-0022489339ad',
@@ -197,6 +221,7 @@ let ADHOC51_MENU_ITEMS = [
         'min_quantity': 1,
         'img_url': 'resources/fruit-platter.webp',      // dynamic path
         'unit': null,
+        'notes': '',
     },
 ];
 
@@ -208,6 +233,7 @@ let CYCLONE_SHELTER_MENU_ITEMS = [
         'min_quantity': 20,
         'img_url': 'resources/sausages.webp',      // dynamic path
         'unit': 'KG',
+        'notes': 'in kilograms',
     },
     {
         'id': '7ba5e4b3-fe9c-ed11-aad1-000d3ad215e6',
@@ -216,6 +242,7 @@ let CYCLONE_SHELTER_MENU_ITEMS = [
         'min_quantity': 5,
         'img_url': 'resources/tomatoes.webp',      // dynamic path
         'unit': 'KG',
+        'notes': '',
     },
     {
         'id': '7aa5e4b3-fe9c-ed11-aad1-000d3ad215e6',
@@ -224,6 +251,7 @@ let CYCLONE_SHELTER_MENU_ITEMS = [
         'min_quantity': 2,
         'img_url': 'resources/canned-tuna.webp',      // dynamic path
         'unit': 'sets of 12x95gms',
+        'notes': 'whole set',
     },
     {
         'id': '78a5e4b3-fe9c-ed11-aad1-000d3ad215e6',
@@ -232,6 +260,7 @@ let CYCLONE_SHELTER_MENU_ITEMS = [
         'min_quantity': 40,
         'img_url': 'resources/yoghurt.webp',      // dynamic path
         'unit': '150g portion',
+        'notes': '',
     },
     {
         'id': '7da5e4b3-fe9c-ed11-aad1-000d3ad215e6',
@@ -240,6 +269,7 @@ let CYCLONE_SHELTER_MENU_ITEMS = [
         'min_quantity': 60,
         'img_url': 'resources/butters.webp',      // dynamic path
         'unit': '7g',
+        'notes': null,
     },
     {
         'id': '85a5e4b3-fe9c-ed11-aad1-000d3ad215e6',
@@ -248,6 +278,7 @@ let CYCLONE_SHELTER_MENU_ITEMS = [
         'min_quantity': 20,
         'img_url': 'resources/fruit-assortment.webp',      // dynamic path
         'unit': '1 box 200PC',
+        'notes': '',
     },
 ];
 
@@ -336,7 +367,7 @@ const HYPOTHETICAL_JSON_DATA = [{
     'name': 'Priority Catering - Cyclone Shelter Catering',
     'url': 'https://wsservicemanagementuat.powerappsportals.com/Requests/Catering-Order/?id=fe298b2a-5f64-ed11-9561-000d3aca76e9',
     'title': "<h1>Priority Catering - <span class='special-txt'>Cyclone Shelter</span> Catering</h1>",
-    'sub-title': "<h6>Don't let hunger be a <span class='special-txt'>concern</span> during a cyclone, choose priority food for cyclone shelter</h6><span class='material-symbols-outlined'>warning</span>",
+    'sub-title': "<h6>Don't let hunger be a <span class='special-txt'>concern</span> during a cyclone, choose priority food for cyclone shelter</h6><span class='material-symbols-outlined pfm-yellow'>warning</span>",
     'html_name': 'priority',
     'is_regular_menu': false,
     'is_emergency': true,
@@ -348,14 +379,10 @@ let MY_CART = [
     {},
 ];
 
-const date = new Date();
+/*const date = new Date();
 let _day = date.getDate();
 let _month = date.getMonth() + 1;
-let _year = date.getFullYear();
-
-const REGULAR_MENU_JSON = HYPOTHETICAL_JSON_DATA.filter((menu_type) => menu_type['is_regular_menu'] && !menu_type['is_emergency']);
-const WEEKLY_MENU_JSON = HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type['is_regular_menu'] && !menu_type['is_emergency'])[_query_nth_week_of_the_month()];
-const PRIORITY_MENU_JSON = HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type['is_regular_menu'] && menu_type['is_emergency']);
+let _year = date.getFullYear();*/
 
 function _query_nth_week_of_the_month(){
     const today = new Date();
@@ -391,11 +418,13 @@ function _render_card_swipe_btns(preview_item_card_menu_prev_btn_attr, preview_i
         const actual_width = card_item.scrollWidth - _container_dimension.width;
         
         _item_card_prev_btn[index].addEventListener('click', (e) => {
+            // scroll left i.e decreasing the scroll width
             card_item.scrollLeft -= _sub_card_width;
             console.log(card_item.scrollLeft);
             _toggle_card_swipe(nxt_btn, prev_btn, card_item, actual_width);
         });
         _item_card_nxt_btn[index].addEventListener('click', (e) => {
+            // scroll right i.e increasing the scroll width
             card_item.scrollLeft += _sub_card_width;
             console.log(card_item.scrollLeft);
             _toggle_card_swipe(nxt_btn, prev_btn, card_item, actual_width);
@@ -404,36 +433,38 @@ function _render_card_swipe_btns(preview_item_card_menu_prev_btn_attr, preview_i
 }
 
 function _render_weekly_menu(weekly_menu_json){
+    // since the html for this special menu type has already been written in the calling html document
+    // here only its corresponding menu type content is added
     const _foreground_markup = weekly_menu_json['title'] + "<br>" + weekly_menu_json['sub-title'] + "<br>" + "<a href='" + weekly_menu_json['url'] + "'><button type='button' class='btn btn-primary' name='explore-menu-btn' confirm='Are your sure?' id='explore-menu-btn'>Explore now</button></a></div>";
     $('div[name=weekly-specials-container]').find('.menu-desc').append(_foreground_markup);
-
     const _background_img_img_markup = "<img src='" + weekly_menu_json['img_url'] + "'>"
     $('div[name=weekly-specials-container]').find('.background-img-container').append(_background_img_img_markup);
 }
+
 function _render_regular_menus(regular_menu_list){
     var _item_idx = 0;
     regular_menu_list.forEach((regular_menu) => {
-        const _hz_separating_line = _item_idx % 2 == 0 ? "<hr class='hz-separating-line'>" : "<hr class='hz-separating-line' style='transform: translateX(-30%);'>";
-
         const _html_name =  regular_menu['html_name'];
         const _containing_section = $('section[name=regular-item-menu-section]');
-        const _display_render_container_name = _html_name + "-quick-menu-display";
-
+        // main section container
         const _quick_menu_display_name_attr = _html_name + '-quick-menu-display';
         const _quick_menu_display_name = 'name=' + _quick_menu_display_name_attr;
 
+        // horizontal card menu container
         const _preview_item_card_menu_name_attr = _html_name + '-item-container-menu';
         const _preview_item_card_menu_name = 'name=' + _preview_item_card_menu_name_attr;
         const _preview_item_card_menu_div_attr = '[' + _preview_item_card_menu_name + ']';
         const _preview_item_card_menu_dom_div_name = 'div' + _preview_item_card_menu_div_attr;
         const _preview_item_card_menu_div = $(_preview_item_card_menu_dom_div_name);
 
+        // individual menu item card
         const _preview_item_card_container_name_attr = _html_name + '-item-card';
         const _preview_item_card_container_name = 'name=' + _preview_item_card_container_name_attr;
         const _preview_item_card_container_attr = '[' + _preview_item_card_container_name + ']';
         const _preview_item_card_container_dom_div_name = 'div' + _preview_item_card_container_attr;
         const _preview_item_card_container = $(_preview_item_card_container_dom_div_name);
 
+        // card navigation buttons
         const _preview_item_card_nxt_btn_name_attr = _html_name + '-swipe-next-btn';
         const _preview_item_card_nxt_btn_name = 'name=' + _preview_item_card_nxt_btn_name_attr;
         const _preview_item_card_menu_nxt_btn_attr = '[' + _preview_item_card_nxt_btn_name + ']';
@@ -446,24 +477,28 @@ function _render_regular_menus(regular_menu_list){
         const _preview_item_card_menu_dom_prev_btn_name = 'div' + _preview_item_card_menu_prev_btn_attr;
         const _preview_item_card_menu_prev_btn= $(_preview_item_card_menu_dom_prev_btn_name);
 
-        console.log(_preview_item_card_container_name_attr);
-        var _markup = "<div class='quick-menu-display' name='" + _display_render_container_name + "'>";
+        //console.log(_preview_item_card_container_name_attr);
+        // construct main parent container for horizontal grid, nav buttons, separator and 'view-more' button
+        var _markup = "<div class='quick-menu-display' name='" + _quick_menu_display_name_attr + "'>";
         // Descriptive texts
         _markup += regular_menu['title'];
         _markup += "<div class='menu-desc-text'>" + regular_menu['sub-title'] + "</div><br>";
-        // Quick menu cards
+        // render the horizontal card menu container
         _markup += _build_preview_menu(regular_menu['quick_card_menu'], _preview_item_card_container_name_attr, _preview_item_card_menu_name_attr, _html_name);
         // card swipe buttons
         _markup += "<div class='card-menu-swiper' name='card-menu-swiper'>";
         _markup += "<button class='card-menu-swipe-btn' name='" + _preview_item_card_prev_btn_name_attr + "'><span class='material-symbols-outlined'>arrow_back_ios</span></button>";
         _markup += "<button class='card-menu-swipe-btn' name='" + _preview_item_card_nxt_btn_name_attr + "'><span class='material-symbols-outlined'>arrow_back_ios</span></button>";
         _markup += "</div><br>";
-        // Link to menu content page
+        // Link to respective menu content page
         _markup += "<a href='" + regular_menu['url'] + "'><h5>View all</h5></a>";
-        //_markup += "<hr class='hz-seperating-line'>";
-        _markup += "</div>" + _hz_separating_line + "<br><br>";
-        $('section[name=regular-item-menu-section]').append(_markup);
 
+        // even indexed item will have hz-separating-line positioned on the left and right otherwise
+        const _hz_separating_line = _item_idx % 2 == 0 ? "<hr class='hz-separating-line'>" : "<hr class='hz-separating-line' style='transform: translateX(-30%);'>";
+        _markup += "</div>" + _hz_separating_line + "<br><br>";
+        // render this menu type content within the section
+        $('section[name=regular-item-menu-section]').append(_markup);
+        // construct card swiping functionality
         _render_card_swipe_btns(_preview_item_card_menu_prev_btn_attr, _preview_item_card_menu_nxt_btn_attr, _preview_item_card_menu_prev_btn, _preview_item_card_menu_nxt_btn, _preview_item_card_menu_div_attr);
         _item_idx++;
     });
@@ -471,20 +506,46 @@ function _render_regular_menus(regular_menu_list){
 
 function _build_preview_menu(menu_items, preview_item_card_container_name_attr, preview_item_card_menu_name_attr, menu_type){
     var _markup = "<div class='menu-item-container bottom hidden snap-inline' name='" + preview_item_card_menu_name_attr + "'>";
+
+    // construct a card container for each item in this menu type
     menu_items.forEach((menu_item) => {
         menu_item['menu_type'] = String(menu_type);
-        var _unit_metric_markup = menu_item['unit'] == null || menu_item['unit'] == 'Each' ? '' : "<h6 style='font-size: 0.8em; padding: 1px;'>" + menu_item['unit'] + "</h6>";
+        // for any item that has a metric of unit restriction
+        const _unit_metric_markup = menu_item['unit'] == null || menu_item['unit'] == 'Each' ? '<h6 hidden></h6>' : "<h6 style='font-size: 0.8em; padding: 1px;'>" + menu_item['unit'] + "</h6>";
+        const _popup_remark = menu_item['notes'] != null && !is_whitespace(menu_item['notes']) ? 
+        `<div class='dropdown dropup'>
+            <a class='nav-link' id='item-info-dropdown-btn' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                <i class='material-symbols-outlined bold small' id='info-icon'>info</i>
+            </a>
+            <ul name='item-info-drop-down' class='dropdown-menu' aria-labelledby='item-info-dropdown-btn' onclick='event.stopPropagation()' id='item-info-dropdown'>
+                <div class='popup-content item-info-popup-content' name='popup-content'>
+                    <h6>${menu_item['notes']}</h6>
+                </div>
+            </ul>
+        </div>` : 
+        `<div class='dropdown'>
+        <a class='nav-link' id='item-info-dropdown-btn' role='button' data-bs-toggle='dropdown' aria-expanded='false' style='opacity: 0;'>
+            <i class='material-symbols-outlined bold small' id='info-icon'>info</i>
+        </a>
+        <ul hidden name='item-info-drop-down' class='dropdown-menu' aria-labelledby='item-info-dropdown-btn' onclick='event.stopPropagation()' id='item-info-dropdown'>
+            <div class='popup-content item-info-popup-content' name='popup-content'>
+                <h6>${menu_item['notes']}</h6>
+            </div>
+        </ul>
+        </div>`;
 
+        // construct the main card body container with its corresponding menu type name given
         _markup += "<div name='" + preview_item_card_container_name_attr + "' class='item-container'><p hidden name='item-id'>" + menu_item['id'] + "</p>"; //0
-        _markup += "<div class='item-img-container'>" + "<img src='" + menu_item['img_url'] + "'></div>";  //1
+        _markup += "<div class='item-img-container'>" + "<img id='menu-item-thbn-img' src='" + menu_item['img_url'] + "'></div>";  //1
         // Name/description and price --> children().eq(2):: name <!--0-->; price <!--1-->
         _markup += "<div class='menu-item-desc'><h6 id='menu-item-title' class='menu-item-title'>" + menu_item['name'] + "</h6>";
         _markup +=  _unit_metric_markup;
-        _markup += "<h6>$" + parseFloat(menu_item['price']).toFixed(2) + "</h6></div>";  //2
+        _markup += "<h6>$" + parseFloat(menu_item['price']).toFixed(2) + "</h6>" + _popup_remark + "</div>";  //2
 
         _markup +=  "<div class='item-input-container'><div><input name='item-quantity-input' class='item-quantity-input' placeholder='at least "+  menu_item['min_quantity'] + "'><i class='input-err-msg'>Must be at least " + menu_item['min_quantity'] + "</i><p hidden name='min-item-quantity'>" + menu_item['min_quantity'] + "</p><p hidden name='float-price'>" + parseFloat(menu_item['price']) + "</p></div></div>";    //3
         _markup += "<button disabled type='button' class='btn btn-primary' name='add-to-cart-btn' confirm='Are your sure?' id='add-to-cart-btn'>Add to cart</button>";   //4
         _markup += "<i hidden>" + menu_item['menu_type'] + "</i>";  //5
+        _markup += "<h6 hidden" + menu_item['notes'] + "</p>"   //6
         _markup += "</div>";
     });
     _markup += "</div><br>";
@@ -507,8 +568,10 @@ function _add_to_cart(item_name, item_id, menu_type, item_price, selected_quanti
         }
     });
     if (_matched_item != null){
+        // existing item has already been added above thus making the variable _matched_item not null -> halts the function
         return;
     }
+    // this item doesn't exist in the cart
     MY_CART.push({
         'id': item_id,
         'name': item_name,
@@ -519,23 +582,49 @@ function _add_to_cart(item_name, item_id, menu_type, item_price, selected_quanti
     });
 }
 
-_render_weekly_menu(WEEKLY_MENU_JSON);
-_render_regular_menus(REGULAR_MENU_JSON);
-_render_regular_menus(PRIORITY_MENU_JSON);
+
+/*async*/ function _retrieve_resources(){
+    /*let {data: REGULAR_MENU_JSON, error0} = await HYPOTHETICAL_JSON_DATA.filter((menu_type) => menu_type['is_regular_menu'] && !menu_type['is_emergency']);
+    let {data: WEEKLY_MENU_JSON, error1} = await HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type['is_regular_menu'] && !menu_type['is_emergency'])[_query_nth_week_of_the_month()];
+    let {data: PRIORITY_MENU_JSON, error2} = await HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type['is_regular_menu'] && menu_type['is_emergency']);*/
+    const REGULAR_MENU_JSON = HYPOTHETICAL_JSON_DATA.filter((menu_type) => menu_type['is_regular_menu'] && !menu_type['is_emergency']);
+    const WEEKLY_MENU_JSON = HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type['is_regular_menu'] && !menu_type['is_emergency'])[_query_nth_week_of_the_month()];
+    const PRIORITY_MENU_JSON = HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type['is_regular_menu'] && menu_type['is_emergency']);
+    return [REGULAR_MENU_JSON, WEEKLY_MENU_JSON, PRIORITY_MENU_JSON];
+    //return Promise.resolve([REGULAR_MENU_JSON, WEEKLY_MENU_JSON, PRIORITY_MENU_JSON]);
+}
+
+function _render_body_content(args){
+    const REGULAR_MENU_JSON = args[0]; //HYPOTHETICAL_JSON_DATA.filter((menu_type) => menu_type['is_regular_menu'] && !menu_type['is_emergency']);
+    const WEEKLY_MENU_JSON = args[1]; //HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type['is_regular_menu'] && !menu_type['is_emergency'])[_query_nth_week_of_the_month()];
+    const PRIORITY_MENU_JSON = args[2]; //HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type['is_regular_menu'] && menu_type['is_emergency']);
+
+    _render_weekly_menu(WEEKLY_MENU_JSON);
+    _render_regular_menus(REGULAR_MENU_JSON);
+    _render_regular_menus(PRIORITY_MENU_JSON);
+}
 
 // Animation control
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {entry.isIntersecting ? entry.target.classList.add('show') : entry.target.classList.remove('show');});
 });
-document.querySelectorAll('.hidden').forEach((elem) => {observer.observe(elem);});
 // End of animation controls
 
 $(document).ready(function () {
     //const today_date = _day + '/' + _month + '/' + _year;
+    /*_retrieve_resources().then(
+        (args) => _render_body_content(args)
+    );*/
+    _render_body_content(_retrieve_resources());
+
+    // render document animations
+    document.querySelectorAll('.hidden').forEach((elem) => {observer.observe(elem);});
+
+    // styling minor elements
     $('.input-err-msg').css('color', 'transparent');
-    $('div[name=card-menu-swiper]').each(function(){
-        $(this).children().eq(1).children().eq(0).css('transform', 'rotate(180deg)');
-    });
+    // rotate each next nav arrow icon 180º i.e make it point to the right
+    $('div[name=card-menu-swiper]').each(function() {$(this).children().eq(1).children().eq(0).css('transform', 'rotate(180deg)');});
+    // adjust each menu item's title/name a bold font weight
     $('.menu-item-desc').each(() => $(this).children().eq(0).css('font-weight', 'bold'));
 
     $(document).on('keyup', 'input[name=item-quantity-input]', function (e) {
@@ -554,7 +643,7 @@ $(document).ready(function () {
     });
 
     $(document).on('click', 'button[name=add-to-cart-btn]', function(e) {
-        $(this).attr('disabled', true);
+        $(this).attr('disabled', true);        
         const _parent_div = $(this).parent();
         const _input_div = _parent_div.children().eq(3).children().eq(0);
 
@@ -566,8 +655,10 @@ $(document).ready(function () {
         //console.log(_selected_quantity);
         //console.log(_item_name);
         _add_to_cart(_item_name, _item_id, _menu_type, _item_price, _selected_quantity);
+        // clear existing inputs
         _input_div.children().eq(0).val(null);
         MY_CART.forEach((cart_item) => {console.log(cart_item)});
+        alert(`${_selected_quantity} of ${_item_name} has been added to your shopping cart`);
     });
     /*const _item_cards_container = [...document.querySelectorAll('[name=consumable-item-container-menu]')];
     const _item_card_prev_btn = [...document.querySelectorAll('[name=consumable-swipe-prev-btn]')];

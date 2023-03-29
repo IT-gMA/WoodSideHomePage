@@ -5,3 +5,7 @@ function is_whitespace(str) {
 function is_valid_digit(digit){
     return DIGIT_REGEX.test(digit.trim()) && digit != '' && digit != null;
 }
+
+function is_whitespace(str) {
+    return !str.trim().length;
+}
