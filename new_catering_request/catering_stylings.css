@@ -24,6 +24,7 @@ button, a, input, i{
 /* End font styling*/
 
 body{
+    width: 100vw !important;
     background-color: white !important;
 }
 
@@ -257,7 +258,8 @@ section{
     border-radius: 20px 0px 20px 20px !important;
 
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
-    background-image: linear-gradient(135deg, #e0eebf, #c2de80, #a2cd40 2%, #c2de80, #e0eebf, white 55%, white) !important;
+    background-color: white;
+    /*background-image: linear-gradient(135deg, #e0eebf, #c2de80, #a2cd40 2%, #c2de80, #e0eebf, white 55%, white) !important;*/
     
     transition: .5s ease-in-out !important;
     overflow: hidden !important;
@@ -311,7 +313,7 @@ section{
 
 .item-container:hover{
     box-shadow: rgba(99, 99, 99, 0.25) 2px 4px 10px 4px;
-    background-image: linear-gradient(135deg, #e0eebf, white, white 90%) !important;
+    /*background-image: linear-gradient(135deg, #e0eebf, white, white 90%) !important;*/
 }
 
 .item-container:hover > .item-img-container img{
@@ -442,10 +444,143 @@ section{
     padding: 4px 12px !important;
 }
 
+.input-err-msg{
+    color: transparent;
+}
+
+/*In page nav menu*/
+.in-page-nav-menu{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.in-page-nav-menu-container{
+    /*width: 80% !important;*/
+    
+    border: solid white !important;
+    border-radius: 20px !important;
+    box-shadow: rgba(0, 0, 0, 0.1) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+
+    display: grid !important;
+    justify-content: center !important;
+    align-items: center !important;
+    
+    grid-row-gap: 10% !important;
+    grid-template-columns: 20% 20% 20% 20% 20% !important;
+    padding: 30px 10px !important;
+}
+
+.in-page-nav-menu-container a{
+    text-decoration: none !important;
+}
+
+.in-page-nav-menu-container div{
+    display: grid !important;
+    max-width: 150px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px !important;
+
+    border: solid transparent !important;
+    border-width: .1px !important;
+    border-radius: 50% !important;
+    
+    text-align: center !important;
+}
+
+.in-page-nav-menu-container img{
+    max-width: 100% !important;
+    aspect-ratio: 1/1 !important;
+}
+
+.in-page-nav-menu-container h6{
+    padding-top: 5px !important;
+    text-decoration: none !important;
+    color: #3D3935 !important;
+    font-size: 0.6em !important;
+}
+
+.in-page-nav-menu-container div:hover > *{
+    text-decoration: underline !important;
+}
+
+.in-page-nav-menu-container a:hover > div{
+    background-color: rgba(233, 233, 233, 0.5) !important;
+}
+
+
+/*Shopping cart button*/
+.cart-btn-container{
+    position: fixed !important;
+    bottom: 5px;
+    left: 10px;
+    cursor: grab !important;
+
+    display: grid !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 10 !important;
+}
+
+.cart-btn-container button{
+    grid-area: 1/1 !important;
+
+    padding: 10px !important;
+    border: solid #84BD00 !important;
+    border-width: 3px !important;
+    border-radius: 50% !important;
+
+    background-color: #84BD00;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.cart-btn-container button span{
+    font-size: xx-large !important;
+    font-weight: bold !important;
+    color: white;
+}
+
+.cart-btn-container button:hover{
+    border: solid #c2de80 !important;
+}
+
+.cart-btn-container button:hover > span{
+    color: #3D3935;
+}
+
+.cart-btn-container button:focus, .cart-btn-container button:active{
+    border: solid #a2cd40 !important;
+    box-shadow: rgba(17, 17, 26, 0.01) 0px 4px 16px, rgba(17, 17, 26, 0.01) 0px 8px 32px;
+}
+
+.cart-btn-container h6{
+    grid-area: 1/1 !important;
+    padding: 10px !important;
+    width: 30px !important;
+    height: 30px !important;
+
+    background-color: red !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 50% !important;
+
+    z-index: 11 !important;
+
+    transform: translate(130%, -60%) !important;
+
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+
+    font-size: 0.8em !important;
+    cursor: pointer !important;
+}
 
 
 /* styling for grid on mobile */
-@media (max-width: 767px) {
+@media (max-width: 780px) {
     body{
         overflow-x: hidden !important;
     }
@@ -470,8 +605,8 @@ section{
         padding: 24px !important;
         background-color: rgba(255,255,255,0.2) !important;
         backdrop-filter: blur(8px) !important;
-        box-shadow: 0 1px 12px rgba(0, 0, 0, 0.08) !important;
         -webkit-backdrop-filter: blur(8px) !important;
+        box-shadow: 0 1px 12px rgba(0, 0, 0, 0.08) !important;
 
         border: solid none !important;
         border-radius: 16px;
@@ -494,7 +629,7 @@ section{
 
     /*Card views*/
     .menu-item-container{
-        grid-auto-columns: 48% !important;
+        grid-auto-columns: 32% !important;
         --spacer: .5rem !important;
         padding: 5px var(--spacer) var(--spacer) !important;
         gap: var(--spacer) !important;
@@ -563,5 +698,77 @@ section{
     /*Info icon popup*/
     #info-icon{
         font-size: 1em !important;
+    }
+
+    /*In page nav menu*/
+    .in-page-nav-menu-container{
+        grid-template-columns: 25% 25% 25% 25% !important;
+        grid-row-gap: 5% !important;
+    }
+
+    .in-page-nav-menu-container div{
+        max-width: 100px !important;
+    }
+
+
+    /*Shopping cart button*/
+    .cart-btn-container button{
+        padding: 8px !important;
+    }
+
+    .cart-btn-container button span{
+        font-size: x-large !important;
+    }
+
+    .cart-btn-container h6{
+        padding: 8px !important;
+        width: 25px !important;
+        height: 25px !important;
+
+        transform: translate(120%, -50%) !important;
+        font-size: 0.55em !important;
+    }
+  }
+
+
+  @media (max-width: 450px) {
+     /*Card views*/
+     .menu-item-container{
+        grid-auto-columns: 48% !important;
+    }
+
+     /*In page nav menu*/
+     .in-page-nav-menu-container{
+        grid-template-columns: 33% 33% 33% !important;
+        grid-row-gap: 5% !important;
+    }
+
+    .in-page-nav-menu-container div{
+        padding: 5px !important;
+        text-align: center !important;
+        max-width: 90px !important;
+    }
+    
+    .in-page-nav-menu-container h6{
+        padding-top: 2px !important;
+        font-size: 0.5em !important;
+    }
+
+    /*Shopping cart button*/
+    .cart-btn-container button{
+        padding: 5px !important;
+    }
+
+    .cart-btn-container button span{
+        font-size: large !important;
+    }
+
+    .cart-btn-container h6{
+        padding: 5px !important;
+        width: 20px !important;
+        height: 20px !important;
+
+        transform: translate(100%, -50%) !important;
+        font-size: 0.5em !important;
     }
   }

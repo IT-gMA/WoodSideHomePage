@@ -1,383 +1,71 @@
 const CARD_CHILDREN_WIDTH_FACTOR = 0.25;
-let CONSUMABLE_MENU_ITEMS = [
-    {
-        'id': '9a7cb85-49c-ed11-aad1-000d3acb5309',
-        'name': 'Full Cream Milk - Fresh (2ltr)',
-        'price': 4.07,
-        'min_quantity': 1,
-        'img_url': 'resources/brownes-full_cream_milk.png',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-    {
-        'id': '927cb85-49c-ed11-aad1-000d3acb5309',
-        'name': 'Peanut Butter - Smooth - Jar (750gm)',
-        'price': 10.53,
-        'min_quantity': 1,
-        'img_url': 'resources/cashew-butter-dark-background.webp',      // dynamic path
-        'unit': null,
-        'notes': '750 gm',
-    },
-    {
-        'id': '9a7cb85-49c-ed11-aad1-000d3acb5309',
-        'name': 'Jam - Raspberry - Jar (500gm)',
-        'price': 4.58,
-        'min_quantity': 1,
-        'img_url': 'resources/jam-jar-raspberry-ground-grey-surface.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-    {
-        'id': '867cb8f5-f49c-ed11-aad1-000d3acb5309',
-        'name': 'Honey - Jar (500gm)',
-        'price': 8.44,
-        'min_quantity': 1,
-        'img_url': 'resources/honey-dripping-from-wooden-spoon.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-    {
-        'id': '877cb875-f49c-ed11-aad1-000d3acb5309',
-        'name': 'Bread Wholemeal - Loaf',
-        'price': 2.40,
-        'min_quantity': 1,
-        'img_url': 'resources/sliced-bread-wood-white-white-table-gray-surface-side-view-space-text.webp',      // dynamic path
-        'unit': null,
-        'notes': null,
-    },
-    {
-        'id': '8f7cb8f5-f49c-ed11-aad1-000d3acb5309',
-        'name': 'Vegemite - Jar (500gm)',
-        'price': 10.95,
-        'min_quantity': 1,
-        'img_url': 'resources/vegemite.png',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-];
-let ADHOC100_MENU_ITEMS = [
-    {
-        'id': '7599e7a-2e33-ed11-9db1-00224892b273',
-        'name': 'Scones with Jam and Cream',
-        'price': 2.80,
-        'min_quantity': 1,
-        'img_url': 'resources/scorns-w-jams-n-cream.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-    {
-        'id': 'fd56df49-2e33-ed11-9db1-00224892b273',
-        'name': 'Whole Gourmet Cake (serves 12 -16)',
-        'price': 112.50,
-        'min_quantity': 1,
-        'img_url': 'resources/whole-gourmet-cake.webp',      // dynamic path
-        'unit': null,
-        'notes': null,
-    },
-    {
-        'id': 'ea377a78-f39c-ed11-aad1-0022489339ad',
-        'name': 'Fresh Fruit Platter',
-        'price': 1.02,
-        'min_quantity': 1,
-        'img_url': 'resources/fruit-platter.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-        'notes': '',
-    },
-    {
-        'id': 'ea377a78-f39c-ed11-aad1-0022489339ad',
-        'name': 'Baguette with assorted fillings',
-        'price': 6.80,
-        'min_quantity': 1,
-        'img_url': 'resources/baguette-w-assorted-fillings.webp',      // dynamic path
-        'unit': null,
-        'notes': null,
-    },
-    {
-        'id': '17c45e49-2e33-ed11-9db1-002248933ec4',
-        'name': 'Antipasto Platter',
-        'price': 2.60,
-        'min_quantity': 1,
-        'img_url': 'resources/antipaso-platter.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-    {
-        'id': 'e6377a78-139c-ed11-aad1-0022489339ad',
-        'name': 'Muffins (Sweet)',
-        'price': 2.30,
-        'min_quantity': 1,
-        'img_url': 'resources/sweet-muffins.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-];
-let ADHOC50_MENU_ITEMS = [
-    {
-        'id': 'ea377a78-f39c-ed11-aad1-0022489339ad',
-        'name': 'Wraps with assorted fillings',
-        'price': 5.25,
-        'min_quantity': 1,
-        'img_url': 'resources/wrap-w-assorted-fillings.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-    {
-        'id': '5aa5e4b3-fe9c-ed11-aad1-000d3ad215e6',
-        'name': 'A Selection of Ribbon Sandwiches',
-        'price': 5.70,
-        'min_quantity': 1,
-        'img_url': 'resources/ribbon-sandwiches.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-    {
-        'id': 'ea377a78-f39c-ed11-aad1-0022489339ad',
-        'name': 'Baguette with assorted fillings',
-        'price': 6.80,
-        'min_quantity': 1,
-        'img_url': 'resources/baguette-w-assorted-fillings.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-    {
-        'id': '6ea5e4b3-fe9c-ed11-aad1-000d3ad215e6',
-        'name': 'Cheese Platter',
-        'price': 1.10,
-        'min_quantity': 1,
-        'img_url': 'resources/cheese-platter.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-    {
-        'id': '61a5e4b3-fe9c-ed11-aad1-000d3ad215e6',
-        'name': '2lt Orange Juice',
-        'price': 6.60,
-        'min_quantity': 1,
-        'img_url': 'resources/2lt-orange-juice.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-    {
-        'id': '17c45e49-2e33-ed11-9db1-002248933ec4',
-        'name': 'Antipasto Platter',
-        'price': 4.00,
-        'min_quantity': 1,
-        'img_url': 'resources/antipaso-platter.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-];
-let ADHOC51_MENU_ITEMS = [
-    {
-        'id': '61a5e4b3-fe9c-ed11-aad1-000d3ad215e6',
-        'name': '2lt Orange Juice',
-        'price': 6.60,
-        'min_quantity': 1,
-        'img_url': 'resources/2lt-orange-juice.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-    {
-        'id': '5ea5e4b3-fe9c-ed11-aad1-000d3ad215e6',
-        'name': 'Assorted Individual Gourmet Cakes',
-        'price': 2.20,
-        'min_quantity': 1,
-        'img_url': 'resources/individual-gourmet-cakes.webp',      // dynamic path
-        'unit': null,
-        'notes': null,
-    },
-    {
-        'id': '17c45e49-2e33-ed11-9db1-002248933ec4',
-        'name': 'Antipasto Platter',
-        'price': 3.80,
-        'min_quantity': 1,
-        'img_url': 'resources/antipaso-platter.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-    {
-        'id': 'ea377a78-f39c-ed11-aad1-0022489339ad',
-        'name': 'Baguette with assorted fillings',
-        'price': 6.80,
-        'min_quantity': 1,
-        'img_url': 'resources/baguette-w-assorted-fillings.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-    {
-        'id': '5aa5e4b3-fe9c-ed11-aad1-000d3ad215e6',
-        'name': 'Home Style Cookies',
-        'price': 1.80,
-        'min_quantity': 1,
-        'img_url': 'resources/home-styled-cookies.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-    {
-        'id': 'ea377a78-f39c-ed11-aad1-0022489339ad',
-        'name': 'Fresh Fruit Platter',
-        'price': 1.11,
-        'min_quantity': 1,
-        'img_url': 'resources/fruit-platter.webp',      // dynamic path
-        'unit': null,
-        'notes': '',
-    },
-];
+const _CART_BUTTON = $('div[name=shopping-cart-button]');
+let MY_CART = [];
+let is_cart_btn_dragged = false;
+let screen_width = window.innerWidth;
+let screen_height = window.innerHeight;
+window.addEventListener('resize', function() {
+    screen_width = window.innerWidth;
+    screen_height = window.innerHeight;
+  });
+/*_queried_selected_cart_btn.addEventListener('mousedown', btn_drag_start);
+_queried_selected_cart_btn.addEventListener('mouseup', btn_drag_end);
+_queried_selected_cart_btn.addEventListener('mousemove', btn_drag);*/
+function _drag_element(elem){
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    elem.onmousedown = dragMouseDown;
 
-let CYCLONE_SHELTER_MENU_ITEMS = [
-    {
-        'id': '7ea5e4b3-fe9c-ed11-aad1-000d3ad215e6',
-        'name': 'Sausages',
-        'price': 8.81,
-        'min_quantity': 20,
-        'img_url': 'resources/sausages.webp',      // dynamic path
-        'unit': 'KG',
-        'notes': 'in kilograms',
-    },
-    {
-        'id': '7ba5e4b3-fe9c-ed11-aad1-000d3ad215e6',
-        'name': 'Tomato',
-        'price': 6.78,
-        'min_quantity': 5,
-        'img_url': 'resources/tomatoes.webp',      // dynamic path
-        'unit': 'KG',
-        'notes': '',
-    },
-    {
-        'id': '7aa5e4b3-fe9c-ed11-aad1-000d3ad215e6',
-        'name': 'Tuna',
-        'price': 1.53,
-        'min_quantity': 2,
-        'img_url': 'resources/canned-tuna.webp',      // dynamic path
-        'unit': 'sets of 12x95gms',
-        'notes': 'whole set',
-    },
-    {
-        'id': '78a5e4b3-fe9c-ed11-aad1-000d3ad215e6',
-        'name': 'Yoghurt',
-        'price': 1.55,
-        'min_quantity': 40,
-        'img_url': 'resources/yoghurt.webp',      // dynamic path
-        'unit': '150g portion',
-        'notes': '',
-    },
-    {
-        'id': '7da5e4b3-fe9c-ed11-aad1-000d3ad215e6',
-        'name': 'Spreads',
-        'price': 6.84,
-        'min_quantity': 60,
-        'img_url': 'resources/butters.webp',      // dynamic path
-        'unit': '7g',
-        'notes': null,
-    },
-    {
-        'id': '85a5e4b3-fe9c-ed11-aad1-000d3ad215e6',
-        'name': 'Fruit - applies, pears, bananas',
-        'price': 4.63,
-        'min_quantity': 20,
-        'img_url': 'resources/fruit-assortment.webp',      // dynamic path
-        'unit': '1 box 200PC',
-        'notes': '',
-    },
-];
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+      }
+    
+      function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        elem.style.top = `${_format_new_elem_vert_position(elem.offsetTop - pos2)}px`;
+        elem.style.left = `${_format_new_elem_hrz_position(elem.offsetLeft - pos1)}px`;
+      }
+    
+      function closeDragElement() {
+        /* stop moving when mouse button is released:*/
+        document.onmouseup = null;
+        document.onmousemove = null;
+      }
+}
 
-const HYPOTHETICAL_JSON_DATA = [{
-    'id': '85f8652d-5f64-ed11-9561-000d3acc166b',
-    'name': 'Consumables',
-    'url': 'https://wsservicemanagementuat.powerappsportals.com/Requests/Catering-Order/?id=85f8652d-5f64-ed11-9561-000d3acc166b',
-    'title': "<h1>Let's grab some <span class='special-txt'>light</span> and <span class='special-txt'>quick</span> snacks</h1>",
-    'sub-title': "<h6>Whether you're looking for a quick snack or a full meal, our consumable food products are the <span class='special-txt'>perfect choice</span> for satisfying hunger and providing sustained energy throughout the day</h6>",
-    'html_name': 'consumable',
-    'is_regular_menu': true,
-    'is_emergency': false,
-    'quick_card_menu': CONSUMABLE_MENU_ITEMS,
-}, {
-    'id': 'baba4017-5f64-ed11-9561-0022489624ee',
-    'name': 'Fresh Daily Menu - Week 1',
-    'url': 'https://wsservicemanagementuat.powerappsportals.com/Requests/Catering-Order/?id=c09ecc2d-f29c-ed11-aad1-002248114fd7',
-    'sub-title': "<h6>Our weekly special rotating menu is perfect for anyone who loves to explore <span>new tastes and flavours</span>. Whether you're a foodie looking for the latest culinary trends, or simply someone who appreciates a great meal, you're sure to find something to love on our rotating menu. And with <span style='color: #F57F25;'>new dishes</span> being added <span style='color: #F57F25;'>every week</span>, there's always a reason to come back for more. We use only the freshest, highest-quality ingredients, and our chefs are always experimenting with new techniques and flavor combinations to create dishes that are truly <span>one-of-a-kind</span>.</h6>",
-    'title': "<h1>Check out <span>this week</span> specials!</h1>",
-    'img_url': 'resources/arrival-hall-brunch.webp',
-    'is_regular_menu': false,
-    'is_emergency': false,
-    'quick_card_menu': [],
-}, {
-    'id': 'c09ecc2d-f29c-ed11-aad1-002248114fd7',
-    'name': 'Fresh Daily Menu - Week 2',
-    'url': 'https://wsservicemanagementuat.powerappsportals.com/Requests/Catering-Order/?id=c09ecc2d-f29c-ed11-aad1-002248114fd7',
-    'sub-title': "<h6>If you're looking for a unique and delicious dining experience, look no further than our <span>weekly special menu</span>! Every week, our talented chefs create a mouth-watering menu that features the <span style='color: #F57F25;'>freshest and most flavorful ingredients available</span>. From classic comfort foods to exotic and adventurous dishes, there's something for everyone on our <span>weekly special menu</span>. So gather your friends and family, and join us for an unforgettable dining experience!. Don't miss out on this week's special menu, it's sure to tantalize your taste buds and leave you craving <span>more</span></h6>.",
-    'title': "<h1>Check out <span>this week</span> specials!</h1>",
-    'img_url': 'resources/pizza-thumbnail-img.webp',
-    'is_regular_menu': false,
-    'is_emergency': false,
-    'quick_card_menu': [],
-}, {
-    'id': '85f8652d-5f64-ed11-9561-000d3acc166b',
-    'name': 'Fresh Daily Menu - Week 3',
-    'url': 'https://wsservicemanagementuat.powerappsportals.com/Requests/Catering-Order/?id=c19ecc2d-f29c-ed11-aad1-002248114fd7',
-    'sub-title': "<h6>Looking for an exquisite that offers a <span>weekly special rotating</span> menu to spice up your daily meal after a day of hard works? Look no further than our service at Programmed! Our experienced chefs create a <span style='color: #F57F25;'>new and exciting</span> menu each week, featuring a range of delicious dishes inspired by global cuisine. From classic comfort foods to exotic and adventurous flavors, our <span>weekly special menu</span> is the perfect way to break out of your mealtime rut and try something new.</h6>",
-    'title': "<h1>Check out <span>this week</span> specials!</h1>",
-    'img_url': 'resources/borgar-img-thumbnail.webp',
-    'is_regular_menu': false,
-    'is_emergency': false,
-    'quick_card_menu': [],
-}, {
-    'id': 'c29ecc2d-f29c-ed11-aad1-002248114fd7',
-    'name': 'Fresh Daily Menu - Week 4',
-    'url': 'https://wsservicemanagementuat.powerappsportals.com/Requests/Catering-Order/?id=c29ecc2d-f29c-ed11-aad1-002248114fd7',
-    'sub-title': "<h6>Looking for a culinary adventure? We are excited to offer a new special menu that rotates <span>every week</span>, providing a fresh and exciting dining experience with each visit. Our team of skilled chefs crafts each dish with care, using only the finest ingredients to create <span>unique and flavorful dishes</span> that will tantalize your taste buds. From bold and spicy to delicate and savory, our rotating menu has something to offer for every palate. Whether you're a foodie or just looking to try something new, our weekly specials are the perfect way to indulge in an <span>unforgettable meal</span>. Don't miss out on the chance to explore a world of flavors and join us for our <span style='color: #F57F25;'>next special menu rotation</span>.</h6>",
-    'title': "<h1>Check out <span>this week</span> specials!</h1>",
-    'img_url': 'resources/pasta-fettuccine-bolognese-with-tomato-sauce-white-bowl.webp',
-    'is_regular_menu': false,
-    'is_emergency': false,
-    'quick_card_menu': [],
-}, {
-    'id': 'db7c2127-5f64-ed11-9561-002248933ec4',
-    'name': 'Functions - Ad hoc Catering (>100pax)',
-    'url': 'https://wsservicemanagementuat.powerappsportals.com/Requests/Catering-Order/?id=db7c2127-5f64-ed11-9561-002248933ec4',
-    'title': "<h1>Functions - Ad hoc Catering <span class='special-txt'>(>100pax)</span></h1>",
-    'sub-title': "<h6>Indulge in our menu of <span class='special-txt'>generously sized portions</span> that will satisfy your hunger and leave you feeling fully satisfied</h6>",
-    'html_name': 'adhoc-100',
-    'is_regular_menu': true,
-    'is_emergency': false,
-    'quick_card_menu': ADHOC100_MENU_ITEMS,
-}, {
-    'id': '674bdf21-5f64-ed11-9561-0022489334d1',
-    'name': 'Functions - Ad hoc Catering (51-100pax)',
-    'url': 'https://wsservicemanagementuat.powerappsportals.com/Requests/Catering-Order/?id=674bdf21-5f64-ed11-9561-0022489334d1',
-    'title': "<h1>Functions - Ad hoc Catering <span class='special-txt'>(51-100pax)</span></h1>",
-    'sub-title': "<h6>Savor our menu of <span class='special-txt'>perfectly proportioned</span> dishes that are delicious and satisfying without leaving you feeling overly stuffed</h6>",
-    'html_name': 'adhoc-51',
-    'is_regular_menu': true,
-    'is_emergency': false,
-    'quick_card_menu': ADHOC51_MENU_ITEMS,
-}, {
-    'id': '200fa41d-5f64-ed11-9561-00224893237a',
-    'name': 'Functions - Ad hoc Catering (max 50pax)',
-    'url': 'https://wsservicemanagementuat.powerappsportals.com/Requests/Catering-Order/?id=200fa41d-5f64-ed11-9561-00224893237a',
-    'title': "<h1>Functions - Ad hoc Catering <span class='special-txt'>(max 50pax)</span></h1>",
-    'sub-title': "<h6>Explore our thoughtfully curated selection of <span class='special-txt'>artisanal groceries</span> and enjoy our menu of small plates crafted with the <span class='special-txt'>freshest ingredients</span>, perfect for a light and satisfying meal.</h6>",
-    'html_name': 'adhoc-50',
-    'is_regular_menu': true,
-    'is_emergency': false,
-    'quick_card_menu': ADHOC50_MENU_ITEMS,
-}, {
-    'id': 'fe298b2a-5f64-ed11-9561-000d3aca76e9',
-    'name': 'Priority Catering - Cyclone Shelter Catering',
-    'url': 'https://wsservicemanagementuat.powerappsportals.com/Requests/Catering-Order/?id=fe298b2a-5f64-ed11-9561-000d3aca76e9',
-    'title': "<h1>Priority Catering - <span class='special-txt'>Cyclone Shelter</span> Catering</h1>",
-    'sub-title': "<h6>Don't let hunger be a <span class='special-txt'>concern</span> during a cyclone, choose priority food for cyclone shelter</h6><span class='material-symbols-outlined pfm-yellow'>warning</span>",
-    'html_name': 'priority',
-    'is_regular_menu': false,
-    'is_emergency': true,
-    'quick_card_menu': CYCLONE_SHELTER_MENU_ITEMS,
-},
-];
+function _format_new_elem_vert_position(pos){
+    if (pos < 0){
+        return 0;
+    }else if (pos > screen_height){
+        return screen_height;
+    }
+    return pos;
+}
 
-let MY_CART = [
-    {},
-];
+function _format_new_elem_hrz_position(pos){
+    console.log(`${pos > screen_width}`);
+    if (pos < 0){
+        return 0;
+    }else if (pos > screen_width - 100){
+        return screen_width;
+    }
+    return pos;
+}
+
+//_drag_element(document.getElementById('cart-btn-container'));
 
 /*const date = new Date();
 let _day = date.getDate();
@@ -435,11 +123,11 @@ function _render_card_swipe_btns(preview_item_card_menu_prev_btn_attr, preview_i
 function _render_weekly_menu(weekly_menu_json){
     // since the html for this special menu type has already been written in the calling html document
     // here only its corresponding menu type content is added
-    const _foreground_markup = `${weekly_menu_json['title']}<br>
-                            ${weekly_menu_json['sub-title']}<br>
-                            <a href='${weekly_menu_json['url']}'>
-                                <button type='button' class='btn btn-primary' name='explore-menu-btn' id='explore-menu-btn'>Explore now</button>
-                            </a>`;
+    const _foreground_markup = `<h1>${weekly_menu_json['title']}</h1><br>
+                                <h6>${weekly_menu_json['sub-title']}</h6><br>
+                                <a href='${weekly_menu_json['url']}'>
+                                    <button type='button' class='btn btn-primary' name='explore-menu-btn' id='explore-menu-btn'>Explore now</button>
+                                </a>`;
     $('div[name=weekly-specials-container]').find('.menu-desc').append(_foreground_markup);
     const _background_img_img_markup = "<img src='" + weekly_menu_json['img_url'] + "'>"
     $('div[name=weekly-specials-container]').find('.background-img-container').append(_background_img_img_markup);
@@ -448,6 +136,9 @@ function _render_weekly_menu(weekly_menu_json){
 function _render_regular_menus(regular_menu_list){
     var _item_idx = 0;
     regular_menu_list.forEach((regular_menu) => {
+        if (regular_menu['quick_card_menu'].length < 1){
+            return;
+        }
         const _html_name =  regular_menu['html_name'];
         const _containing_section = $('section[name=regular-item-menu-section]');
         // main section container
@@ -485,11 +176,11 @@ function _render_regular_menus(regular_menu_list){
         const _hz_separating_line = _item_idx % 2 == 0 ? "<hr class='hz-separating-line'>" : "<hr class='hz-separating-line' style='transform: translateX(-30%);'>";
         //console.log(_preview_item_card_container_name_attr);
         // construct main parent container for horizontal grid, nav buttons, separator and 'view-more' button
-        var _markup = `<div class='quick-menu-display' name='${_quick_menu_display_name_attr}'>`;
+        var _markup = `<div class='quick-menu-display' id='quick-menu-${_html_name}' name='${_quick_menu_display_name_attr}'>`;
         // Descriptive texts
-        _markup += `${regular_menu['title']}
+        _markup += `<h1>${regular_menu['title']}</h1>
                     <div class='menu-desc-text'>
-                        ${regular_menu['sub-title']}
+                        <h6>${regular_menu['sub-title']}</h6>
                     </div><br>`;
         // render the horizontal card menu container
         _markup += _build_preview_menu(regular_menu['quick_card_menu'], _preview_item_card_container_name_attr, _preview_item_card_menu_name_attr, _html_name);
@@ -511,11 +202,20 @@ function _render_regular_menus(regular_menu_list){
         $('section[name=regular-item-menu-section]').append(_markup);
         // construct card swiping functionality
         _render_card_swipe_btns(_preview_item_card_menu_prev_btn_attr, _preview_item_card_menu_nxt_btn_attr, _preview_item_card_menu_prev_btn, _preview_item_card_menu_nxt_btn, _preview_item_card_menu_div_attr);
+
+        // render in page navigation menu
+        $('.in-page-nav-menu-container').append(`<a href='#quick-menu-${_html_name}'>
+                                                    <div>
+                                                        <img src='${regular_menu['icon_url']}'>
+                                                        <h6>${_html_name}</h6>
+                                                    </div>
+                                                </a>`);
         _item_idx++;
     });
 }
 
 function _build_preview_menu(menu_items, preview_item_card_container_name_attr, preview_item_card_menu_name_attr, menu_type){
+    // bottom hidden
     var _markup = `<div class='menu-item-container bottom hidden snap-inline' name='${preview_item_card_menu_name_attr}'>`;
 
     // construct a card container for each item in this menu type
@@ -585,6 +285,23 @@ function disable_individual_btn(btn, valid_cond){
     btn.attr('disabled', !valid_cond);
 }
 
+function _quick_ui_styling(){
+    // styling minor elements
+    $('.input-err-msg').css('color', 'transparent');
+    // rotate each next nav arrow icon 180º i.e make it point to the right
+    $('div[name=card-menu-swiper]').each(function() {$(this).children().eq(1).children().eq(0).css('transform', 'rotate(180deg)');});
+    // adjust each menu item's title/name a bold font weight
+    $('.menu-item-desc').each(() => $(this).children().eq(0).css('font-weight', 'bold'));
+}
+
+function _render_animation(){
+    // Animation control
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {entry.isIntersecting ? entry.target.classList.add('show') : entry.target.classList.remove('show');});
+    });
+    document.querySelectorAll('.hidden').forEach((elem) => {observer.observe(elem);});
+}
+
 function _add_to_cart(item_name, item_id, menu_type, item_price, selected_quantity){
     var _matched_item = null;
     // check whether this item already exists in the cart
@@ -610,51 +327,86 @@ function _add_to_cart(item_name, item_id, menu_type, item_price, selected_quanti
     });
 }
 
-
-/*async*/ function _retrieve_resources(){
-    /*let {data: REGULAR_MENU_JSON, error0} = await HYPOTHETICAL_JSON_DATA.filter((menu_type) => menu_type['is_regular_menu'] && !menu_type['is_emergency']);
-    let {data: WEEKLY_MENU_JSON, error1} = await HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type['is_regular_menu'] && !menu_type['is_emergency'])[_query_nth_week_of_the_month()];
-    let {data: PRIORITY_MENU_JSON, error2} = await HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type['is_regular_menu'] && menu_type['is_emergency']);*/
-    const REGULAR_MENU_JSON = HYPOTHETICAL_JSON_DATA.filter((menu_type) => menu_type['is_regular_menu'] && !menu_type['is_emergency']);
-    const WEEKLY_MENU_JSON = HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type['is_regular_menu'] && !menu_type['is_emergency'])[_query_nth_week_of_the_month()];
-    const PRIORITY_MENU_JSON = HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type['is_regular_menu'] && menu_type['is_emergency']);
-    return [REGULAR_MENU_JSON, WEEKLY_MENU_JSON, PRIORITY_MENU_JSON];
-    //return Promise.resolve([REGULAR_MENU_JSON, WEEKLY_MENU_JSON, PRIORITY_MENU_JSON]);
+function _process_num_cart_items(){
+    const sum_item_quantity = MY_CART.reduce((accumulator, _v) => {
+        return accumulator + _v.ordered_quantity;
+      }, 0);
+    _CART_BUTTON.children('[name=cart-item-num]').text(sum_item_quantity > 99 ? '99+' : String(sum_item_quantity));
 }
 
-function _render_body_content(args){
-    const REGULAR_MENU_JSON = args[0]; //HYPOTHETICAL_JSON_DATA.filter((menu_type) => menu_type['is_regular_menu'] && !menu_type['is_emergency']);
-    const WEEKLY_MENU_JSON = args[1]; //HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type['is_regular_menu'] && !menu_type['is_emergency'])[_query_nth_week_of_the_month()];
-    const PRIORITY_MENU_JSON = args[2]; //HYPOTHETICAL_JSON_DATA.filter((menu_type) => !menu_type['is_regular_menu'] && menu_type['is_emergency']);
+function _render_body_content(){
+    $.ajax({
+        type: 'POST',
+        url: 'https://prod-04.australiasoutheast.logic.azure.com:443/workflows/389d03ade6b84ee9807722164d89d6e0/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pEONyZeLFfJNLAG8enF7uEJddG5hL70KVQuIsgM90uo',
+        contentType: 'application/json',
+        accept: 'application/json;odata=verbose',
+        success: function (response1, status1, xhr1){
+            let _menu_items = [];
+            response1.value.forEach(function(menu_item){
+                _menu_items.push({
+                    'id': menu_item.prg_cateringitemdescription,
+                    'name': menu_item.prg_cateringitemdescription,
+                    'price': menu_item.prg_priceperunit,
+                    'min_quantity': menu_item.prg_minimumorderquantity,
+                    'img_url': menu_item.crcfc_img_url,
+                    'unit': menu_item.prg_unit,
+                    'notes': menu_item.prg_notes,
+                    'menu_type_frk': menu_item.prg_menutype,
+                    'menu_section': menu_item.prg_menusection,
+                })
+            })
+            //_menu_items.forEach((v) => console.log(v));
+            $.ajax({
+                type: 'POST',
+                url: 'https://prod-00.australiasoutheast.logic.azure.com:443/workflows/0f48026bd06a4dccb978cdb25c138528/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=NLP_gSS9EekQLAyCuYFQL5h_v22E5rprksKLL69ubdA',
+                contentType: 'application/json',
+                accept: 'application/json;odata=verbose',
+                success: function (response, status, xhr){
+                    const _keyMap = {  crcfc_is_regular_menu: 'is_regular_menu', 
+                                        crcfc_is_emergency: 'is_emergency',
+                                        prg_cateringmenuid: 'id',
+                                        prg_menutype: 'name',
+                                        crcfc_html_name: 'html_name',
+                                        crcfc_title: 'title',
+                                        crcfc_subtitle: 'sub-title',
+                                        crcfc_corresponding_url: 'url',
+                                        crcfc_img_url: 'img_url',
+                                        crcfc_svg_icon_url: 'icon_url',
+                                    };
+                    let _menu_types = response.value.map(menu_type => 
+                                            Object.fromEntries(
+                                                Object.entries(menu_type).map(([key, value]) => 
+                                                                                [_keyMap[key] || key, value])
+                                            ));
+                    _menu_types.forEach(function(menu_type){
+                        menu_type['quick_card_menu'] = _menu_items.filter(menu_item => String(menu_item.menu_type_frk).trim() == String(menu_type.name).trim());
+                    });                          
 
-    _render_weekly_menu(WEEKLY_MENU_JSON);
-    _render_regular_menus(REGULAR_MENU_JSON);
-    _render_regular_menus(PRIORITY_MENU_JSON);
+                    let _weekly_menus = _menu_types.filter(menu_type => !menu_type['is_regular_menu'] && !menu_type['is_emergency']);
+                    _weekly_menus.sort((a, b) => a.name.localeCompare(b.name));
+                    let _regular_menus = _menu_types.filter(menu_type => menu_type['is_regular_menu'] && !menu_type['is_emergency']);
+                    _regular_menus.sort((a, b) => a.name.localeCompare(b.name));
+                    let _priority_menus = _menu_types.filter(menu_type => !menu_type['is_regular_menu'] && menu_type['is_emergency']);
+                    _priority_menus.sort((a, b) => a.name.localeCompare(b.name));
+
+                    _render_weekly_menu(_weekly_menus[_query_nth_week_of_the_month()]);
+                    _render_regular_menus(_regular_menus);
+                    _render_regular_menus(_priority_menus);
+
+                    _quick_ui_styling();
+                    // render document animations
+                    _render_animation();
+                    // render shopping cart
+                    _process_num_cart_items();
+
+                },
+            });
+        }
+    });
 }
-
-// Animation control
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {entry.isIntersecting ? entry.target.classList.add('show') : entry.target.classList.remove('show');});
-});
-// End of animation controls
 
 $(document).ready(function () {
-    //const today_date = _day + '/' + _month + '/' + _year;
-    /*_retrieve_resources().then(
-        (args) => _render_body_content(args)
-    );*/
-    _render_body_content(_retrieve_resources());
-
-    // render document animations
-    document.querySelectorAll('.hidden').forEach((elem) => {observer.observe(elem);});
-
-    // styling minor elements
-    $('.input-err-msg').css('color', 'transparent');
-    // rotate each next nav arrow icon 180º i.e make it point to the right
-    $('div[name=card-menu-swiper]').each(function() {$(this).children().eq(1).children().eq(0).css('transform', 'rotate(180deg)');});
-    // adjust each menu item's title/name a bold font weight
-    $('.menu-item-desc').each(() => $(this).children().eq(0).css('font-weight', 'bold'));
-
+    _render_body_content();
     $(document).on('keyup', 'input[name=item-quantity-input]', function (e) {
         !DIGIT_REGEX.test($(this).val()) ? $(this).val(null) : null;
 
@@ -687,27 +439,6 @@ $(document).ready(function () {
         _input_div.children().eq(0).val(null);
         MY_CART.forEach((cart_item) => {console.log(cart_item)});
         alert(`${_selected_quantity} of ${_item_name} has been added to your shopping cart`);
+        _process_num_cart_items();
     });
-    /*const _item_cards_container = [...document.querySelectorAll('[name=consumable-item-container-menu]')];
-    const _item_card_prev_btn = [...document.querySelectorAll('[name=consumable-swipe-prev-btn]')];
-    const _item_card_nxt_btn = [...document.querySelectorAll('[name=consumable-swipe-next-btn]')];
-    _item_cards_container.forEach((card_item, index) => {
-        let _container_dimension = card_item.getBoundingClientRect();
-        let _sub_card_width = _container_dimension.width * CARD_CHILDREN_WIDTH_FACTOR;
-        let _prev_arrow = $('button[name=consumable-swipe-prev-btn]').children().eq(0);
-        $('button[name=consumable-swipe-prev-btn]').attr('disabled', true);
-        let _next_arrow = $('button[name=consumable-swipe-next-btn]').children().eq(1);
-        const actual_width = card_item.scrollWidth - _container_dimension.width;
-        
-        _item_card_prev_btn[index].addEventListener('click', (e) => {
-            card_item.scrollLeft -= _sub_card_width;
-            console.log(card_item.scrollLeft);
-            _toggle_card_swipe($('button[name=consumable-swipe-next-btn]'), $('button[name=consumable-swipe-prev-btn]'), card_item, actual_width);
-        });
-        _item_card_nxt_btn[index].addEventListener('click', (e) => {
-            card_item.scrollLeft += _sub_card_width;
-            console.log(card_item.scrollLeft);
-            _toggle_card_swipe($('button[name=consumable-swipe-next-btn]'), $('button[name=consumable-swipe-prev-btn]'), card_item, actual_width);
-        });
-    });*/
 });

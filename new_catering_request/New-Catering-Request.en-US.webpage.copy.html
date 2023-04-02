@@ -89,6 +89,24 @@
     'GRAD' -25,
     'opsz' 24
   }
+
+  @media (max-width: 767px) {
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 100,
+      'GRAD' -25,
+      'opsz' 24
+    }
+
+  .material-symbols-outlined.bold.small{
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 300,
+      'GRAD' -25,
+      'opsz' 24
+    }
+  }
   </style>
 <!--/head-->
 
@@ -121,6 +139,7 @@
 <br><br><br>
 <div hidden class='menu-desc'>
 </div>
+
 <section class='menu-offer-section'>
   <div class='menu-grid-display' name='weekly-specials-container'>
     <div class='menu-desc'>
@@ -130,6 +149,17 @@
   </div>
 </section>
 <br><br><br>
+
+<section class='in-page-nav-menu' name='in-page-nav-menu'>
+  <div class='in-page-nav-menu-container'>
+    <!--<a>
+      <div>
+        <img>
+        <h6></h6>
+      </div>
+    </a>-->
+  </div>
+</section><br><br>
 
 <section class='menu-offer-section regular-menu' name='regular-item-menu-section'>
   <!--<div class='quick-menu-display' name='consumable-quick-menu-display'>
@@ -170,6 +200,13 @@
 </section>
 
 <br><br>
+
+<div class='cart-btn-container' id='cart-btn-container' name='shopping-cart-button'>
+  <button>
+    <span class='material-symbols-outlined'>shopping_cart</span>
+  </button>
+    <h6 name='cart-item-num'>0</h6>
+</div>
 
 <script type='text/javascript' src='util_functions.js'></script>
 <script async defer type='text/javascript' src='catering.js'></script>
