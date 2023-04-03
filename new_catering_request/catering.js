@@ -12,15 +12,15 @@ window.addEventListener('resize', function() {
 _queried_selected_cart_btn.addEventListener('mouseup', btn_drag_end);
 _queried_selected_cart_btn.addEventListener('mousemove', btn_drag);*/
 function _drag_element(elem){
-    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    let initial_hrz_pos = 0, initial_vert_pos = 0, curr_hrz_pos = 0, curr_vert_pos = 0;
     elem.onmousedown = dragMouseDown;
 
     function dragMouseDown(e) {
         e = e || window.event;
         e.preventDefault();
         // get the mouse cursor position at startup:
-        pos3 = e.clientX;
-        pos4 = e.clientY;
+        curr_hrz_pos = e.clientX;
+        curr_vert_pos = e.clientY;
         document.onmouseup = closeDragElement;
         // call a function whenever the cursor moves:
         document.onmousemove = elementDrag;
@@ -30,13 +30,17 @@ function _drag_element(elem){
         e = e || window.event;
         e.preventDefault();
         // calculate the new cursor position:
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
+        initial_hrz_pos = curr_hrz_pos - e.clientX;
+        initial_vert_pos = curr_vert_pos - e.clientY;
+        curr_hrz_pos = e.clientX;
+        curr_vert_pos = e.clientY;
         // set the element's new position:
-        elem.style.top = `${_format_new_elem_vert_position(elem.offsetTop - pos2)}px`;
-        elem.style.left = `${_format_new_elem_hrz_position(elem.offsetLeft - pos1)}px`;
+        //elem.style.bottom = _format_new_elem_vert_position(elem.offsetTop - initial_vert_pos);
+        //elem.style.left = _format_new_elem_hrz_position(elem.offsetLeft - initial_hrz_pos);
+        //elem.style.left = `${curr_hrz_pos * 100 / screen_width}vw`;
+        console.log(curr_hrz_pos);
+        elem.style.left = _format_new_elem_hrz_position(curr_hrz_pos);
+        //elem.style.bottom = _format_new_elem_hrz_position(curr_vert_pos);
       }
     
       function closeDragElement() {
@@ -47,25 +51,26 @@ function _drag_element(elem){
 }
 
 function _format_new_elem_vert_position(pos){
-    if (pos < 0){
-        return 0;
-    }else if (pos > screen_height){
-        return screen_height;
+    const _pos_in_vh = pos * 100 / screen_height;
+    if (pos < 1.5){
+        return '1.5vh';
+    }else if (_pos_in_vh > 95){
+        return '95vh';
     }
-    return pos;
+    return `${_pos_in_vh}vh`;
 }
 
 function _format_new_elem_hrz_position(pos){
-    console.log(`${pos > screen_width}`);
-    if (pos < 0){
-        return 0;
-    }else if (pos > screen_width - 100){
-        return screen_width;
+    const _pos_in_vw = pos * 100 / screen_width;
+    if (_pos_in_vw < 1.5){
+        return '1.5vw';
+    }else if (_pos_in_vw > 92.5){
+        return '92.5vw';
     }
-    return pos;
+    return `${_pos_in_vw}vw`;
 }
 
-//_drag_element(document.getElementById('cart-btn-container'));
+_drag_element(document.getElementById('cart-btn-container'));
 
 /*const date = new Date();
 let _day = date.getDate();

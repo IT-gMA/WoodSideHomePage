@@ -513,8 +513,8 @@ section{
 /*Shopping cart button*/
 .cart-btn-container{
     position: fixed !important;
-    bottom: 5px;
-    left: 10px;
+    bottom: 1.5vh;
+    left: 1.5vw;
     cursor: grab !important;
 
     display: grid !important;
@@ -532,7 +532,7 @@ section{
     border-radius: 50% !important;
 
     background-color: #84BD00;
-    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 }
 
 .cart-btn-container button span{
@@ -551,7 +551,7 @@ section{
 
 .cart-btn-container button:focus, .cart-btn-container button:active{
     border: solid #a2cd40 !important;
-    box-shadow: rgba(17, 17, 26, 0.01) 0px 4px 16px, rgba(17, 17, 26, 0.01) 0px 8px 32px;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 24px, rgba(17, 17, 26, 0.05) 0px 16px 56px;
 }
 
 .cart-btn-container h6{
