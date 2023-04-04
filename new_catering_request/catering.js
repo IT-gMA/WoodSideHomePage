@@ -28,6 +28,8 @@ function _drag_element(elem){
       }
     
       function elementDrag(e) {
+        _CART_BUTTON.css('transition', 'none');
+        
         e = e || window.event;
         e.preventDefault();
         // calculate the new cursor position:
