@@ -109,6 +109,10 @@ section{
     max-width: 100% !important;
 }
 
+.loading-spinner div div span{
+    color: #84BD00 !important;
+}
+
 .loading-spinner div h6{
     color: #3D3935 !important;
     text-align: center !important;
@@ -142,10 +146,11 @@ section{
 .weekly-menu-hero-container{
     grid-area: 1 / 1 !important;
     display: grid !important;
-    grid-template-columns: 50% 40% 10%;
+    grid-template-columns: 50% 45% 5%;
     width: 100% !important;
     background-color: #eef7de !important;
     padding: 40px !important;
+    grid-gap: 5px !important;
 }
 
 .notice-container{
