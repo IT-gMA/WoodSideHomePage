@@ -90,6 +90,31 @@ section{
 /*End of animation styling*/
 
 
+/*Loading spinner*/
+.loading-spinner{
+    width: 100vw !important;
+    height: 100vh !important;
+
+    z-index: 11 !important;
+}
+
+.loading-spinner div{
+    justify-content: center !important;
+    align-items: center !important;
+
+    transform: translateY(50%) !important;
+}
+
+.loading-spinner div img{
+    max-width: 100% !important;
+}
+
+.loading-spinner div h6{
+    color: #3D3935 !important;
+    text-align: center !important;
+}
+
+
 /*PFM button styling*/
 #explore-menu-btn, .btn.btn-primary{
     background-color: #a2cd40 !important;
@@ -108,11 +133,127 @@ section{
 
 
 /*Thumbnail img cover*/
+.menu-offer-section:nth-child(1){
+    display: grid !important;
+    justify-content: center !important;
+    align-items: baseline !important;
+}
+
+.weekly-menu-hero-container{
+    grid-area: 1 / 1 !important;
+    display: grid !important;
+    grid-template-columns: 50% 40% 10%;
+    width: 100% !important;
+    background-color: #eef7de !important;
+    padding: 40px !important;
+}
+
+.notice-container{
+    grid-area: 1 / 1 !important;
+    z-index: 4 !important;
+    width: max-content !important;
+    
+    background-color: white;
+    transform: translateY(-60%);
+
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 3px 3px 0px;
+
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+
+    padding: 10px !important;
+}
+
+.weekly-menu-hero-img img, .notice-container div img{
+    max-width: 100% !important;
+}
+
+.weekly-menu-hero-title{
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+
+    padding: 10% 20% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+
+    color: #315F35 !important;
+}
+
+.weekly-menu-hero-title h1{
+    font-weight: 300 !important;
+}
+
+.hero-section-action-btn-container{
+    position: relative !important;
+    width: max-content !important;
+
+    display: grid !important;
+    grid-template-columns: 45% 45% !important;
+    align-items: center !important;
+    justify-content: center !important;
+    grid-gap: 30px !important;
+}
+
+.hero-section-action-btn-container a{
+    max-width: 150px !important;
+    min-width: 110px !important;
+}
+
+.hero-section-action-btn-container a div{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    background-color: transparent;
+    border: solid #84BD00;
+    border-width: 3px !important;
+    border-radius: 5px !important;
+
+    padding: 10px 30px !important;
+}
+
+.hero-section-action-btn-container a div:hover{
+    background-color: #c2de80;
+    border: solid #315F35;
+}
+
+.hero-section-action-btn-container a div h5, .hero-section-action-btn-container a div h6{
+    color: #315F35 !important;
+}
+
+.hero-section-action-btn-container a div h6{
+    font-weight: 300 !important;
+    font-size: x-small !important;
+}
+
+.notice-container div{
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: left !important;
+
+    margin-right: 20px !important;
+    /*min-width: 250px;*/
+}
+
+.notice-container div h6{
+    font-weight: lighter !important;
+    font-size: small !important;
+    margin-left: 3px !important;
+}
+
+
 .menu-offer-section{
     cursor: pointer !important;
 }
 
-.menu-offer-section .menu-grid-display{
+.menu-offer-section .menu-grid-display, .loading-spinner div{
     display: grid !important;
 }
 
@@ -456,8 +597,7 @@ section{
 }
 
 .in-page-nav-menu-container{
-    /*width: 80% !important;*/
-    
+    width: max-content !important;
     border: solid white !important;
     border-radius: 20px !important;
     box-shadow: rgba(0, 0, 0, 0.1) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
@@ -465,9 +605,9 @@ section{
     display: grid !important;
     justify-content: center !important;
     align-items: center !important;
-    
     grid-row-gap: 10% !important;
-    grid-template-columns: 20% 20% 20% 20% 20% !important;
+    
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr !important;
     padding: 30px 10px !important;
 }
 
@@ -475,38 +615,35 @@ section{
     text-decoration: none !important;
 }
 
-.in-page-nav-menu-container div{
+.in-page-nav-menu-container a div{
     display: grid !important;
     max-width: 150px !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 10px !important;
+    padding: 5px 15px !important;
 
-    border: solid transparent !important;
+    /*border: solid transparent !important;
     border-width: .1px !important;
-    border-radius: 50% !important;
+    border-radius: 50% !important;*/
     
     text-align: center !important;
 }
 
-.in-page-nav-menu-container img{
+.in-page-nav-menu-container a div img{
     max-width: 100% !important;
     aspect-ratio: 1/1 !important;
 }
 
-.in-page-nav-menu-container h6{
+.in-page-nav-menu-container a div h6{
     padding-top: 5px !important;
     text-decoration: none !important;
     color: #3D3935 !important;
     font-size: 0.6em !important;
 }
 
-.in-page-nav-menu-container div:hover > *{
+.in-page-nav-menu-container a div:hover > *{
     text-decoration: underline !important;
-}
-
-.in-page-nav-menu-container a:hover > div{
-    background-color: rgba(233, 233, 233, 0.5) !important;
+    color: #84BD00 !important;
 }
 
 
@@ -589,6 +726,53 @@ section{
         font-size: x-small !important;
     }
     /*Weekly menu section*/
+    .weekly-menu-hero-container{
+        grid-template-columns: 50% 50%;
+        width: 100% !important;
+        padding: 2px !important;
+    }
+
+    .hero-section-action-btn-container{
+        grid-template-columns: 100% !important;
+        grid-gap: 15px !important;
+    }
+
+    .hero-section-action-btn-container a{
+        max-width: 110px !important;
+        min-width: 110px !important;
+    }
+
+    .hero-section-action-btn-container a div{
+        border-width: 2px !important;
+        padding: 10px 15px !important;
+    }
+
+    .hero-section-action-btn-container a div h5{
+        font-size: medium !important;
+    }
+
+    .hero-section-action-btn-container a div h6{
+        font-size: small !important;
+    }
+
+    .notice-container{
+        width: 100% !important;
+        transform: translateY(0%) !important;
+        box-shadow: none !important;
+    }
+
+    .notice-container div{
+        margin-right: 15px !important;
+    }
+
+    .notice-container div img{
+        max-width: 70px !important;
+    }
+
+    .notice-container div h6{
+        font-size: smaller !important;
+    }
+
     .background-img-container{
         overflow: visible !important;
     }
@@ -702,12 +886,30 @@ section{
 
     /*In page nav menu*/
     .in-page-nav-menu-container{
-        grid-template-columns: 25% 25% 25% 25% !important;
-        grid-row-gap: 5% !important;
+        width: 98% !important;
+        grid-template-columns: 1fr 1fr !important;
+        height: max-content !important;
+        grid-row-gap: 10px !important;
     }
 
-    .in-page-nav-menu-container div{
-        max-width: 100px !important;
+    .in-page-nav-menu-container a div{
+        max-width: 100% !important;
+
+        display: flex !important;
+        flex-direction: row !important;
+
+        text-align: left !important;
+        justify-content: flex-start !important;
+        padding: 0 5% !important;
+    }
+
+    .in-page-nav-menu-container a div img{
+        max-width: 70px !important;
+    }
+
+    .in-page-nav-menu-container a div h6{
+        font-size: medium !important;
+        margin-left: 15px !important;
     }
 
 
@@ -732,6 +934,64 @@ section{
 
 
   @media (max-width: 450px) {
+    /*Weekly menu section*/
+    .weekly-menu-hero-container{
+        grid-template-columns: 35% 65%;
+        width: 100% !important;
+        padding: 2px !important;
+    }
+
+    .weekly-menu-hero-title h1{
+        font-size: large !important;
+    }
+
+    .weekly-menu-hero-title{
+        padding: 10% 5% !important;
+    }
+
+    .weekly-menu-hero-img img{
+        aspect-ratio: 1 / 1 !important;
+        transform: translate(10%) !important;
+    }
+
+    .hero-section-action-btn-container a{
+        max-width: 90px !important;
+        min-width: 90px !important;
+    }
+
+    .hero-section-action-btn-container a div{
+        padding: 2px 10px !important;
+    }
+
+    .hero-section-action-btn-container a div h5{
+        font-size: small !important;
+    }
+
+    .hero-section-action-btn-container a div h6{
+        font-size: xx-small !important;
+    }
+
+    .notice-container{
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+    
+        padding: 10px 40px !important;
+    }
+
+    .notice-container div{
+        margin-right: 0px !important;
+        margin-top: 10px !important;
+    }
+
+    .notice-container div img{
+        max-width: 50px !important;
+    }
+
+    .notice-container div h6{
+        font-size: 0.6em !important;
+    }
+
      /*Card views*/
      .menu-item-container{
         grid-auto-columns: 48% !important;
@@ -739,19 +999,22 @@ section{
 
      /*In page nav menu*/
      .in-page-nav-menu-container{
-        grid-template-columns: 33% 33% 33% !important;
-        grid-row-gap: 5% !important;
-    }
-
-    .in-page-nav-menu-container div{
-        padding: 5px !important;
-        text-align: center !important;
-        max-width: 90px !important;
+        width: 99% !important;
+        grid-template-columns: 1fr !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
     
-    .in-page-nav-menu-container h6{
-        padding-top: 2px !important;
-        font-size: 0.5em !important;
+     .in-page-nav-menu-container a div{
+        padding: 0 5% !important;
+     }
+
+    .in-page-nav-menu-container a div img{
+        max-width: 60px !important;
+    }
+    
+    .in-page-nav-menu-container a div h6{
+        font-size: small !important;
     }
 
     /*Shopping cart button*/

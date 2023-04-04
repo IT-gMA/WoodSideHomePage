@@ -4,6 +4,7 @@ let MY_CART = [];
 let is_cart_btn_dragged = false;
 let screen_width = window.innerWidth;
 let screen_height = window.innerHeight;
+
 window.addEventListener('resize', function() {
     screen_width = window.innerWidth;
     screen_height = window.innerHeight;
@@ -136,6 +137,16 @@ function _render_weekly_menu(weekly_menu_json){
     $('div[name=weekly-specials-container]').find('.menu-desc').append(_foreground_markup);
     const _background_img_img_markup = "<img src='" + weekly_menu_json['img_url'] + "'>"
     $('div[name=weekly-specials-container]').find('.background-img-container').append(_background_img_img_markup);
+
+    $('.weekly-menu-hero-img').append(`<img src='${weekly_menu_json['img_url']}'>`);
+
+    // render in page navigation menu
+    $('.in-page-nav-menu-container').append(`<a href='${weekly_menu_json['url']}'>
+                                                <div>
+                                                    <img src='${weekly_menu_json['icon_url']}'>
+                                                    <h6>${weekly_menu_json['icon_name']}</h6>
+                                                </div>
+                                            </a>`);
 }
 
 function _render_regular_menus(regular_menu_list){
@@ -212,7 +223,7 @@ function _render_regular_menus(regular_menu_list){
         $('.in-page-nav-menu-container').append(`<a href='#quick-menu-${_html_name}'>
                                                     <div>
                                                         <img src='${regular_menu['icon_url']}'>
-                                                        <h6>${_html_name}</h6>
+                                                        <h6>${regular_menu['icon_name']}</h6>
                                                     </div>
                                                 </a>`);
         _item_idx++;
@@ -377,6 +388,7 @@ function _render_body_content(){
                                         crcfc_corresponding_url: 'url',
                                         crcfc_img_url: 'img_url',
                                         crcfc_svg_icon_url: 'icon_url',
+                                        crcfc_icon_name: 'icon_name',
                                     };
                     let _menu_types = response.value.map(menu_type => 
                                             Object.fromEntries(
@@ -404,13 +416,32 @@ function _render_body_content(){
                     // render shopping cart
                     _process_num_cart_items();
 
+                    _ready_page_for_contents();
                 },
             });
         }
     });
 }
 
+function _ready_page_for_contents(){
+    //Unhide on successful resources loading
+    $('.menu-offer-section').show();
+    // Hide loading spinner on successful resources loading
+    $('.loading-spinner').css('display', 'none');
+
+    //Unhide on successful resources loading
+    $('div[name=shopping-cart-button], .in-page-nav-menu').css('opacity', '1');
+}
+
+function _hide_elements_on_load(){
+    // Hidden element before loading resources
+    $('div[name=shopping-cart-button], .in-page-nav-menu').css('opacity', '0');
+    $('.menu-offer-section').hide();
+    //$('.in-page-nav-menu').hide();
+}
+
 $(document).ready(function () {
+    _hide_elements_on_load();
     _render_body_content();
     $(document).on('keyup', 'input[name=item-quantity-input]', function (e) {
         !DIGIT_REGEX.test($(this).val()) ? $(this).val(null) : null;
