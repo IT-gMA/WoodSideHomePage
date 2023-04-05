@@ -409,14 +409,14 @@ section{
 .decorative-box{
     background-color: var(--clr-green-primary-100) !important;
     width: 48%;
-    height: 85%;
+    height: 100%;
     z-index: 0 !important;
-    margin-top: 15% !important;
+    margin-top: 5% !important;
     opacity: .5 !important;
 }
 
 .advertised-content-container-header{
-    padding: 10% !important;
+    padding: 0 10% !important;
 
     display: grid !important;
     grid-template-columns: var(--grid-row-two-per-row) !important;
