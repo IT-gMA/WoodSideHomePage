@@ -477,6 +477,7 @@ section{
 
 .advertised-content .img-caption p{
     line-height: 2em !important;
+    max-width: 800px !important;
 }
 
 .advertised-content .img-caption p span{
