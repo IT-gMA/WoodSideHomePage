@@ -9,9 +9,7 @@ window.addEventListener('resize', function() {
     screen_width = window.innerWidth;
     screen_height = window.innerHeight;
   });
-/*_queried_selected_cart_btn.addEventListener('mousedown', btn_drag_start);
-_queried_selected_cart_btn.addEventListener('mouseup', btn_drag_end);
-_queried_selected_cart_btn.addEventListener('mousemove', btn_drag);*/
+  
 function _drag_element(elem){
     let initial_hrz_pos = 0, initial_vert_pos = 0, curr_hrz_pos = 0, curr_vert_pos = 0;
     elem.onmousedown = dragMouseDown;
@@ -29,7 +27,6 @@ function _drag_element(elem){
     
       function elementDrag(e) {
         _CART_BUTTON.css('transition', 'none');
-        
         e = e || window.event;
         e.preventDefault();
         // calculate the new cursor position:
@@ -101,18 +98,19 @@ function _toggle_card_swipe(nxt_btn, prev_btn, card_item, actual_width){
     nxt_btn.attr('disabled', card_item.scrollLeft >= actual_width - 10);
 }
 
-function _render_card_swipe_btns(preview_item_card_menu_prev_btn_attr, preview_item_card_menu_nxt_btn_attr, prev_btn, nxt_btn ,preview_item_card_menu_div_attr){
-    const _item_cards_container = [...document.querySelectorAll(preview_item_card_menu_div_attr)];
-    const _item_card_prev_btn = [...document.querySelectorAll(preview_item_card_menu_prev_btn_attr)];
-    const _item_card_nxt_btn = [...document.querySelectorAll(preview_item_card_menu_nxt_btn_attr)];
+function _render_card_swipe_btns(preview_item_card_menu_prev_btn_attr, preview_item_card_menu_nxt_btn_attr, prev_btn, nxt_btn ,preview_item_card_menu_div_attr, scroll_factor=null){
+    const _item_cards_container = document.querySelectorAll(preview_item_card_menu_div_attr);
+    const _item_card_prev_btn = document.querySelectorAll(preview_item_card_menu_prev_btn_attr);
+    const _item_card_nxt_btn = document.querySelectorAll(preview_item_card_menu_nxt_btn_attr);
     _item_cards_container.forEach((card_item, index) => {
         let _container_dimension = card_item.getBoundingClientRect();
-        let _sub_card_width = _container_dimension.width * CARD_CHILDREN_WIDTH_FACTOR;
+        let _sub_card_width = _container_dimension.width * (typeof scroll_factor == 'number' ? scroll_factor : CARD_CHILDREN_WIDTH_FACTOR);
         let _prev_arrow = prev_btn.children().eq(0);
         prev_btn.attr('disabled', true);
         let _next_arrow = nxt_btn.children().eq(1);
         const actual_width = card_item.scrollWidth - _container_dimension.width;
         
+        console.log(_item_card_prev_btn[index]);
         _item_card_prev_btn[index].addEventListener('click', (e) => {
             // scroll left i.e decreasing the scroll width
             card_item.scrollLeft -= _sub_card_width;
@@ -141,9 +139,11 @@ function _render_weekly_menu(weekly_menu_json){
     $('div[name=weekly-specials-container]').find('.background-img-container').append(_background_img_img_markup);
 
     $('.weekly-menu-hero-img').append(`<img src='${weekly_menu_json['img_url']}'>`);
+    $('.weekly-menu-hero-title').find('h1').empty();
+    $('.weekly-menu-hero-title').find('h1').append(weekly_menu_json['title']);
 
     // render in page navigation menu
-    $('.in-page-nav-menu-container').append(`<a href='${weekly_menu_json['url']}'>
+    $('div[name=in-page-nav-menu-container]').append(`<a href='${weekly_menu_json['url']}'>
                                                 <div>
                                                     <img src='${weekly_menu_json['icon_url']}'>
                                                     <h6>${weekly_menu_json['icon_name']}</h6>
@@ -222,7 +222,7 @@ function _render_regular_menus(regular_menu_list){
         _render_card_swipe_btns(_preview_item_card_menu_prev_btn_attr, _preview_item_card_menu_nxt_btn_attr, _preview_item_card_menu_prev_btn, _preview_item_card_menu_nxt_btn, _preview_item_card_menu_div_attr);
 
         // render in page navigation menu
-        $('.in-page-nav-menu-container').append(`<a href='#quick-menu-${_html_name}'>
+        $('div[name=in-page-nav-menu-container]').append(`<a href='#quick-menu-${_html_name}'>
                                                     <div>
                                                         <img src='${regular_menu['icon_url']}'>
                                                         <h6>${regular_menu['icon_name']}</h6>
@@ -419,6 +419,10 @@ function _render_body_content(){
                     _process_num_cart_items();
 
                     _ready_page_for_contents();
+                    
+                    document.querySelectorAll('[name=top-nav-prev]').forEach((e) => {console.log(e)});
+
+                    _render_card_swipe_btns('[name=top-nav-prev]', '[name=top-nav-nxt]', $('span[name=top-nav-prev]'), $('span[name=top-nav-nxt]'), '[name=in-page-nav-menu-container]', 0.2);
                 },
             });
         }
@@ -427,18 +431,22 @@ function _render_body_content(){
 
 function _ready_page_for_contents(){
     //Unhide on successful resources loading
-    $('.menu-offer-section').show();
+    $('.menu-offer-section').each(function(e){
+        $(this).show();
+    });
     // Hide loading spinner on successful resources loading
     $('.loading-spinner').css('display', 'none');
 
     //Unhide on successful resources loading
-    $('div[name=shopping-cart-button], .in-page-nav-menu').css('opacity', '1');
+    $('div[name=shopping-cart-button], .in-page-nav-menu, .in-page-top-nav-menu, .notice-container, .menu-offer-section').css('opacity', '1');
 }
 
 function _hide_elements_on_load(){
     // Hidden element before loading resources
-    $('div[name=shopping-cart-button], .in-page-nav-menu').css('opacity', '0');
-    $('.menu-offer-section').hide();
+    $('div[name=shopping-cart-button], .in-page-nav-menu, .in-page-top-nav-menu, .notice-container, .menu-offer-section').css('opacity', '0');
+    $('.menu-offer-section').each(function(e){
+        $(this).hide();
+    });
     //$('.in-page-nav-menu').hide();
 }
 
