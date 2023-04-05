@@ -475,8 +475,9 @@ section{
 }
 
 .advertised-content .img-caption p{
-    line-height: 2em !important;
-    max-width: 800px !important;
+    line-height: 2.4em !important;
+    max-width: 1500px !important;
+    font-size: large !important;
 }
 
 .advertised-content .img-caption p span{
