@@ -1040,12 +1040,11 @@ section{
     }
 
     .advertised-content-container-header{
-        width: 100% !important;
-        padding: 2rem !important;
-
         display: grid !important;
         grid-template-columns: var(--grid-row-two-per-row) !important;
         gap: 2rem !important;
+
+        padding: 10% !important;
     }
 
     .advertised-content{
