@@ -28,7 +28,7 @@ button, a, input, i{
 }
 
 #homepage-hero-img{
-    background-image: url('resources/hero-page-gif.gif') !important;
+    background-image: url('https://i.ibb.co/Jdf9b64/hero-page-gif.gif') !important;
     background-size: cover !important;
     height: 80% !important;
     min-height: 550px !important;
@@ -202,8 +202,8 @@ button, a, input, i{
     color: #a2cd40;
 }*/
 
-.nav-container:hover > *{
-    color: #a2cd40;
+.nav-container:hover > h6{
+    color: #a2cd40 !important;
 }
 
 .nav-section-container{
