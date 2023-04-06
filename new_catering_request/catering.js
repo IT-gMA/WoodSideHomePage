@@ -477,6 +477,9 @@ $(document).ready(function () {
         }else{
             _curr_quantity = parseInt(_input_field.val());
             _this_name_attr == 'add-quantity-btn' ? _curr_quantity++ :  _curr_quantity < _min_quantity ?  _curr_quantity = null : _curr_quantity -= 1;
+            if ( _this_name_attr == 'add-quantity-btn' && _curr_quantity < _min_quantity){
+                _curr_quantity = _min_quantity;
+            }
             _input_field.val(_curr_quantity);
             _input_field.parent().parent().children().eq(1).css('color', `${_curr_quantity >= _min_quantity || _curr_quantity == null ?  'transparent' : 'red'}`);
         }
