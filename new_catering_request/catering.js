@@ -476,9 +476,9 @@ $(document).ready(function () {
             _curr_quantity = parseInt(_input_field.val());
         }else{
             _curr_quantity = parseInt(_input_field.val());
-            _this_name_attr == 'add-quantity-btn' ? _curr_quantity++ :  _curr_quantity <= 0 ?  _curr_quantity = 0 : _curr_quantity -= 1;
+            _this_name_attr == 'add-quantity-btn' ? _curr_quantity++ :  _curr_quantity < _min_quantity ?  _curr_quantity = null : _curr_quantity -= 1;
             _input_field.val(_curr_quantity);
-            _input_field.parent().parent().children().eq(1).css('color', `${_curr_quantity >= _min_quantity ?  'transparent' : 'red'}`);
+            _input_field.parent().parent().children().eq(1).css('color', `${_curr_quantity >= _min_quantity || _curr_quantity == null ?  'transparent' : 'red'}`);
         }
         _valid_digit = is_valid_digit(_input_field.val());
         disable_individual_btn($(this).parent().parent().parent().parent().children().eq(4), _valid_digit && parseInt(_input_field.val()) >= _min_quantity);
