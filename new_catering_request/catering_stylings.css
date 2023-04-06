@@ -18,6 +18,11 @@
     --border-solid-dark-green: solid var(--clr-dark-green) !important;
     --border-solid-charcoal: solid var(--clr-programmed-charcoal-400) !important;
 
+    --border-solid-charcoal-thin: .5px solid var(--clr-programmed-charcoal-400) !important;
+    --border-solid-primary-thin: .5px solid var(--clr-green-primary-400) !important;
+    --border-solid-primary-200-thin: .5px solid var(--clr-green-primary-200) !important;
+    
+
     --grid-row-four-per-row: 1fr 1fr 1fr 1fr !important;
     --grid-row-three-per-row: 1fr 1fr 1fr !important;
     --grid-row-two-per-row: 1fr 1fr !important;
@@ -579,12 +584,19 @@ section{
     justify-content: center;
 }
 
-.item-input-container div{
-    margin: 0px 5%;
+.item-input-container div, .item-input-container div div{
     display: flex !important;
-    flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
+}
+
+.item-input-container div div{
+    flex-direction: row !important;
+}
+
+.item-input-container div{
+    margin: 0px 3%;
+    flex-direction: column !important;
 }
 
 .item-input-container div i{
@@ -593,6 +605,27 @@ section{
     font-size: 0.75em;
     font-weight: lighter !important;
     opacity: 0.8 !important;
+}
+
+.item-input-container div div .material-symbols-outlined.circular{
+    position: relative !important;
+    font-size: 1em !important;
+}
+
+.material-symbols-outlined.circular{
+    cursor: pointer !important;
+    padding: auto !important;
+    border: var(--border-solid-charcoal-thin) !important;
+    border-radius: 50% !important;
+}
+
+.material-symbols-outlined.circular:hover{
+    color: var(--clr-green-primary-200) !important;
+    border: var(--border-solid-primary-200-thin) !important;
+}
+.material-symbols-outlined.circular:active{
+    color: var(--clr-green-primary-400) !important;
+    border: var(--border-solid-primary-thin) !important;
 }
 
 .item-input-container input:active, .item-input-container input:focus, .item-input-container input::after{
@@ -604,8 +637,9 @@ section{
 }
 
 .item-input-container input{
-    width: 90% !important;
-    padding-left: 12px;
+    width: 70% !important;
+    margin: 0 5% !important;
+    padding-left: .7em !important;
     box-shadow: none !important;
     outline: none !important;
 
@@ -1096,7 +1130,7 @@ section{
     }
 
     .item-input-container div{
-        margin: 0px 5px !important;
+        margin: 0px 1.5% !important;
     }
 
     .item-input-container div i{
@@ -1104,9 +1138,14 @@ section{
         font-size: 0.5em;
     }
 
+    .item-input-container div div .material-symbols-outlined.circular{
+        position: relative !important;
+        font-size: .8em !important;
+    }
+
     .item-input-container input{
-        width: 95% !important;
-        padding-left: 6px;
+        width: 80% !important;
+        padding-left: .6em !important;
         border-radius: 10px !important;
     
         font-size: 0.6em;
@@ -1332,5 +1371,18 @@ section{
 
         transform: translate(100%, -50%) !important;
         font-size: 0.5em !important;
+    }
+  }
+
+  @media (max-width: 350px) {
+    /*Menu item input styling*/
+    .item-input-container div div .material-symbols-outlined.circular{
+        font-size: .65em !important;
+    }
+
+    .item-input-container input{
+        width: 65% !important;
+        margin: 0 2.5% !important;
+        font-size: 0.55em;
     }
   }

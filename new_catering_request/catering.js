@@ -52,22 +52,12 @@ function _drag_element(elem){
 
 function _format_new_elem_vert_position(pos){
     const _pos_in_vh = pos * 100 / screen_height;
-    if (pos < 1.5){
-        return '1.5vh';
-    }else if (_pos_in_vh > 95){
-        return '95vh';
-    }
-    return `${_pos_in_vh}vh`;
+    return pos < 1.5 ? '1.5vh' : _pos_in_vh > 95 ? '95vh' : `${_pos_in_vh}vh`;
 }
 
 function _format_new_elem_hrz_position(pos){
     const _pos_in_vw = pos * 100 / screen_width;
-    if (_pos_in_vw < 1.5){
-        return '1.5vw';
-    }else if (_pos_in_vw > 92.5){
-        return '92.5vw';
-    }
-    return `${_pos_in_vw}vw`;
+    return _pos_in_vw < 1.5 ? '1.5vw' : _pos_in_vw > 92.5 ? '92.5vw' : `${_pos_in_vw}vw`;
 }
 
 _drag_element(document.getElementById('cart-btn-container'));
@@ -81,13 +71,7 @@ function _query_nth_week_of_the_month(){
     const today = new Date();
     const nth_week = parseInt(Math.ceil(today.getDate() / 7) - 1);
     //console.log(`Today is in week ${nth_week - 1} of the month.`);
-    if (nth_week < 1){
-        return 0;
-    }
-    if (nth_week > 3){
-        return 3;
-    }
-    return nth_week;
+    return nth_week < 1 ? 0 : nth_week > 3 ? 3 : nth_week;
 }
 
 function _toggle_card_swipe(nxt_btn, prev_btn, card_item, actual_width){
@@ -109,8 +93,7 @@ function _render_card_swipe_btns(preview_item_card_menu_prev_btn_attr, preview_i
         prev_btn.attr('disabled', true);
         let _next_arrow = nxt_btn.children().eq(1);
         const actual_width = card_item.scrollWidth - _container_dimension.width;
-        
-        console.log(_item_card_prev_btn[index]);
+
         _item_card_prev_btn[index].addEventListener('click', (e) => {
             // scroll left i.e decreasing the scroll width
             card_item.scrollLeft -= _sub_card_width;
@@ -152,7 +135,7 @@ function _render_weekly_menu(weekly_menu_json){
 }
 
 function _render_regular_menus(regular_menu_list){
-    var _item_idx = 0;
+    let _item_idx = 0;
     regular_menu_list.forEach((regular_menu) => {
         if (regular_menu['quick_card_menu'].length < 1){
             return;
@@ -194,7 +177,7 @@ function _render_regular_menus(regular_menu_list){
         const _hz_separating_line = _item_idx % 2 == 0 ? "<hr class='hz-separating-line'>" : "<hr class='hz-separating-line' style='transform: translateX(-30%);'>";
         //console.log(_preview_item_card_container_name_attr);
         // construct main parent container for horizontal grid, nav buttons, separator and 'view-more' button
-        var _markup = `<div class='quick-menu-display' id='quick-menu-${_html_name}' name='${_quick_menu_display_name_attr}'>`;
+        let _markup = `<div class='quick-menu-display' id='quick-menu-${_html_name}' name='${_quick_menu_display_name_attr}'>`;
         // Descriptive texts
         _markup += `<h1>${regular_menu['title']}</h1>
                     <div class='menu-desc-text'>
@@ -234,12 +217,14 @@ function _render_regular_menus(regular_menu_list){
 
 function _build_preview_menu(menu_items, preview_item_card_container_name_attr, preview_item_card_menu_name_attr, menu_type){
     // bottom hidden
-    var _markup = `<div class='menu-item-container bottom hidden snap-inline' name='${preview_item_card_menu_name_attr}'>`;
+    let _markup = `<div class='menu-item-container bottom hidden snap-inline' name='${preview_item_card_menu_name_attr}'>`;
 
     // construct a card container for each item in this menu type
     menu_items.forEach((menu_item) => {
         menu_item['menu_type'] = String(menu_type);
         // for any item that has a metric of unit restriction
+        const _min_quantity = !is_valid_digit(String(menu_item['min_quantity'])) ? 1 : parseInt(menu_item['min_quantity']) > 0 ? menu_item['min_quantity'] : 1;
+
         const _unit_metric_markup = menu_item['unit'] == null || menu_item['unit'] == 'Each' ? '<h6 hidden></h6>' : "<h6 style='font-size: 0.8em; padding: 1px;'>" + menu_item['unit'] + "</h6>";
         const _popup_remark = menu_item['notes'] != null && !is_whitespace(menu_item['notes']) ? 
         `<div class='dropdown dropup'>
@@ -278,11 +263,17 @@ function _build_preview_menu(menu_items, preview_item_card_container_name_attr, 
                         </div>      <!--2-->
                         <div class='item-input-container'>
                             <div>
-                                <input name='item-quantity-input' 
-                                        class='item-quantity-input' 
-                                        placeholder='at least ${menu_item['min_quantity']}'>                <!--0-->
-                                <i class='input-err-msg'>Must be at least ${menu_item['min_quantity']}</i>  <!--1-->
-                                <p hidden name='min-item-quantity'>${menu_item['min_quantity']}</p>         <!--2-->
+                                <div>
+                                    <span class='material-symbols-outlined circular' 
+                                            name='add-quantity-btn'>add</span>                                  <!--0-->                  
+                                    <input name='item-quantity-input' 
+                                            class='item-quantity-input' 
+                                            placeholder='at least ${_min_quantity}'>                <!--1-->
+                                    <span class='material-symbols-outlined circular' 
+                                            name='reduce-quantity-btn'>remove</span>                            <!--2-->
+                                </div>                                                                      <!--0-->
+                                <i class='input-err-msg'>Must be at least ${_min_quantity}</i>  <!--1-->
+                                <p hidden name='min-item-quantity'>${_min_quantity}</p>         <!--2-->
                                 <p hidden name='float-price'>${parseFloat(menu_item['price'])}</p>           <!--3-->
                             </div>
                         </div>      <!--3-->
@@ -321,7 +312,7 @@ function _render_animation(){
 }
 
 function _add_to_cart(item_name, item_id, menu_type, item_price, selected_quantity){
-    var _matched_item = null;
+    let _matched_item = null;
     // check whether this item already exists in the cart
     MY_CART.forEach(function(cart_item){
         if (cart_item['id'] == item_id && cart_item['name'] == item_name && cart_item['price'] == parseFloat(item_price)){
@@ -458,22 +449,48 @@ $(document).ready(function () {
 
         const _valid_digit = is_valid_digit($(this).val());
         console.log(_valid_digit);
-        const _parent_div = $(this).parent();
+        const _parent_div = $(this).parent().parent();
 
         if ($(this).val() && _valid_digit){
-            parseInt($(this).val()) >= parseInt(_parent_div.children().eq(2).text()) ? _parent_div.children().eq(1).css('color', 'transparent') : _parent_div.children().eq(1).css('color', 'red');
+            _parent_div.children().eq(1).css('color', `${parseInt($(this).val()) >= parseInt(_parent_div.children().eq(2).text()) ? 'transparent' : 'red'}`);
         }else{
-            _valid_digit || !$(this).val() ? _parent_div.children().eq(1).css('color', 'transparent') : _parent_div.children().eq(1).css('color', 'red');
+            _parent_div.children().eq(1).css('color', `${_valid_digit || !$(this).val() ? 'transparent' : 'red'}`);
         }
         disable_individual_btn(_parent_div.parent().parent().children().eq(4), _valid_digit && parseInt($(this).val()) >= parseInt(_parent_div.children().eq(2).text()));
+    });
+
+    $(document).on('click', 'span[name=add-quantity-btn], span[name=reduce-quantity-btn]', function(e){
+        const _this_name_attr = String($(this).attr('name'));
+        const _input_field = $(this).parent().children().eq(1);
+        let _valid_digit = is_valid_digit(!_input_field.val() ? 'none' : _input_field.val());
+        if (!_valid_digit){
+            _input_field.val(null);
+        }
+        let _curr_quantity = _input_field.val();
+        const _min_quantity = parseInt($(this).parent().parent().children().eq(2).text());
+        /*console.log(_this_name_attr);
+        console.log(_input_field.val());
+        console.log(_min_quantity);*/
+        if (!_input_field.val()){
+            _this_name_attr == 'add-quantity-btn' ? _input_field.val(_min_quantity) : null;
+            _curr_quantity = parseInt(_input_field.val());
+        }else{
+            _curr_quantity = parseInt(_input_field.val());
+            _this_name_attr == 'add-quantity-btn' ? _curr_quantity++ :  _curr_quantity <= 0 ?  _curr_quantity = 0 : _curr_quantity -= 1;
+            _input_field.val(_curr_quantity);
+            _input_field.parent().parent().children().eq(1).css('color', `${_curr_quantity >= _min_quantity ?  'transparent' : 'red'}`);
+        }
+        _valid_digit = is_valid_digit(_input_field.val());
+        disable_individual_btn($(this).parent().parent().parent().parent().children().eq(4), _valid_digit && parseInt(_input_field.val()) >= _min_quantity);
     });
 
     $(document).on('click', 'button[name=add-to-cart-btn]', function(e) {
         $(this).attr('disabled', true);        
         const _parent_div = $(this).parent();
         const _input_div = _parent_div.children().eq(3).children().eq(0);
+        console.log(_input_div);
 
-        const _selected_quantity = parseInt(_input_div.children().eq(0).val());
+        const _selected_quantity = parseInt(_input_div.find('.item-quantity-input').val());
         const _item_id = _parent_div.children().eq(0).text();
         const _item_name = _parent_div.children().eq(2).children().eq(0).text();
         const _menu_type = _parent_div.children().eq(5).text();
@@ -482,7 +499,7 @@ $(document).ready(function () {
         //console.log(_item_name);
         _add_to_cart(_item_name, _item_id, _menu_type, _item_price, _selected_quantity);
         // clear existing inputs
-        _input_div.children().eq(0).val(null);
+        _input_div.find('.item-quantity-input').val(null);
         MY_CART.forEach((cart_item) => {console.log(cart_item)});
         alert(`${_selected_quantity} of ${_item_name} has been added to your shopping cart`);
         _process_num_cart_items();
