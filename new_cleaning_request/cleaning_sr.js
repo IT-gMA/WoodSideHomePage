@@ -348,9 +348,10 @@ $(document).ready(function(){
             if (!index) return;
 
             $(this).find('.to-be-searched-data').each(function (idx) {
-                let value_found_here = $(this).text().toLowerCase().trim();
-                $(this).closest('tr').toggle(value_found_here.includes(searched_value));
-                return not_found;
+                const value_found_here = $(this).text().toLowerCase().trim();
+                const _is_matched = value_found_here.includes(searched_value);
+                $(this).closest('tr').toggle(_is_matched);
+                return !_is_matched;
             });
         });
     });
