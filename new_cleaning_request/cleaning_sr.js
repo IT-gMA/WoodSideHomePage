@@ -147,7 +147,7 @@ function _render_cleaning_service_type_modal(){
                                                                 <td hidden>${data['service_id']}</td>       <!--3: always for id-->
                                                             </tr>`);
             });
-            $('section[name=site-location-modal-container]').find('[name=save-modal-change-btn]').attr('disabled', selected_cleaning_type == null);
+            $('section[name=cleaning-type-modal-container]').find('[name=save-modal-change-btn]').attr('disabled', selected_cleaning_type == null);
         },
     });
 }
