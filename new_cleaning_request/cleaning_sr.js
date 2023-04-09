@@ -4,6 +4,9 @@ const NUMBER_REGEX = new RegExp("^[0-9.]+$");
 const DIGIT_REGEX = new RegExp("^[0-9]+$");
 const REAL_NUM_REGEX = /^[+-]?\d*\.?\d+$/;
 const EMAIL_REGEX = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+// Business hours
+const EARLIEST = 9;
+const LATEST = 17;
 
 let _is_valid_datetime = false;
 const _datetime_input = $('input[name=datetime-input]');
@@ -33,7 +36,7 @@ function validate_regex(input_string){
     return STRING_REGEX.test(input_string);
 }
 function validate_phonenum(phonenum){
-    phone_num = phonenum.trim();
+    const phone_num = phonenum.trim();
     if (phonenum == '' || phonenum == null){
         return true;
     }
@@ -50,11 +53,15 @@ function format_json_data(response, key_map){
 function convert_to_datetime(dt_str){
     return new Date(String(dt_str));
 }
+
+function _describe_selected_modal_item(modal_body, selected_item){
+    modal_body.find('.selected-item-txt').empty();
+    modal_body.find('.selected-item-txt').append(`Selected: ${selected_item}`);
+    modal_body.find('.selected-item-txt').css('opacity', `${selected_item == null ? '0' : '1'}`);
+}
 // End of util functions
 
 function _render_datetime_input_field(){
-    const EARLIEST = 9;
-    const LATEST = 17;
     let curr_datetime = new Date();
     let two_months_later = new Date();
 
@@ -99,7 +106,7 @@ function _render_datetime_input_field(){
 function _init_modal_resources(modal){
     modal.find('.table-row').remove();
     modal.find('th').remove();
-    modal.find('[name=selected-item-txt]').empty();
+    modal.find('[name=selected-item-txt]').css('opacity', '0');
     modal.find('.loading-spinner').show();
 }
 
@@ -123,7 +130,7 @@ function _render_cleaning_service_type_modal(){
                                 )));
 
             $('section[name=cleaning-type-modal-container]').find('.loading-spinner').hide();
-            $('section[name=cleaning-type-modal-container]').find('[name=selected-item-txt]').append(selected_cleaning_type_name);
+            _describe_selected_modal_item($('section[name=cleaning-type-modal-container]'), selected_cleaning_type_name);
 
             ['', 'Cleaning Service Type'].forEach((data) => {
                 $('table[name=cleaning-type-table]').find('.table-header').append(`<th scope='col'>${data}</th>`);
@@ -165,7 +172,7 @@ function _render_site_location_modal(){
                                 )));
 
             $('section[name=site-location-modal-container]').find('.loading-spinner').hide();
-            $('section[name=site-location-modal-container]').find('[name=selected-item-txt]').append(selected_site_location_name);
+            _describe_selected_modal_item($('section[name=site-location-modal-container]'), selected_site_location_name);
 
             ['', 'Site Location Descriptions', 'Site Location Requested'].forEach((data) => {
                 $('table[name=site-location-table]').find('.table-header').append(`<th scope='col'>${data}</th>`);
@@ -220,16 +227,6 @@ $(document).ready(function(){
     $('span[name=loading-spinner]').parent().parent().remove();
     $('.input-form-section').css('opacity', '1');
 
-    /*$(document).on('keyup change', 'input[name=datetime-input]', function(e){
-        const _selected_datetime_value = convert_to_datetime($(this).val());
-        const _min_dt_attr = convert_to_datetime($(this).attr('min'));
-        const _max_dt_attr = convert_to_datetime($(this).attr('max'));
-        _is_valid_datetime = _min_dt_attr <= _selected_datetime_value <= _max_dt_attr;
-        $(this).parent().parent().find('.input-err-msg').css('color', `${_is_valid_datetime ? 'transparent' : 'red'}`);
-        console.log(_is_valid_datetime);
-        console.log($(this).val());
-    });*/
-
     $('span[name=site-location-content], span[name=cleaning-type-content]').find('.click-to-open-modal').each(function(idx){
         let _modal_dialog = $('section[name=site-location-modal-container]');
         const content_name_attr = $(this).closest('.input-field-container').attr('name');
@@ -239,7 +236,6 @@ $(document).ready(function(){
         $(this).click(function(event){
             console.log(content_name_attr);
             _init_modal_resources(_modal_dialog);
-            
             if (content_name_attr == 'site-location-content'){
                 _modal_dialog.find('[name=save-modal-change-btn]').attr('disabled', $('input[name=site-location-chkbox]:checked').length < 1);
                 _render_site_location_modal();
@@ -301,16 +297,15 @@ $(document).ready(function(){
             const table_row = $(this).parent().parent();
             const _modal_body = $(this).closest('.modal-section');
             if ($(this).attr('name') == 'site-location-chkbox'){
-                selected_site_location = String(table_row.children().eq(3).text());
-                selected_site_location_name = `Selected ${table_row.children().eq(1).text()}`;
+                selected_site_location = table_row.children().eq(3).text();
+                selected_site_location_name = table_row.children().eq(1).text();
                 _modal_body.find('[name=save-modal-change-btn]').attr('disabled', $('input[name=site-location-chkbox]:checked').length < 1);
             }else if ($(this).attr('name') == 'cleaning-type-chkbox'){
-                selected_cleaning_type = String(table_row.children().eq(3).text());
-                selected_cleaning_type_name = `Selected ${table_row.children().eq(1).text()}`;
+                selected_cleaning_type = table_row.children().eq(3).text();
+                selected_cleaning_type_name = table_row.children().eq(1).text();
                 _modal_body.find('[name=save-modal-change-btn]').attr('disabled', $('input[name=cleaning-type-chkbox]:checked').length < 1);
             }
-            _modal_body.find('.selected-item-txt').empty();
-            _modal_body.find('.selected-item-txt').append(`Selected: ${table_row.children().eq(1).text()}`);
+            _describe_selected_modal_item(_modal_body, table_row.children().eq(1).text());
         }
     });
 
@@ -348,16 +343,19 @@ $(document).ready(function(){
     });
 
     $(document).on('keyup', '.search-text-field', function(){
-        let value = $(this).val().toLowerCase().trim();
+        const searched_value = $(this).val().toLowerCase().trim();
         $(this).closest('.modal-body').find('tr').each(function (index) {
             if (!index) return;
 
             $(this).find('.to-be-searched-data').each(function (idx) {
-                var id = $(this).text().toLowerCase().trim();
-                var not_found = !(id.includes(value));
-                $(this).closest('tr').toggle(!not_found);
+                let value_found_here = $(this).text().toLowerCase().trim();
+                $(this).closest('tr').toggle(value_found_here.includes(searched_value));
                 return not_found;
             });
         });
+    });
+
+    $('button[name=submit-form-btn]').click(function(event){
+        const _email_data = $('input[name=email-input]').val();
     });
 });
