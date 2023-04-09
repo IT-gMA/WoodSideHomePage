@@ -20,6 +20,7 @@ let valid_cost_code = false;
 let valid_building = false;
 let valid_cleaning_rq = false;
 let valid_square_meterage = true;
+let valid_datetime = true;
 
 // Util functions
 function validate_varchar(varchar) {
@@ -52,27 +53,47 @@ function convert_to_datetime(dt_str){
 // End of util functions
 
 function _render_datetime_input_field(){
+    const EARLIEST = 9;
+    const LATEST = 17;
     let curr_datetime = new Date();
-    let two_months_later = new Date(curr_datetime.getTime() + (60 * 60 * 24 * 60 * 1000 * 60));
+    let two_months_later = new Date();
 
     // Earliest is 9am
     let min_time = convert_to_datetime(curr_datetime);
-    min_time.setHours(9, 0, 0, 0);
+    if (min_time.getHours() > LATEST){
+        min_time.setDate(min_time.getDate() + 1);
+    }
+    min_time.setHours(EARLIEST, 0, 0, 0);
 
     // Latest time is 9pm
     let max_time = convert_to_datetime(curr_datetime);
-    max_time.setHours(17, 0, 0, 0);
+    max_time.setMonth(max_time.getMonth() + 2);
+    max_time.setHours(LATEST, 0, 0, 0);
+    console.log(`currdate:${curr_datetime}\nmin_time: ${min_time}\nmax_time: ${max_time}`);
 
     _datetime_input.attr('min', min_time.toISOString().slice(0, 16));
-    _datetime_input.attr('max', two_months_later.toISOString().slice(0, 16));
-    /*_datetime_input.on('input', function(){
-        let date_field = $(this).val();
-        let time_field = new Date(date_field).getHours();
-        if (time_field < 9 || time_field >= 17){
-            $(this).val(min_time.toISOString().slice(0, 16));
-            console.log('invalid date time value');
+    _datetime_input.attr('max', max_time.toISOString().slice(0, 16));
+    $(document).on('keyup change', 'input[name=datetime-input]', function(e){
+        if ($(this).val() == null || !$(this).val()){
+            valid_datetime = true;
+        }else{
+            const entered_datetime = convert_to_datetime($(this).val());
+            console.log(entered_datetime.getHours());
+            console.log(entered_datetime > max_time);
+            valid_datetime = !(min_time > entered_datetime || entered_datetime > max_time || entered_datetime.getHours() < EARLIEST || entered_datetime.getHours() > LATEST);
+            $(this).closest('.input-field-container').find('.input-err-msg').css('opacity', `${valid_datetime ? '0' : '1'}`);
+            console.log(`valid_datetime: ${!(min_time > entered_datetime || entered_datetime > max_time)}`);
+            console.log(`valid_hours: ${!(entered_datetime.getHours() < EARLIEST || entered_datetime.getHours() > LATEST)}`);
         }
-    });*/
+        enable_submit_button();
+    });
+
+    $(document).on('click', 'span[name=clear-datetime-input-btn]', function(event){
+        $('input[name=datetime-input]').val(null);
+        valid_datetime = true;
+        $(this).closest('.input-field-container').find('.input-err-msg').css('opacity', `${valid_datetime ? '0' : '1'}`);
+        enable_submit_button();
+    });
 }
 
 function _init_modal_resources(modal){
@@ -189,7 +210,7 @@ function enable_submit_button(){
     console.log(`valid_phonenum ${valid_phonenum}`);
     console.log(`valid_cost_code ${valid_cost_code}`);*/
     $('button[name=submit-form-btn]').attr('disabled', selected_site_location == null || selected_cleaning_type == null ||
-                                                        !valid_building || !valid_cleaning_rq || !valid_square_meterage || 
+                                                        !valid_building || !valid_cleaning_rq || !valid_square_meterage || !valid_datetime ||
                                                         !valid_email || !valid_name || !valid_phonenum || !valid_cost_code);
 }
 
@@ -199,7 +220,7 @@ $(document).ready(function(){
     $('span[name=loading-spinner]').parent().parent().remove();
     $('.input-form-section').css('opacity', '1');
 
-    $(document).on('keyup change', 'input[name=datetime-input]', function(e){
+    /*$(document).on('keyup change', 'input[name=datetime-input]', function(e){
         const _selected_datetime_value = convert_to_datetime($(this).val());
         const _min_dt_attr = convert_to_datetime($(this).attr('min'));
         const _max_dt_attr = convert_to_datetime($(this).attr('max'));
@@ -207,7 +228,7 @@ $(document).ready(function(){
         $(this).parent().parent().find('.input-err-msg').css('color', `${_is_valid_datetime ? 'transparent' : 'red'}`);
         console.log(_is_valid_datetime);
         console.log($(this).val());
-    });
+    });*/
 
     $('span[name=site-location-content], span[name=cleaning-type-content]').find('.click-to-open-modal').each(function(idx){
         let _modal_dialog = $('section[name=site-location-modal-container]');
