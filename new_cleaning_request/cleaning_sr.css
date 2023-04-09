@@ -1,0 +1,596 @@
+:root{
+    --clr-programmed-light-grey: #E9E9E9 !important;
+    --clr-programmed-charcoal-400: #3D3935 !important;
+    --clr-pfm-light-grey-400: #E9E9E9 !important;
+    --clr-green-primary-400: #84BD00 !important;
+    --clr-green-primary-300: #a2cd40 !important;
+    --clr-green-primary-200: #c2de80 !important;
+    --clr-green-primary-100: #e0eebf !important;
+    --clr-dark-green: #315F35 !important;
+    --clr-safety-orange: #F57F25 !important;
+
+    --ff-univers-pro: 'Univers Next Pro', sans-serif !important;
+    --ff-roboto: 'Roboto', sans-serif !important;
+
+    --border-solid-primary: solid var(--clr-green-primary-400) !important;
+    --border-solid-primary-300: solid var(--clr-green-primary-300) !important;
+    --border-solid-primary-200: solid var(--clr-green-primary-200) !important;
+    --border-solid-dark-green: solid var(--clr-dark-green) !important;
+    --border-solid-charcoal: solid var(--clr-programmed-charcoal-400) !important;
+    --border-solid-light-grey: solid var(--clr-programmed-light-grey) !important;
+
+    --border-solid-charcoal-thin: .5px solid var(--clr-programmed-charcoal-400) !important;
+    --border-solid-primary-thin: .5px solid var(--clr-green-primary-400) !important;
+    --border-solid-primary-200-thin: .5px solid var(--clr-green-primary-200) !important;
+    
+
+    --grid-row-four-per-row: 1fr 1fr 1fr 1fr !important;
+    --grid-row-three-per-row: 1fr 1fr 1fr !important;
+    --grid-row-two-per-row: 1fr 1fr !important;
+    --grid-row-one-per-row: 1fr !important;
+
+    --flip-hrzly: rotate(180deg) !important;  
+    
+    --top-rounded-border-radius: 12.5px 12.5px 0 0 !important;
+    --bottom-rounded-border-radius: 0px 0 12.5px 12.5px !important;
+    --left-rounded-border-radius: 12.5px 0 12.5px 0px !important;
+    --right-rounded-border-radius: 0px 12.5px 12.5px 0px !important;
+}
+
+.flip-hrzly{
+    transform: var(--flip-hrzly) !important;
+}
+
+html,body{ scroll-behavior: smooth !important}
+/* Font styling*/
+h1, h2, h3{
+    font-family: var(--ff-univers-pro) !important;
+    color: var(--clr-programmed-charcoal-400) !important;
+}
+
+h1{
+    font-size: x-large;
+}
+
+h2, h3{
+    font-size: larger;
+}
+
+h4, h5, h6, p, label{
+    font-family: var(--ff-roboto);
+    font-size: medium;
+    color: var(--clr-programmed-charcoal-400) !important;
+}
+
+button, a, input, i{
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+/* End font styling*/
+
+/*Button element styling*/
+.btn.btn-primary{
+    background-color: var(--clr-green-primary-300) !important;
+    border: solid transparent !important;
+    border-radius: 20px !important;
+    padding: 5px 20px;
+    border-width: 3px !important;
+}
+.btn.btn-primary:hover{
+    border: var(--border-solid-primary-200) !important;
+    border-width: 3px !important;
+    background-color: var(--clr-green-primary-400) !important;
+}
+.btn.btn-primary:active{
+    border: var(--border-solid-primary) !important;
+    border-width: 3px !important;
+    background-color: var(--clr-green-primary-300) !important;
+}
+/*End of button styling*/
+
+body{
+    background-color: white !important;
+}
+
+.modal-section, section, .form-content-container, .modal-section .modal-content, .modal-section .modal-content .modal-footer, .loading-spinner div{
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.modal-section{
+    position: fixed !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    display: none;
+    overflow: scroll !important;
+
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    color: var(--clr-programmed-charcoal-400) !important;
+
+    width: 100vw !important;
+    height: 100vh !important;
+}
+
+.input-form-section, .form-content-container, .modal-section .modal-content, .modal-section .modal-content .modal-footer, .loading-spinner div{
+    display: flex !important;
+}
+
+form, .form-header, .form-container{
+    align-items: flex-start !important;
+    justify-content: center !important;
+}
+
+.form-content-container .form-container .overflow{
+    order: 1 !important;
+}
+.form-content-container .form-container .img-container {
+    order: 2 !important;
+}
+
+.form-content-container{
+    max-width: 1400px !important;
+}
+
+
+.form-header, .form-content-container{
+    width: 100% !important;
+    position: relative !important;
+    flex-direction: column !important;
+}
+
+.input-form-section{
+    margin-top: 40px !important;
+}
+
+.form-header, .form-container{
+    width: 80% !important;
+}
+
+form .form-component{
+    width: 100% !important;
+}
+
+.form-container{
+    position: relative !important;
+    display: grid !important;
+    grid-template-columns: 80% 20%;
+
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06) !important;
+    border-radius: 12.5px !important;
+    background-color: transparent !important;
+
+    background-color: white !important;
+    height: max-content !important;
+
+    cursor: pointer !important;
+}
+
+form, .form-header{
+    padding: 1em !important;
+    color: var(--clr-programmed-charcoal-400) !important;
+    text-align: left !important;
+}
+
+form{
+    position: absolute !important;
+    background-color: transparent;
+    max-height: 99% !important;
+    overflow-y: scroll !important;
+    width: 79.5% !important;
+}
+
+.form-container .overflow{
+    padding: 5px 0 5px 5px !important;
+    border-radius: var(--left-rounded-border-radius) !important;
+    width: 100% !important;
+}
+
+/*Form field styling*/
+.form-component label{
+    font-weight: lighter !important;
+    padding-left: .5em !important;
+}
+
+.input-field-container .input-err-msg{
+    color: red !important;
+    font-weight: lighter !important;
+    opacity: 0;
+    font-size: smaller !important;
+    text-align: center !important;
+    text-align: left !important;
+}
+
+.form-component label span{
+    color: red !important;
+    font-size: 0.8em !important;
+    font-weight: 100 !important;
+}
+
+.form-component .input-field-content, .search-filter-container{
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 65% auto auto !important;
+    grid-gap: 2rem !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+}
+
+.form-component input, .form-component textarea{
+    border: var(--border-solid-light-grey) !important;
+    border-width: .1rem !important;
+    color: var(--border-solid-charcoal) !important;
+    font-size: small !important;
+    padding: .4em 0 .4em .6em !important;
+    box-shadow: none !important;
+    outline: none !important;
+    color: var(--border-solid-charcoal) !important;
+}
+
+.form-component textarea{
+   border-radius: .8em !important;
+}
+.form-component input{
+   border-radius: 1em !important;
+}
+
+.form-component input:hover, .form-component textarea:hover, .search-bar-container:hover{
+    border: var(--border-solid-primary-200) !important;
+    border-width: .1rem !important;
+}
+
+.form-component input:active, .form-component textarea:active, .form-component input:focus, .form-component textarea:focus, .search-bar-container:focus{
+    border: var(--border-solid-primary) !important;
+    border-width: .1rem !important;
+    box-shadow: none !important;
+}
+
+.form-component .input-field-content div span,
+.form-component .input-field-content div:hover > span,
+.form-component .input-field-content div:active > span{
+    padding: 1px !important;
+    border-radius: 50% !important;
+    border-width: .1rem !important;
+}
+
+.form-component .input-field-content div .clear-input{
+    color: red !important;
+    border: solid red !important;
+    border-width: .1rem !important;
+}
+
+.form-component .input-field-content div .modal-btn{
+    color: var(--clr-green-primary-400) !important;
+    border: solid var(--clr-green-primary-400) !important;
+    border-width: .1rem !important;
+}
+
+.form-component .input-field-content div:hover > .clear-input{
+    color: var(--clr-safety-orange) !important;
+    border: solid var(--clr-safety-orange) !important;
+    border-width: .1rem !important;
+}
+.form-component .input-field-content div:hover > .modal-btn{
+    color: var(--clr-green-primary-300) !important;
+    border: solid var(--clr-green-primary-300) !important;
+    border-width: .1rem !important;
+}
+
+.form-component .input-field-content div:active > span{
+    background-color: var(--clr-pfm-light-grey-400) !important;
+}
+
+input[class='click-to-open-modal']{
+    cursor: pointer !important;
+}
+
+input[type='datetime-local']::-webkit-calendar-picker-indicator{
+    background-color: var(--clr-green-primary-200) !important;
+    color: var(--clr-green-primary-200) !important;
+}
+
+/*Illustration image*/
+.form-container .img-container{
+    z-index: 5 !important;
+    filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.02)) drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.08));
+}
+
+.form-container .img-container img{
+    max-width: 100% !important;
+    content: url('https://i.ibb.co/M6tTbqy/cleaning-illustration-desktop.webp');
+    border-radius: var(--right-rounded-border-radius) !important;
+}
+
+/*Loading spinner*/
+.loading-spinner{
+    position: relative !important;
+    width: 100% !important;
+}
+
+.loading-spinner div img{
+    max-width: 100% !important;
+}
+
+.loading-spinner div div span{
+    color: var(--clr-green-primary-400) !important;
+}
+
+.loading-spinner div h6{
+    color: var(--border-solid-charcoal) !important;
+    text-align: center !important;
+}
+
+
+
+/*Modal styling*/
+.modal-section .modal-content{
+    display: flex !important;
+    flex-direction: column !important;
+
+    width: 80% !important;
+    max-width: 1000px !important;
+    background-color: white !important;
+    cursor: pointer !important;
+
+    
+    border-radius: .6rem !important;
+}
+
+.modal-section .modal-content div{
+    width: 100% !important;
+}
+
+.modal-section .modal-content .modal-header{
+    display: grid !important;
+    grid-template-columns: 95% auto !important;
+}
+
+.modal-section .modal-content .modal-header .modal-title{
+    padding-left: .6em !important;
+}
+
+.modal-section .modal-content .modal-footer{
+    padding: .5em !important;
+}
+
+.modal-section .modal-content .modal-body{
+    padding: 1em !important;
+}
+
+.close-modal-btn:hover{
+    color: red !important;
+}
+.close-modal-btn:active{
+    color: var(--clr-safety-orange) !important;
+}
+
+/*.modal-section .modal-content .modal-body .selected-item-txt{
+    opacity: 0;
+}*/
+
+.modal-section .modal-content .modal-body h6{
+    font-weight: lighter !important;
+}
+
+.modal-hz-divider{
+    position: relative !important;
+    height: .05rem !important;
+    background-color: var(--clr-green-primary-300) !important;
+}
+
+/*Table styling*/
+.table-container .overflow-scroll{
+    position: relative !important;
+    overflow-y: scroll !important;
+    width: 100% !important;
+    max-height: clamp(30em, 10vh, 250px) !important;
+    font-size: medium !important;
+}
+
+.table-container .sticky-top{
+    z-index: 101 !important;
+    background-color: white !important;
+}
+
+table .sticky-top .table-header th{
+    color: var(--clr-green-primary-400) !important;
+}
+
+table tr td{
+    color: var(--clr-programmed-charcoal-400) !important;
+}
+
+.modal-section .modal-content .modal-body .table-container .sticky-top th:nth-child(1){
+    width: 2% !important;
+    max-width: 2.5% !important;
+}
+
+
+
+
+/*Form check input button styling*/
+.form-check-input.checkbox:checked{
+    background-color: var(--clr-green-primary-400) !important;
+    color: var(--clr-green-primary-400) !important;
+    box-shadow: none !important;
+    border-color: var(--clr-programmed-charcoal-400) !important;
+}
+
+.form-check-input.checkbox:hover, .form-check-input.checkbox:active{
+    background-color: var(--clr-green-primary-200);
+    box-shadow:none !important;
+    border-color: var(--clr-programmed-charcoal-400) !important;
+}
+
+/*Search and filter*/
+.search-filter-container{
+    color: var(--clr-programmed-charcoal-400) !important;
+}
+
+.search-bar-container{
+    display: grid !important;
+    grid-template-columns: 5% auto;
+    padding: .15em .5em !important;
+
+    border: var(--border-solid-light-grey) !important;
+    border-width: .5px !important;
+    border-radius: 2em !important;
+}
+
+.search-bar-container, .search-bar-container:hover, .search-bar-container:active, .search-bar-container:focus{
+    border-width: .1rem !important;
+}
+
+.search-text-field{
+    text-indent: 0px;
+    background-color: transparent !important;
+    border-width: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+@media (max-width: 1301px) {
+    .form-header, .form-container{
+        transition: .5s ease-in-out !important;
+    }
+}
+
+@media (max-width: 1300px) {
+    .form-header, .form-container{
+        width: 90% !important;
+    }
+}
+@media (max-width: 1000px) {
+    .form-header, .form-container{
+        width: 95% !important;
+    }
+}
+
+@media (max-width: 780px) {
+    /*Form element*/
+    .form-content-container .form-container .overflow{
+      order: 2 !important;
+    }
+    .form-content-container .form-container .img-container {
+      order: 1 !important;
+    }
+
+    .form-container{
+        display: flex !important;
+        flex-direction: column !important;
+        height: unset !important;
+    }
+
+    .form-header, .form-container{
+        width: 95% !important;
+    }
+
+    .form-container .img-container img{
+        content: url('https://i.ibb.co/P5D8xp0/cleaning-illustration-mobile.webp');
+        border-radius: var(--top-rounded-border-radius) !important;
+    }
+
+    form{
+        position: relative !important;
+        max-height: auto !important;
+        overflow-y: auto !important;
+        width: 100% !important;
+    }
+
+    .form-component .input-field-content, .search-filter-container{
+        width: unset !important;
+        
+    }
+
+    /*Button styling*/
+    .form-component.button-container{
+        margin-bottom: 50px !important;
+    }
+
+    /*Modal styling*/
+    .modal-section .modal-content{
+        overflow-y: scroll !important;
+        width: 90% !important;
+    }
+
+    .modal-section .modal-content .modal-header{
+        grid-template-columns: 90% auto !important;
+    }
+
+    .modal-hz-divider{
+        height: .025rem !important;
+    }
+
+    /*Search and filter*/
+    .search-bar-container{
+        grid-gap: 1em !important;
+        padding: .1em .3em !important;
+    }
+}
+
+
+@media (max-width: 451px) {
+    h4{
+        font-size: large !important;
+    }
+    /*Text font styling*/
+    h5, h6, p, label, button, a, input, i, 
+    .input-field-container .input-err-msg, .form-component input, .form-component textarea, 
+    .table-container .overflow-scroll, table tr{
+        font-size: smaller !important;
+    }
+
+    /*Form components*/
+    .form-component input, .form-component textarea,
+    .form-component input:hover, .form-component textarea:hover, 
+    .form-component .input-field-content div .clear-input, .form-component .input-field-content div .modal-btn,
+    .form-component .input-field-content div:hover > .modal-btn, .form-component .input-field-content div:hover > .clear-input,
+    .form-component .input-field-content div span,
+    .form-component .input-field-content div:hover > span,
+    .form-component .input-field-content div:active > span,
+    .form-component input:active, .form-component textarea:active, .form-component input:focus, .form-component textarea:focus, .search-bar-container:focus,
+    .search-bar-container, .search-bar-container:hover, .search-bar-container:active, .search-bar-container:focus
+    {
+        border-width: .03rem !important;
+    }
+
+    /*Modal styling*/
+    .modal-section .modal-content .modal-body{
+        padding: .5em !important;
+    }
+}
+
+@media (max-width: 400px) {
+    /*Text font styling*/
+    h5, h6, p, label, button, a, input, i, 
+    .input-field-container .input-err-msg, .form-component input, .form-component textarea, 
+    .table-container .overflow-scroll, table tr{
+        font-size: x-small !important;
+    }
+
+    /*Form components*/
+    .form-component .input-field-content, .search-filter-container{
+        grid-template-columns: 70% auto auto !important;
+        grid-gap: 1rem !important;
+    }
+
+    .form-component .input-field-content span{
+        font-size: 1em !important;
+    }
+
+    /*Modal styling*/
+    .modal-section .modal-content{
+        width: 92.5% !important;
+    }
+
+    .modal-section .modal-content .modal-header{
+        grid-template-columns: 88% auto !important;
+    }
+}
+
+@media (max-width: 376px) {
+    /*table styling*/
+    .table-container .overflow-scroll{
+        max-height: clamp(25em, 10vh, 250px) !important;
+    }
+}
