@@ -104,6 +104,7 @@ function _render_datetime_input_field(){
 }
 
 function _init_modal_resources(modal){
+    modal.find('.search-text-field').val(null);
     modal.find('.table-row').remove();
     modal.find('th').remove();
     modal.find('[name=selected-item-txt]').css('opacity', '0');
