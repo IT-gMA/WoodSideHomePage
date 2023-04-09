@@ -147,6 +147,7 @@ function _render_cleaning_service_type_modal(){
                                                                 <td hidden>${data['service_id']}</td>       <!--3: always for id-->
                                                             </tr>`);
             });
+            $('section[name=site-location-modal-container]').find('[name=save-modal-change-btn]').attr('disabled', selected_cleaning_type == null);
         },
     });
 }
@@ -189,6 +190,7 @@ function _render_site_location_modal(){
                                                                 <td hidden>${data['sr_id']}</td>       <!--3: always for id-->
                                                             </tr>`);
             });
+            $('section[name=site-location-modal-container]').find('[name=save-modal-change-btn]').attr('disabled', selected_site_location == null);
         },
     });
 }
@@ -271,6 +273,7 @@ $(document).ready(function(){
                 selected_cleaning_type_name = null;
                 $(this).parent().parent().find('[name=cleaning-type-input-field]').val(null);
             }
+            _modal_body.find('[name=save-modal-change-btn]').attr('disabled', true);
             enable_submit_button();
         });
     });
