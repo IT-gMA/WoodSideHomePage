@@ -40,6 +40,9 @@
     --bottom-rounded-border-radius: 0px 0 12.5px 12.5px !important;
     --left-rounded-border-radius: 12.5px 0 12.5px 0px !important;
     --right-rounded-border-radius: 0px 12.5px 12.5px 0px !important;
+
+    --box-shadow-inner-style0: rgb(0, 0, 0, .2) 1.5px 1.5px 3px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset !important;
+    --box-shadow-inner-style0-hover: rgb(0, 0, 0, .15) 1px 1px 1px 0px inset, rgba(255, 255, 255, 0.35) -1.5px -1.5px 3px .5px inset !important;
 }
 
 .flip-hrzly{
@@ -221,13 +224,17 @@ form{
     justify-content: flex-start !important;
 }
 
+.form-component input, .form-component textarea, .search-bar-container{
+    box-shadow: var(--box-shadow-inner-style0) !important;
+}
+
 .form-component input, .form-component textarea{
     border: var(--border-solid-light-grey) !important;
     border-width: .1rem !important;
     color: var(--border-solid-charcoal) !important;
     font-size: small !important;
     padding: .4em 0 .4em .6em !important;
-    box-shadow: none !important;
+    
     outline: none !important;
     color: var(--border-solid-charcoal) !important;
 }
@@ -242,6 +249,7 @@ form{
 .form-component input:hover, .form-component textarea:hover, .search-bar-container:hover{
     border: var(--border-solid-primary-200) !important;
     border-width: .1rem !important;
+    box-shadow: var(--box-shadow-inner-style0-hover) !important;
 }
 
 .form-component input:active, .form-component textarea:active, .form-component input:focus, .form-component textarea:focus, .search-bar-container:focus{
