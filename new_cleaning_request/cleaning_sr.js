@@ -77,7 +77,7 @@ function _render_datetime_input_field(){
     let max_time = convert_to_datetime(curr_datetime);
     max_time.setMonth(max_time.getMonth() + 2);
     max_time.setHours(LATEST, 0, 0, 0);
-    console.log(`currdate:${curr_datetime}\nmin_time: ${min_time}\nmax_time: ${max_time}`);
+    //console.log(`currdate:${curr_datetime}\nmin_time: ${min_time}\nmax_time: ${max_time}`);
 
     _datetime_input.attr('min', min_time.toISOString().slice(0, 16));
     _datetime_input.attr('max', max_time.toISOString().slice(0, 16));
