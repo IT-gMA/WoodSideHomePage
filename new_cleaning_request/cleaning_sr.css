@@ -1,4 +1,6 @@
 :root{
+    --clr-red-cathode: #f1184c !important;
+    --clr-off-white-primary: #FAF9F6 !important;
     --clr-programmed-light-grey: #E9E9E9 !important;
     --clr-programmed-charcoal-400: #3D3935 !important;
     --clr-pfm-light-grey-400: #E9E9E9 !important;
@@ -18,6 +20,9 @@
     --border-solid-dark-green: solid var(--clr-dark-green) !important;
     --border-solid-charcoal: solid var(--clr-programmed-charcoal-400) !important;
     --border-solid-light-grey: solid var(--clr-programmed-light-grey) !important;
+    --border-solid-red: solid red !important;
+    --border-solid-red-cathode: solid var(--clr-red-cathode) !important;
+    --border-solid-programmed-safety-orange: solid var(--clr-safety-orange) !important;
 
     --border-solid-charcoal-thin: .5px solid var(--clr-programmed-charcoal-400) !important;
     --border-solid-primary-thin: .5px solid var(--clr-green-primary-400) !important;
@@ -156,7 +161,7 @@ form .form-component{
     display: grid !important;
     grid-template-columns: 80% 20%;
 
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06) !important;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px !important;
     border-radius: 12.5px !important;
     background-color: transparent !important;
 
@@ -248,36 +253,59 @@ form{
 .form-component .input-field-content div span,
 .form-component .input-field-content div:hover > span,
 .form-component .input-field-content div:active > span{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
     padding: 1px !important;
     border-radius: 50% !important;
     border-width: .1rem !important;
+
+    font-weight: bolder !important;
+    color: var(--clr-off-white-primary) !important;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset !important;
+}
+
+.form-component .input-field-content div:hover > span{
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 14px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px .5px inset !important;
+}
+
+.form-component .input-field-content div:active > span{
+    color: var(--clr-programmed-charcoal-400) !important;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px !important;
 }
 
 .form-component .input-field-content div .clear-input{
-    color: red !important;
+    background-color: red !important;
     border: solid red !important;
     border-width: .1rem !important;
 }
 
 .form-component .input-field-content div .modal-btn{
-    color: var(--clr-green-primary-400) !important;
+    background-color: var(--clr-green-primary-400) !important;
     border: solid var(--clr-green-primary-400) !important;
     border-width: .1rem !important;
 }
 
 .form-component .input-field-content div:hover > .clear-input{
-    color: var(--clr-safety-orange) !important;
     border: solid var(--clr-safety-orange) !important;
     border-width: .1rem !important;
 }
 .form-component .input-field-content div:hover > .modal-btn{
-    color: var(--clr-green-primary-300) !important;
     border: solid var(--clr-green-primary-300) !important;
     border-width: .1rem !important;
 }
 
-.form-component .input-field-content div:active > span{
-    background-color: var(--clr-pfm-light-grey-400) !important;
+.form-component .input-field-content div:active > .clear-input{
+    background-color: var(--clr-safety-orange) !important;
+    border: var(--border-solid-red-cathode) !important;
+    border-width: .1rem !important;
+}
+
+.form-component .input-field-content div:active > .modal-btn{
+    background-color: var(--clr-green-primary-300) !important;
+    border: var(--border-solid-primary-200) !important;
+    border-width: .1rem !important;
 }
 
 input[class='click-to-open-modal']{
