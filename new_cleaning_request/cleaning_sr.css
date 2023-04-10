@@ -233,7 +233,7 @@ form{
     border-width: .1rem !important;
     color: var(--border-solid-charcoal) !important;
     font-size: small !important;
-    padding: .4em 0 .4em .6em !important;
+    padding: .4em 0 .4em 1em !important;
     
     outline: none !important;
     color: var(--border-solid-charcoal) !important;
@@ -242,8 +242,8 @@ form{
 .form-component textarea{
    border-radius: .8em !important;
 }
-.form-component input{
-   border-radius: 1em !important;
+.form-component input, .search-filter-container{
+   border-radius: 2.8em !important;
 }
 
 .form-component input:hover, .form-component textarea:hover, .search-bar-container:hover{
