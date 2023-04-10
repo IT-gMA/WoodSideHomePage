@@ -86,9 +86,9 @@ function _render_datetime_input_field(){
             valid_datetime = true;
         }else{
             const entered_datetime = convert_to_datetime($(this).val());
-            console.log(entered_datetime.getHours());
-            console.log(entered_datetime > max_time);
-            valid_datetime = !(min_time > entered_datetime || entered_datetime > max_time || entered_datetime.getHours() < EARLIEST || entered_datetime.getHours() > LATEST);
+            //console.log(entered_datetime.getHours());
+            //console.log(entered_datetime > max_time);
+            valid_datetime = !(min_time > entered_datetime || entered_datetime > max_time || entered_datetime.getHours() < EARLIEST || entered_datetime.getHours() + entered_datetime.getMinutes() + entered_datetime.getSeconds() > LATEST);
             $(this).closest('.input-field-container').find('.input-err-msg').css('opacity', `${valid_datetime ? '0' : '1'}`);
             console.log(`valid_datetime: ${!(min_time > entered_datetime || entered_datetime > max_time)}`);
             console.log(`valid_hours: ${!(entered_datetime.getHours() < EARLIEST || entered_datetime.getHours() > LATEST)}`);
