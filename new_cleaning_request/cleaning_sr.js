@@ -10,6 +10,10 @@ const LATEST = 17;
 
 let _is_valid_datetime = false;
 const _datetime_input = $('input[name=datetime-input]');
+const FORM_DOM = $('form[name=cleaning-request-form]');
+const INSET_BOX_SHADOW_BOTTOM = 'inset 0px -25px 20px -20px rgba(0, 0, 0, 0.2)';
+const INSET_BOX_SHADOW_TOP  = 'inset 0px 25px 20px -20px rgba(0, 0, 0, 0.2)';
+
 let CLEANING_SERVICES = [];
 let SITE_LOCATIONS = [];
 let selected_site_location = null;
@@ -140,7 +144,7 @@ function _render_cleaning_service_type_modal(){
                 $('table[name=cleaning-type-table]').append(`<tr class="table-row">
                                                                 <td>
                                                                     <input ${selected_cleaning_type != null && selected_cleaning_type == String(data['service_id']) ? 'checked' : ''}
-                                                                        class='form-check-input checkbox' type='radio' name='cleaning-type-chkbox'/>  
+                                                                        class='form-check-input checkbox modal-td-radio-chkbox' type='radio' name='cleaning-type-chkbox'/>  
                                                                 </td>                           <!--0-->
                                                                 <td class='to-be-searched-data'>${data['service_name']}</td>   <!--1-->
                                                                 <td hidden>${data['service_id']}</td>     <!--2-->
@@ -183,7 +187,7 @@ function _render_site_location_modal(){
                 $('table[name=site-location-table]').append(`<tr class="table-row">
                                                                 <td>
                                                                     <input ${selected_site_location != null && selected_site_location == String(data['sr_id']) ? 'checked' : ''}
-                                                                        class='form-check-input checkbox' type='radio' name='site-location-chkbox'/>  
+                                                                        class='form-check-input checkbox modal-td-radio-chkbox' type='radio' name='site-location-chkbox'/>  
                                                                 </td>                           <!--0-->
                                                                 <td class='to-be-searched-data'>${data['site_name']}</td>   <!--1-->
                                                                 <td class='to-be-searched-data'>${data['site_id']}</td>     <!--2-->
@@ -224,11 +228,26 @@ function enable_submit_button(){
                                                         !valid_email || !valid_name || !valid_phonenum || !valid_cost_code);
 }
 
+function form_scrolling_event_listener(){
+    if ($(window).width() <= 780){
+        FORM_DOM.css('box-shadow', 'none');
+    }else{
+        if (FORM_DOM.scrollTop() == 0){
+            FORM_DOM.css('box-shadow', INSET_BOX_SHADOW_BOTTOM);
+        }
+        else if (FORM_DOM.scrollTop() > FORM_DOM.height()*1.05){
+            FORM_DOM.css('box-shadow', INSET_BOX_SHADOW_TOP);
+        }
+    }
+}
+
 
 $(document).ready(function(){
     _render_datetime_input_field();
     $('span[name=loading-spinner]').parent().parent().remove();
     $('.input-form-section').css('opacity', '1');
+    FORM_DOM.on('scroll', form_scrolling_event_listener);
+    $(window).on('resize', form_scrolling_event_listener);
 
     $('span[name=site-location-content], span[name=cleaning-type-content]').find('.click-to-open-modal').each(function(idx){
         let _modal_dialog = $('section[name=site-location-modal-container]');
@@ -294,19 +313,20 @@ $(document).ready(function(){
         enable_submit_button();
     });
 
-    $(document).on('change', 'input[name=site-location-chkbox], input[name=cleaning-type-chkbox]', function(e){
+    $(document).on('change', '.modal-td-radio-chkbox', function(e){
         if ($(this).prop('checked')){
             const table_row = $(this).parent().parent();
             const _modal_body = $(this).closest('.modal-section');
             if ($(this).attr('name') == 'site-location-chkbox'){
                 selected_site_location = table_row.children().eq(3).text();
                 selected_site_location_name = table_row.children().eq(1).text();
-                _modal_body.find('[name=save-modal-change-btn]').attr('disabled', $('input[name=site-location-chkbox]:checked').length < 1);
+                //_modal_body.find('[name=save-modal-change-btn]').attr('disabled', false);
             }else if ($(this).attr('name') == 'cleaning-type-chkbox'){
                 selected_cleaning_type = table_row.children().eq(3).text();
                 selected_cleaning_type_name = table_row.children().eq(1).text();
-                _modal_body.find('[name=save-modal-change-btn]').attr('disabled', $('input[name=cleaning-type-chkbox]:checked').length < 1);
+                //_modal_body.find('[name=save-modal-change-btn]').attr('disabled', false);
             }
+            _modal_body.find('[name=save-modal-change-btn]').attr('disabled', false);
             _describe_selected_modal_item(_modal_body, table_row.children().eq(1).text());
         }
     });

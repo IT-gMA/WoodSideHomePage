@@ -43,6 +43,7 @@
 
     --box-shadow-inner-style0: rgb(0, 0, 0, .2) 1.5px 1.5px 3px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset !important;
     --box-shadow-inner-style0-hover: rgb(0, 0, 0, .15) 1px 1px 1px 0px inset, rgba(255, 255, 255, 0.35) -1.5px -1.5px 3px .5px inset !important;
+    --box-shadow-form-scroll: inset 0px -25px 20px -20px rgba(0, 0, 0, 0.2) !important;
 }
 
 .flip-hrzly{
@@ -186,6 +187,11 @@ form{
     max-height: 99% !important;
     overflow-y: scroll !important;
     width: 79.5% !important;
+}
+
+.form-container .overflow form{
+    border-radius: 12.5px 0 0 12.5px !important;
+    box-shadow: var(--box-shadow-form-scroll);
 }
 
 .form-container .overflow{
@@ -531,6 +537,11 @@ table tr td{
         max-height: auto !important;
         overflow-y: auto !important;
         width: 100% !important;
+    }
+
+    .form-container .overflow form{
+        border-radius: 0 !important;
+        box-shadow: none !important;
     }
 
     .form-component .input-field-content, .search-filter-container{
