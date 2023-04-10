@@ -267,13 +267,11 @@ $(document).ready(function(){
             if (content_name_attr == 'site-location-content'){
                 selected_site_location = null;
                 selected_site_location_name = null;
-                $(this).parent().parent().find('[name=site-location-name-input-field]').val(null);
             }else if (content_name_attr == 'cleaning-type-content'){
                 selected_cleaning_type = null;
                 selected_cleaning_type_name = null;
-                $(this).parent().parent().find('[name=cleaning-type-input-field]').val(null);
             }
-            _modal_body.find('[name=save-modal-change-btn]').attr('disabled', true);
+            $(this).parent().parent().find('.click-to-open-modal-input').val(null);
             enable_submit_button();
         });
     });
