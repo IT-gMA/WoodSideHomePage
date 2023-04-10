@@ -13,9 +13,12 @@ const _datetime_input = $('input[name=datetime-input]');
 const FORM_DOM = $('form[name=cleaning-request-form]');
 const INSET_BOX_SHADOW_BOTTOM = 'inset 0px -25px 20px -20px rgba(0, 0, 0, 0.2)';
 const INSET_BOX_SHADOW_TOP  = 'inset 0px 25px 20px -20px rgba(0, 0, 0, 0.2)';
+const MOBILE_SCREEN_WIDTH = 780;
+const MODAL_ACTIVATE_ELEMS = 'span[name=site-location-content], span[name=cleaning-type-content]';
 
 let CLEANING_SERVICES = [];
 let SITE_LOCATIONS = [];
+let CLEANING_FREQUENCIES = [];
 let selected_site_location = null;
 let selected_site_location_name = null;
 let selected_cleaning_type = null;
@@ -56,12 +59,6 @@ function format_json_data(response, key_map){
 
 function convert_to_datetime(dt_str){
     return new Date(String(dt_str));
-}
-
-function _describe_selected_modal_item(modal_body, selected_item){
-    modal_body.find('.selected-item-txt').empty();
-    modal_body.find('.selected-item-txt').append(`Selected: ${selected_item}`);
-    modal_body.find('.selected-item-txt').css('opacity', `${selected_item == null ? '0' : '1'}`);
 }
 // End of util functions
 
@@ -115,6 +112,24 @@ function _init_modal_resources(modal){
     modal.find('.loading-spinner').show();
 }
 
+function _describe_selected_modal_item(modal_body, selected_item){
+    modal_body.find('.selected-item-txt').empty();
+    modal_body.find('.selected-item-txt').append(`Selected: ${selected_item}`);
+    modal_body.find('.selected-item-txt').css('opacity', `${selected_item == null ? '0' : '1'}`);
+}
+
+function _make_modal_table_header(header_titles, modal_body){
+    header_titles.forEach((data) => {
+        modal_body.find('.table-header').append(`<th scope='col'>${data}</th>`);
+    });
+}
+
+function _ready_modal_table_content(modal_body, selected_item_name){
+    modal_body.find('.loading-spinner').hide();
+    _describe_selected_modal_item(modal_body, selected_item_name);
+    modal_body.find('[name=save-modal-change-btn]').attr('disabled', selected_item_name == null);
+}
+
 function _render_cleaning_service_type_modal(){
     $.ajax({
         type: 'POST',
@@ -134,12 +149,8 @@ function _render_cleaning_service_type_modal(){
                                     t['service_id'] == data['service_id'] && t['service_name'] == data['service_name']
                                 )));
 
-            $('section[name=cleaning-type-modal-container]').find('.loading-spinner').hide();
-            _describe_selected_modal_item($('section[name=cleaning-type-modal-container]'), selected_cleaning_type_name);
-
-            ['', 'Cleaning Service Type'].forEach((data) => {
-                $('table[name=cleaning-type-table]').find('.table-header').append(`<th scope='col'>${data}</th>`);
-            });
+            _ready_modal_table_content($('section[name=cleaning-type-modal-container]'), selected_cleaning_type_name);
+            _make_modal_table_header(['', 'Cleaning Service Type'], $('table[name=cleaning-type-table]'));
             CLEANING_SERVICES.forEach(function(data){
                 $('table[name=cleaning-type-table]').append(`<tr class="table-row">
                                                                 <td>
@@ -151,7 +162,7 @@ function _render_cleaning_service_type_modal(){
                                                                 <td hidden>${data['service_id']}</td>       <!--3: always for id-->
                                                             </tr>`);
             });
-            $('section[name=cleaning-type-modal-container]').find('[name=save-modal-change-btn]').attr('disabled', selected_cleaning_type == null);
+            //$('section[name=cleaning-type-modal-container]').find('[name=save-modal-change-btn]').attr('disabled', selected_cleaning_type == null);
         },
     });
 }
@@ -177,12 +188,8 @@ function _render_site_location_modal(){
                                     t['site_id'] == data['site_id'] && t['site_name'] == data['site_name']
                                 )));
 
-            $('section[name=site-location-modal-container]').find('.loading-spinner').hide();
-            _describe_selected_modal_item($('section[name=site-location-modal-container]'), selected_site_location_name);
-
-            ['', 'Site Location Descriptions', 'Site Location Requested'].forEach((data) => {
-                $('table[name=site-location-table]').find('.table-header').append(`<th scope='col'>${data}</th>`);
-            });
+            _ready_modal_table_content($('section[name=site-location-modal-container]'), selected_site_location_name);
+            _make_modal_table_header(['', 'Site Location Descriptions', 'Site Location Requested'], $('table[name=site-location-table]'));
             SITE_LOCATIONS.forEach(function(data){
                 $('table[name=site-location-table]').append(`<tr class="table-row">
                                                                 <td>
@@ -194,7 +201,7 @@ function _render_site_location_modal(){
                                                                 <td hidden>${data['sr_id']}</td>       <!--3: always for id-->
                                                             </tr>`);
             });
-            $('section[name=site-location-modal-container]').find('[name=save-modal-change-btn]').attr('disabled', selected_site_location == null);
+            //$('section[name=site-location-modal-container]').find('[name=save-modal-change-btn]').attr('disabled', selected_site_location == null);
         },
     });
 }
@@ -229,15 +236,12 @@ function enable_submit_button(){
 }
 
 function form_scrolling_event_listener(){
-    if ($(window).width() <= 780){
-        FORM_DOM.css('box-shadow', 'none');
-    }else{
-        if (FORM_DOM.scrollTop() == 0){
-            FORM_DOM.css('box-shadow', INSET_BOX_SHADOW_BOTTOM);
-        }
-        else if (FORM_DOM.scrollTop() > FORM_DOM.height()*1.05){
-            FORM_DOM.css('box-shadow', INSET_BOX_SHADOW_TOP);
-        }
+    if ($(window).width() <= MOBILE_SCREEN_WIDTH) return FORM_DOM.css('box-shadow', 'none');
+    if (FORM_DOM.scrollTop() <= 5){
+        FORM_DOM.css('box-shadow', INSET_BOX_SHADOW_BOTTOM);
+    }
+    else if (FORM_DOM.scrollTop() > FORM_DOM.height()*1.05){
+        FORM_DOM.css('box-shadow', INSET_BOX_SHADOW_TOP);
     }
 }
 
@@ -249,21 +253,21 @@ $(document).ready(function(){
     FORM_DOM.on('scroll', form_scrolling_event_listener);
     $(window).on('resize', form_scrolling_event_listener);
 
-    $('span[name=site-location-content], span[name=cleaning-type-content]').find('.click-to-open-modal').each(function(idx){
+    $(MODAL_ACTIVATE_ELEMS).find('.click-to-open-modal').each(function(idx){
         let _modal_dialog = $('section[name=site-location-modal-container]');
         const content_name_attr = $(this).closest('.input-field-container').attr('name');
         if (content_name_attr == 'cleaning-type-content'){
             _modal_dialog = $('section[name=cleaning-type-modal-container]');
         }
         $(this).click(function(event){
-            console.log(content_name_attr);
+            //console.log(content_name_attr);
             _init_modal_resources(_modal_dialog);
             if (content_name_attr == 'site-location-content'){
                 _modal_dialog.find('[name=save-modal-change-btn]').attr('disabled', $('input[name=site-location-chkbox]:checked').length < 1);
                 _render_site_location_modal();
             }else if (content_name_attr == 'cleaning-type-content'){
                 _modal_dialog.find('[name=save-modal-change-btn]').attr('disabled', $('input[name=cleaning-type-chkbox]:checked').length < 1);
-                _render_cleaning_service_type_modal()
+                _render_cleaning_service_type_modal();
             }
             process_modal_section_render(_modal_dialog);
             //_modal_dialog.modal('show');
@@ -280,7 +284,7 @@ $(document).ready(function(){
         }
     });
 
-    $('span[name=site-location-content], span[name=cleaning-type-content]').find('[name=clear-input-btn]').each(function(idx){
+    $(MODAL_ACTIVATE_ELEMS).find('[name=clear-input-btn]').each(function(idx){
         const content_name_attr = $(this).closest('.input-field-container').attr('name');
         $(this).click(function(event){
             if (content_name_attr == 'site-location-content'){
@@ -290,7 +294,7 @@ $(document).ready(function(){
                 selected_cleaning_type = null;
                 selected_cleaning_type_name = null;
             }
-            $(this).parent().parent().find('.click-to-open-modal-input').val(null);
+            $(this).parent().parent().find('.click-to-open-modal-input').val(null);     // clear input text field
             enable_submit_button();
         });
     });
@@ -327,7 +331,7 @@ $(document).ready(function(){
                 //_modal_body.find('[name=save-modal-change-btn]').attr('disabled', false);
             }
             _modal_body.find('[name=save-modal-change-btn]').attr('disabled', false);
-            _describe_selected_modal_item(_modal_body, table_row.children().eq(1).text());
+            _describe_selected_modal_item(_modal_body, table_row.children().eq(1).text());      // the 2nd row data always contains the item's name
         }
     });
 
