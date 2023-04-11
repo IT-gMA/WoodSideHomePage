@@ -143,6 +143,48 @@
       </div>
     </div>
 </section>
+<section role='dialog' tabindex='-1' name='cleaning-freq-modal-container' class='modal-section'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h4 class='modal-title'>Look up records</h4>
+        <span class='material-symbols-outlined close-modal-btn'>cancel</span>
+      </div>
+      <div class='modal-hz-divider'></div>
+      <div class='modal-body'>
+        <h5 class='selected-item-txt' name='selected-item-txt'>*no selection made yet*</h5>
+        <h6>Choose one record and click select to continue</h6>
+        <br>
+        <div class='search-filter-container'>
+          <div class='search-bar-container'>
+            <span class='material-symbols-outlined'>search</span>
+            <input class='search-text-field' type='text' name='search-txt-field' placeholder='Search for items'>
+          </div>
+        </div>
+        <span class='loading-spinner' name='cleaning-freq-loading-spinner'>
+          <div>
+            <img src='https://i.ibb.co/Vp2hJGW/loading-spinner.gif'>
+          </div>
+        </span>
+        <br>
+        <div class='table-container'>
+          <div class='overflow-scroll'>
+            <table class='table table-hover' name='cleaning-freq-table'>
+              <thead class='sticky-top'>
+                <tr class='table-header'>
+                </tr>
+              </thead>
+              <!--tr...-->
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class='modal-hz-divider'></div>
+      <div class='modal-footer'>
+        <button type='button' class='btn btn-primary' name='save-modal-change-btn'>Save changes</button>
+      </div>
+    </div>
+</section>
+
 
 <section class='input-form-section' style='opacity: 0;'>
   <div class='form-content-container'>
@@ -204,12 +246,12 @@
               <h6 class='input-err-msg'>???</h6>
             </span>
             <br>
-            <span class='input-field-container'>
+            <span class='input-field-container' name='service-frequency-content'>
               <label>Service Frequency<span>  *</span></label>
-              <div class='input-field-content' name='service-frequency-content'>
-                <input placeholder='Select service frequency'>
+              <div class='input-field-content'>
+                <input placeholder='Select a service frequency' name='cleaning-freq-input-field' class='click-to-open-modal click-to-open-modal-input'>
                 <div>
-                  <span class='material-symbols-outlined modal-btn' name='open-modal-btn'>frame_inspect</span>
+                  <span class='material-symbols-outlined modal-btn click-to-open-modal' name='open-modal-btn'>frame_inspect</span>
                 </div>
                 <div>
                   <span class='material-symbols-outlined clear-input' name='clear-input-btn'>delete</span>
@@ -234,7 +276,7 @@
             </span>
             <br>
             <span class='input-field-container'>
-              <label>Approximate square meterage (if know)</label>
+              <label>Approximate square meterage (if known)</label>
               <div class='input-field-content'>
                 <input name='square-meterage-input' class='input-txt-field'>
               </div>
@@ -244,7 +286,7 @@
             <span class='input-field-container'>
               <label>Additional note</label>
               <div class='input-field-content'>
-                <textarea rows='4' placeholder='Remark regarding this request'></textarea>
+                <textarea rows='4' placeholder='Remark regarding this request' name='extra-remark-input'></textarea>
               </div>
               <h6 class='input-err-msg'></h6>
             </span>
@@ -297,6 +339,7 @@
     </div>
   </div>
 </section>
+<br><br><br>
 
 <!--My scripts-->
 

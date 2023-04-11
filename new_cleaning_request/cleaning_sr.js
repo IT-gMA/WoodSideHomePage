@@ -14,11 +14,21 @@ const FORM_DOM = $('form[name=cleaning-request-form]');
 const INSET_BOX_SHADOW_BOTTOM = 'inset 0px -25px 20px -20px rgba(0, 0, 0, 0.2)';
 const INSET_BOX_SHADOW_TOP  = 'inset 0px 25px 20px -20px rgba(0, 0, 0, 0.2)';
 const MOBILE_SCREEN_WIDTH = 780;
-const MODAL_ACTIVATE_ELEMS = 'span[name=site-location-content], span[name=cleaning-type-content]';
+const MODAL_ACTIVATE_ELEMS = 'span[name=site-location-content], span[name=cleaning-type-content], span[name=service-frequency-content]';
+const BUTTON_LOADING_SPINNER = `<div style='width:100%; padding: 0; margin: 0;'>
+                                    <div style='display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                max-width: 2.5em;'>
+                                        <img src='https://i.ibb.co/Vp2hJGW/loading-spinner.gif' style='max-width:100%;'>
+                                    </div>
+                                </div>`;
 
 let CLEANING_SERVICES = [];
 let SITE_LOCATIONS = [];
 let CLEANING_FREQUENCIES = [];
+let selected_freq_id = null;
+let selected_freq_name = null;
 let selected_site_location = null;
 let selected_site_location_name = null;
 let selected_cleaning_type = null;
@@ -60,6 +70,9 @@ function format_json_data(response, key_map){
 function convert_to_datetime(dt_str){
     return new Date(String(dt_str));
 }
+function clean_white_space(input_string, all=true){
+    return input_string.replace(/\s+/g, all ? '' : ' ');
+}
 // End of util functions
 
 function _render_datetime_input_field(){
@@ -86,8 +99,8 @@ function _render_datetime_input_field(){
             valid_datetime = true;
         }else{
             const entered_datetime = convert_to_datetime($(this).val());
-            //console.log(entered_datetime.getHours());
-            //console.log(entered_datetime > max_time);
+            console.log(entered_datetime.getHours());
+            console.log(entered_datetime > max_time);
             valid_datetime = !(min_time > entered_datetime || entered_datetime > max_time || entered_datetime.getHours() < EARLIEST || entered_datetime.getHours() + entered_datetime.getMinutes()/60 + entered_datetime.getSeconds()/3600 > LATEST);
             $(this).closest('.input-field-container').find('.input-err-msg').css('opacity', `${valid_datetime ? '0' : '1'}`);
             //console.log(`valid_datetime: ${!(min_time > entered_datetime || entered_datetime > max_time)}`);
@@ -160,6 +173,38 @@ function _render_cleaning_service_type_modal(){
                                                                 <td class='to-be-searched-data'>${data['service_name']}</td>   <!--1-->
                                                                 <td hidden>${data['service_id']}</td>     <!--2-->
                                                                 <td hidden>${data['service_id']}</td>       <!--3: always for id-->
+                                                            </tr>`);
+            });
+            //$('section[name=cleaning-type-modal-container]').find('[name=save-modal-change-btn]').attr('disabled', selected_cleaning_type == null);
+        },
+    });
+}
+function _render_cleaning_frequencies_modal(){
+    $.ajax({
+        type: 'POST',
+        url: 'https://prod-15.australiasoutheast.logic.azure.com:443/workflows/18d474b972d34a1294c8e139b042058e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xWsEdYQGMS8Pxdx8_N927if-Amon09u9DqNQ0pj0EP8',
+        contentType: 'application/json',
+        async: false,
+        accept: 'application/json;odata=verbose',
+        success: function (response, status, xhr){
+            /*const _cleaning_freq_req*/ CLEANING_SERVICES = format_json_data(response, {prg_cleaningfrequencyid: 'freq_id', prg_name: 'freq_name'});
+            //
+            /*CLEANING_FREQUENCIES = _cleaning_freq_req.filter((data, idx, self) => 
+                                idx == self.findIndex((t) => (
+                                    t['freq_id'] == data['freq_id'] && t['freq_name'] == data['freq_name']
+                                )));*/
+           
+            _ready_modal_table_content($('section[name=cleaning-freq-modal-container]'), selected_freq_name);
+            _make_modal_table_header(['', 'Frequencies'], $('table[name=cleaning-freq-table]'));
+            CLEANING_SERVICES.forEach(function(data){
+                $('table[name=cleaning-freq-table]').append(`<tr class="table-row">
+                                                                <td>
+                                                                    <input ${selected_freq_id != null && selected_freq_id == String(data['freq_id']) ? 'checked' : ''}
+                                                                        class='form-check-input checkbox modal-td-radio-chkbox' type='radio' name='cleaning-freq-chkbox'/>  
+                                                                </td>                           <!--0-->
+                                                                <td class='to-be-searched-data'>${data['freq_name']}</td>   <!--1-->
+                                                                <td hidden>${data['freq_id']}</td>     <!--2-->
+                                                                <td hidden>${data['freq_id']}</td>       <!--3: always for id-->
                                                             </tr>`);
             });
             //$('section[name=cleaning-type-modal-container]').find('[name=save-modal-change-btn]').attr('disabled', selected_cleaning_type == null);
@@ -258,6 +303,8 @@ $(document).ready(function(){
         const content_name_attr = $(this).closest('.input-field-container').attr('name');
         if (content_name_attr == 'cleaning-type-content'){
             _modal_dialog = $('section[name=cleaning-type-modal-container]');
+        }else if (content_name_attr == 'service-frequency-content'){
+            _modal_dialog = $('section[name=cleaning-freq-modal-container]');
         }
         $(this).click(function(event){
             //console.log(content_name_attr);
@@ -268,7 +315,10 @@ $(document).ready(function(){
             }else if (content_name_attr == 'cleaning-type-content'){
                 _modal_dialog.find('[name=save-modal-change-btn]').attr('disabled', $('input[name=cleaning-type-chkbox]:checked').length < 1);
                 _render_cleaning_service_type_modal();
-            }
+            }else if (content_name_attr == 'service-frequency-content'){
+                _modal_dialog.find('[name=save-modal-change-btn]').attr('disabled', $('input[name=cleaning-freq-chkbox]:checked').length < 1);
+                _render_cleaning_frequencies_modal();
+            }   
             process_modal_section_render(_modal_dialog);
             //_modal_dialog.modal('show');
         });
@@ -294,6 +344,10 @@ $(document).ready(function(){
                 selected_cleaning_type = null;
                 selected_cleaning_type_name = null;
             }
+            else if (content_name_attr == 'service-frequency-content'){
+                selected_freq_name = null;
+                selected_freq_id = null;
+            }
             $(this).parent().parent().find('.click-to-open-modal-input').val(null);     // clear input text field
             enable_submit_button();
         });
@@ -312,6 +366,9 @@ $(document).ready(function(){
             }else if (_parent_modal.attr('name') == 'cleaning-type-modal-container'){
                 $('span[name=cleaning-type-content]').find('[name=cleaning-type-input-field]').val($('input[name=cleaning-type-chkbox]:checked').length > 0 ? $('input[name=cleaning-type-chkbox]:checked').parent().parent().children().eq(1).text() : null);
             }
+            else if (_parent_modal.attr('name') == 'cleaning-freq-modal-container'){
+                $('span[name=service-frequency-content]').find('[name=cleaning-freq-input-field]').val($('input[name=cleaning-freq-chkbox]:checked').length > 0 ? $('input[name=cleaning-freq-chkbox]:checked').parent().parent().children().eq(1).text() : null);
+            }
         }
         process_modal_section_render($(this).parent().parent().parent(), false);
         enable_submit_button();
@@ -323,11 +380,17 @@ $(document).ready(function(){
             const _modal_body = $(this).closest('.modal-section');
             if ($(this).attr('name') == 'site-location-chkbox'){
                 selected_site_location = table_row.children().eq(3).text();
+                //selected_site_location = table_row.children().eq(2).text();
                 selected_site_location_name = table_row.children().eq(1).text();
                 //_modal_body.find('[name=save-modal-change-btn]').attr('disabled', false);
             }else if ($(this).attr('name') == 'cleaning-type-chkbox'){
                 selected_cleaning_type = table_row.children().eq(3).text();
                 selected_cleaning_type_name = table_row.children().eq(1).text();
+                //_modal_body.find('[name=save-modal-change-btn]').attr('disabled', false);
+            }
+            else if ($(this).attr('name') == 'cleaning-freq-chkbox'){
+                selected_freq_id = table_row.children().eq(3).text();
+                selected_freq_name = table_row.children().eq(1).text();
                 //_modal_body.find('[name=save-modal-change-btn]').attr('disabled', false);
             }
             _modal_body.find('[name=save-modal-change-btn]').attr('disabled', false);
@@ -383,6 +446,61 @@ $(document).ready(function(){
     });
 
     $('button[name=submit-form-btn]').click(function(event){
-        const _email_data = $('input[name=email-input]').val();
+        const _this_btn_dom = $(this);
+        _this_btn_dom.attr('disabled', true);
+        _this_btn_dom.empty();
+        _this_btn_dom.append(BUTTON_LOADING_SPINNER);
+        /*const _email_data = clean_white_space($('input[name=email-input]').val());
+        const _name_data = clean_white_space($('input[name=full-name-input]').val(), false);
+        const _phone_num_data = $('input[name=phone-num-input]').val() ? clean_white_space($('input[name=phone-num-input]').val()) : '';
+        const _cost_code_data = clean_white_space($('input[name=cost-code-input]').val());
+
+        const _site_location_data = selected_site_location;
+        const _building_data = clean_white_space($('input[name=building-num-input]').val());
+        const _cleaning_type_name_data = selected_cleaning_type_name;
+        const _cleaning_type_id_data = selected_cleaning_type;
+        const _clean_request_data = $('input[name=cleaning-request-input]').val();
+        const _preferred_datetime = $('input[name=datetime-input]').val() ? convert_to_datetime($('input[name=datetime-input]').val()) : null;
+        const _approx_meterage_data = $('input[name=square-meterage-input]').val() ? Number($('input[name=square-meterage-input]').val()) : null;
+        const _extra_remark_data = $('textarea[name=extra-remark-input]').val() ? String($('textarea[name=extra-remark-input]').val()) : '';*/
+        let data_schema = {
+            "email_data": clean_white_space($('input[name=email-input]').val()),
+            "name_data": clean_white_space($('input[name=full-name-input]').val(), false),
+            "phone_num_data": $('input[name=phone-num-input]').val() ? clean_white_space($('input[name=phone-num-input]').val()) : '',
+            "cost_code_data":clean_white_space($('input[name=cost-code-input]').val()),
+
+            "site_location_data": selected_site_location,
+            "building_data": clean_white_space($('input[name=building-num-input]').val()),
+            "cleaning_type_id_data": selected_cleaning_type,
+            "cleaning_type_name_data": selected_cleaning_type_name,
+            "clean_request_data": $('input[name=cleaning-request-input]').val(),
+            "extra_remark_data": $('textarea[name=extra-remark-input]').val() ? String($('textarea[name=extra-remark-input]').val()) : '',
+            "cleaning_frequency_data": "2b3a8da5-070e-ed11-b83d-00224810bc50",
+            "approx_meterage_data": $('input[name=square-meterage-input]').val() ? Number($('input[name=square-meterage-input]').val()) : null,
+            //"preferred_datetime_data": _preferred_datetime == null ? '' : _preferred_datetime,
+        };
+        $('input[name=datetime-input]').val() ?  data_schema['preferred_datetime_data'] = convert_to_datetime($('input[name=datetime-input]').val()) : null;
+        if (selected_freq_id != null) data_schema['cleaning_frequency_data'] = selected_freq_id;
+        
+        $.ajax({
+            type: 'POST',
+            url: 'https://prod-18.australiasoutheast.logic.azure.com:443/workflows/24040b719ab74eeda9f4369db94e12f2/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=0SiedekJvkohC8McnK3DOBmKptLf_Y8zYumDR_6BXdw',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify(data_schema),
+            complete: function(response){
+                _this_btn_dom.empty();
+                _this_btn_dom.append('Submit');
+                alert(`New cleaning request ${response.responseText} has been made`);
+                location.reload();
+            },
+            success: function(response){
+                alert(`New cleaning request ${response.responseText} has been made`);
+                location.reload();
+            },
+            /*error: function(response){
+                alert('Failed to submit a new cleaning request at this time');
+            },*/
+        });
     });
 });
