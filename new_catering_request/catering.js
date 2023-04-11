@@ -283,6 +283,8 @@ function _build_preview_menu(menu_items, preview_item_card_container_name_attr, 
                         </button>   <!--4-->
                         <i hidden>${menu_item['menu_type']}</i>     <!--5-->
                         <h6 hidden>${menu_item['notes']}</h6>       <!--6-->
+                        <h6 hidden>${menu_item['menu_type_frk']}</h6>       <!--7-->
+                        <h6 hidden>${menu_item['menu_section']}</h6>       <!--8-->
                     </div>`;
     });
     _markup += "</div><br>";
@@ -311,11 +313,11 @@ function _render_animation(){
     document.querySelectorAll('.hidden').forEach((elem) => {observer.observe(elem);});
 }
 
-function _add_to_cart(item_name, item_id, menu_type, item_price, selected_quantity){
+function _add_to_cart(item_name, item_id, menu_type, menu_section, item_price, selected_quantity){
     let _matched_item = null;
     // check whether this item already exists in the cart
     MY_CART.forEach(function(cart_item){
-        if (cart_item['id'] == item_id && cart_item['name'] == item_name && cart_item['price'] == parseFloat(item_price)){
+        if (cart_item['id'] == item_id && cart_item['name'] == item_name && cart_item['menu_type'] == menu_type && cart_item['menu_section'] == menu_section){
             _matched_item = cart_item;
             cart_item['ordered_quantity'] += selected_quantity;
             cart_item['total_price'] += parseFloat(parseInt(selected_quantity) * parseFloat(item_price));
@@ -331,6 +333,7 @@ function _add_to_cart(item_name, item_id, menu_type, item_price, selected_quanti
         'name': item_name,
         'price': parseFloat(item_price),
         'menu_type': menu_type,
+        'menu_section': menu_section,
         'ordered_quantity': parseInt(selected_quantity),
         'total_price': parseFloat(parseInt(selected_quantity) * parseFloat(item_price)),
     });
@@ -353,7 +356,7 @@ function _render_body_content(){
             let _menu_items = [];
             response1.value.forEach(function(menu_item){
                 _menu_items.push({
-                    'id': menu_item.prg_cateringitemdescription,
+                    'id': menu_item.prg_cateringitemid,
                     'name': menu_item.prg_cateringitemdescription,
                     'price': menu_item.prg_priceperunit,
                     'min_quantity': menu_item.prg_minimumorderquantity,
@@ -499,11 +502,12 @@ $(document).ready(function () {
         if (_selected_quantity == null) return;
         const _item_id = _parent_div.children().eq(0).text();
         const _item_name = _parent_div.children().eq(2).children().eq(0).text();
-        const _menu_type = _parent_div.children().eq(5).text();
+        const _menu_type = _parent_div.children().eq(7).text();
+        const _menu_section = _parent_div.children().eq(8).text();
         const _item_price = parseFloat(_input_div.children().eq(3).text());
         //console.log(_selected_quantity);
         //console.log(_item_name);
-        _add_to_cart(_item_name, _item_id, _menu_type, _item_price, _selected_quantity);
+        _add_to_cart(_item_name, _item_id, _menu_type, _menu_section, _item_price, _selected_quantity);
         // clear existing inputs
         _input_div.find('.item-quantity-input').val(null);
         MY_CART.forEach((cart_item) => {console.log(cart_item)});
