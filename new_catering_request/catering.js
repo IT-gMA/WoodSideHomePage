@@ -265,12 +265,12 @@ function _build_preview_menu(menu_items, preview_item_card_container_name_attr, 
                             <div>
                                 <div>
                                     <span class='material-symbols-outlined circular' 
-                                            name='reduce-quantity-btn'>remove</span>                                  <!--0-->                  
+                                            name='reduce-quantity-btn'>remove</span>                <!--0-->                  
                                     <input name='item-quantity-input' 
                                             class='item-quantity-input' 
                                             placeholder='at least ${_min_quantity}'>                <!--1-->
                                     <span class='material-symbols-outlined circular' 
-                                            name='add-quantity-btn'>add</span>                            <!--2-->
+                                            name='add-quantity-btn'>add</span>                       <!--2-->
                                 </div>                                                                      <!--0-->
                                 <i class='input-err-msg'>Must be at least ${_min_quantity}</i>  <!--1-->
                                 <p hidden name='min-item-quantity'>${_min_quantity}</p>         <!--2-->
@@ -340,9 +340,8 @@ function _add_to_cart(item_name, item_id, menu_type, menu_section, item_price, s
 }
 
 function _process_num_cart_items(){
-    const sum_item_quantity = MY_CART.reduce((accumulator, _v) => {
-        return accumulator + _v.ordered_quantity;
-      }, 0);
+    //const sum_item_quantity = MY_CART.reduce((accumulator, _v) => {return accumulator + _v.ordered_quantity;}, 0);
+    const sum_item_quantity = MY_CART.length;
     _CART_BUTTON.children('[name=cart-item-num]').text(sum_item_quantity > 99 ? '99+' : String(sum_item_quantity));
 }
 
