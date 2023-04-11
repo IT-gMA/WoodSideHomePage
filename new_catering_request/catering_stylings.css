@@ -31,7 +31,8 @@
     --grid-row-two-per-row: 1fr 1fr !important;
     --grid-row-one-per-row: 1fr !important;
 
-    --flip-hrzly: rotate(180deg) !important;   
+    --flip-hrzly: rotate(180deg) !important;
+    --extreme-circular-border-radius: 99999px !important;   
 }
 
 .flip-hrzly{
@@ -155,7 +156,7 @@ section{
 }
 
 .loading-spinner div h6{
-    color: var(--border-solid-charcoal) !important;
+    color: #3D3935 !important;
     text-align: center !important;
 }
 
@@ -440,6 +441,12 @@ section{
 }
 
 .advertised-content-container-header .header-text-container h1{
+    font-size: 4em !important;
+    font-weight: bold !important;
+}
+
+.advertised-content-container-header .header-text-container h4{
+    font-size: large !important;
     font-weight: bold !important;
 }
 
@@ -930,7 +937,7 @@ section{
     padding: 10px !important;
     border: var(--border-solid-primary) !important;
     border-width: 3px !important;
-    border-radius: 50% !important;
+    border-radius: var(--extreme-circular-border-radius) !important;
 
     background-color: var(--clr-green-primary-400);
     box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
@@ -964,7 +971,7 @@ section{
     background-color: red !important;
     color: white !important;
     border: none !important;
-    border-radius: 50% !important;
+    border-radius: var(--extreme-circular-border-radius) !important;
 
     z-index: 11 !important;
 
@@ -1114,6 +1121,9 @@ section{
 
     .advertised-content .img-container{
         transform: translate(0) !important;
+    }
+    .advertised-content-container-header .header-text-container h1{
+        font-size: 3em !important;
     }
     /*End of advertised content styling*/
 
@@ -1311,7 +1321,7 @@ section{
     }
 
     .advertised-content-container-header .header-text-container h1{
-        font-size: large !important;
+        font-size: 2em !important;
     }
     
     .advertised-content-container-header .header-text-container h4, .advertised-content-container-header .header-text-container h5, .advertised-content .img-caption p{

@@ -1,223 +1,259 @@
 <!--head-->
-  <meta charset='utf-8'>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-  <!--Custom font-->
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/univers-next-pro" rel="stylesheet">
-  <!--End of custom font-->
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<!--Custom font-->
+<link href='https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i' rel='stylesheet'>
+<link rel='preconnect' href='https://fonts.googleapis.com'>
+<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+<link href='https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap' rel='stylesheet'>
+<link href='https://fonts.cdnfonts.com/css/univers-next-pro' rel='stylesheet'>
+<!--End of custom font-->
 
-  <link rel='stylesheet' href='netlify_styling.css'>         
+<link rel='stylesheet' href='netlify_styling.css'>         
 
-  <!--CDN scripts-->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src='https://code.jquery.com/jquery-3.6.1.min.js' 
-            integrity='sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ='
-            crossorigin='anonymous'>
-  </script>
-  <script src='https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js'></script>
-  <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+<!--CDN scripts-->
+<script src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'></script>
+<script src='https://code.jquery.com/jquery-3.6.1.min.js' 
+          integrity='sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ='
+          crossorigin='anonymous'>
+</script>
+<script src='https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
 
-  <!--Bootstrap templates-->
-  <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65' crossorigin='anonymous'>
-  <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js' integrity='sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4' crossorigin='anonymous'></script>
+<!--Bootstrap templates-->
+<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65' crossorigin='anonymous'>
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js' integrity='sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4' crossorigin='anonymous'></script>
 
-  <!--FontAwesome-->
-  <script src='https://kit.fontawesome.com/b593de632a.js' crossorigin='anonymous'></script>
-  <link href='https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css' rel='stylesheet'>
+<!--FontAwesome-->
+<script src='https://kit.fontawesome.com/b593de632a.js' crossorigin='anonymous'></script>
+<link href='https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css' rel='stylesheet'>
 
-  <!--Google Material Icon Pack-->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<!--Google Material Icon Pack-->
+<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200' />
 
-  <!---->
-  <style>
-  .material-symbols-outlined {
-    font-variation-settings:
-    'FILL' 0,
-    'wght' 100,
-    'GRAD' -25,
-    'opsz' 48
-  }
-  </style>
+<!---->
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 100,
+  'GRAD' -25,
+  'opsz' 48
+}
+</style>
 <!--/head-->
 
-<div hidden class="row sectionBlockLayout sectionPrimaryColor" style="padding: 8px; display: flex; flex-wrap: wrap; height: 2px; min-height: 15px; margin: 0px; background: rgb(193, 255, 15);"></div>
-<div hidden data-component-theme="" class="row sectionBlockLayout text-left" style="display: flex; flex-wrap: wrap; margin: 0px; min-height: auto; padding: 8px;">
-  <div class="container" style="padding: 0px; display: flex; flex-wrap: wrap; align-items: center;">
-    <!--This line needs to be uncommented for catering + Width to 80%
-    <div class="col-md-4 columnBlockLayout" style="flex-grow: 1; display: flex; flex-direction: column; min-width: 300px; text-align: center;"><a href="Requests/new-catering-request"><img src="https://servicemanagementdev.powerappsportals.com/catering_svg" alt="" name="" style="width: 80%; height: auto; max-width: 100%;"><br><span hidden style="text-align: center; font-size: 25px; font-weight: bold;">New Catering Request</span></a></div>!-->
-    <div class="col-md-4 columnBlockLayout" 
-          style="flex-grow: 1; display: flex; flex-direction: column; min-width: 300px; text-align: center;">
-      <a href="Requests/new-cleaning-request">
-        <img src="https://servicemanagementdev.powerappsportals.com/cleaning_svg" 
-              alt="" name="" 
-              style="width: 60%; height: auto; max-width: 100%;" /><br />
-          <span style="text-align: center; font-size: 25px; font-weight: bold;">New Cleaning Request</span>
-      </a>
-    </div>
-    <div class="col-md-4 columnBlockLayout" 
-          style="flex-grow: 1; display: flex; flex-direction: column; min-width: 300px; text-align: center;">
-      <a href="Requests/new-service-request">
-        <img src="https://programmed.com.au/wp-content/uploads/2022/02/icon-service-maintenance-services.svg" alt="" name="" 
-              style="width: 60%; height: auto; max-width: 100%;" /><br />
-          <span style="text-align: center; font-size: 25px; font-weight: bold;">New Service Request</span>
-        </a>
-    </div>
+<div hidden class='row sectionBlockLayout sectionPrimaryColor' style='padding: 8px; display: flex; flex-wrap: wrap; height: 2px; min-height: 15px; margin: 0px; background: rgb(193, 255, 15);'></div>
+<div hidden data-component-theme='' class='row sectionBlockLayout text-left' style='display: flex; flex-wrap: wrap; margin: 0px; min-height: auto; padding: 8px;'>
+<div class='container' style='padding: 0px; display: flex; flex-wrap: wrap; align-items: center;'>
+  <!--This line needs to be uncommented for catering + Width to 80%
+  <div class='col-md-4 columnBlockLayout' style='flex-grow: 1; display: flex; flex-direction: column; min-width: 300px; text-align: center;'><a href='Requests/new-catering-request'><img src='https://servicemanagementdev.powerappsportals.com/catering_svg' alt='' name='' style='width: 80%; height: auto; max-width: 100%;'><br><span hidden style='text-align: center; font-size: 25px; font-weight: bold;'>New Catering Request</span></a></div>!-->
+  <div class='col-md-4 columnBlockLayout' 
+        style='flex-grow: 1; display: flex; flex-direction: column; min-width: 300px; text-align: center;'>
+    <a href='Requests/new-cleaning-request'>
+      <img src='https://servicemanagementdev.powerappsportals.com/cleaning_svg' 
+            alt='' name='' 
+            style='width: 60%; height: auto; max-width: 100%;' /><br />
+        <span style='text-align: center; font-size: 25px; font-weight: bold;'>New Cleaning Request</span>
+    </a>
   </div>
+  <div class='col-md-4 columnBlockLayout' 
+        style='flex-grow: 1; display: flex; flex-direction: column; min-width: 300px; text-align: center;'>
+    <a href='Requests/new-service-request'>
+      <img src='https://programmed.com.au/wp-content/uploads/2022/02/icon-service-maintenance-services.svg' alt='' name='' 
+            style='width: 60%; height: auto; max-width: 100%;' /><br />
+        <span style='text-align: center; font-size: 25px; font-weight: bold;'>New Service Request</span>
+      </a>
+  </div>
+</div>
 </div>
 
-<section class="'landing-section">
-  <br>
-  <div class="hero-img-container">
-    <div class="mask" style="margin: 0;">
-      <div class="d-flex justify-content-center align-items-center h-100">
-        <div class="text-white">
-          <h1 class="mb-3">The power of jobs done right</h1>
-          <h6 id='hero-txt-subst' class="mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</h6>
-          <br><br>
-          <a class="btn btn-outline-light btn-lg" href="#!" role="button">More <i id='right-arrow-icon' class="fa-solid fa-chevron-right"></i></a>
-        </div>
+<section class='landing-section'>
+<br>
+<div class='hero-img-container'>
+  <div class='mask' style='margin: 0;'>
+    <div class='d-flex justify-content-center align-items-center h-100'>
+      <div class='text-white'>
+        <h1 class='mb-3'>The power of a job done right</h1>
+        <h6 id='hero-txt-subst' class='mb-3'>Programmed is a leading provider of Staffing, Facility Management, Maintenance and Care services. We employ over 30,000 people every year across a broad range of industries and partner with more than 10,000 customers, small and large.</h6>
+        <br><br>
+        <a class='btn btn-outline-light btn-lg' href='https://programmed.com.au/' role='button'>
+          <div>
+            <i>More</i> 
+            <i id='right-arrow-icon' class='ri-arrow-right-s-line'></i>
+          </div>
+        </a>
       </div>
-    </div>
-    <div class="p-5 text-center bg-image" id="homepage-hero-img" style="padding: 0;">
     </div>
   </div>
+  <div class='p-5 text-center bg-image' id='homepage-hero-img' style='padding: 0;'>
+  </div>
+</div>
 </section><br>
 <section class='nav-section'>
-  <div class='nav-section-container'>
-    <div class='tri-nav-icons'>
-      <a class='service-nav-btn hidden'>
-        <div class='nav-container' name="nav-container">
-          <span class="material-symbols-outlined">dinner_dining</span><br>
-            <h6>Catering service</h6>         
+<div class='nav-section-container'>
+  <div class='tri-nav-icons'>
+    <a class='service-nav-btn hidden' href='new_catering_request/New-Catering-Request.en-US.webpage.copy.html'>
+      <div class='nav-container' name='nav-container'>
+        <div>
+          <img src='resources/catering-request-icon.png'>
+        </div>
+        <div>
+          <h6>Catering service</h6>
+        </div>         
+      </div>
+    </a>
+    <a class='service-nav-btn hidden' href='Requests/new-service-request'>
+      <div class='nav-container' name='nav-container'>
+        <div>
+          <img src='resources/service-request-icon.png'>
+        </div>
+        <div>
+          <h6>Cleaning service</h6>
+        </div>         
+      </div>
+    </a>
+    <a class='service-nav-btn hidden' href='Requests/new-cleaning-request'>
+      <div class='nav-container' name='nav-container'>
+        <div>
+          <img src='resources/cleaning-request-icon.png'>
+        </div>
+        <div>
+          <h6>Service request</h6>
+        </div>         
+      </div>
+    </a>
+
+    <!--<a hidden class='service-nav-btn hidden' href='new_catering_request/New-Catering-Request.en-US.webpage.copy.html'>
+      <div class='nav-container' name='nav-container'>
+        <span class='material-symbols-outlined'>restaurant</span><br>
+          <h6>Catering service</h6>         
+      </div>
+    </a>
+      
+      <a hidden class='service-nav-btn hidden' href='Requests/new-cleaning-request'>
+        <div class='nav-container' name='nav-container' href='Requests/new-cleaning-request'>
+          <span class='material-symbols-outlined'>mop</span><br>
+            <h6>Cleaning service</h6>         
         </div>
       </a>
-        
-        <a class='service-nav-btn hidden' href="Requests/new-cleaning-request">
-          <div class='nav-container' name="nav-container" href="Requests/new-cleaning-request">
-            <span class="material-symbols-outlined">mop</span><br>
-              <h6>Cleaning service</h6>         
-          </div>
-        </a>
-        
-        <a class='service-nav-btn hidden' href="Requests/new-service-request">
-          <div class='nav-container' name="nav-container" href="Requests/new-service-request">
-            <span class="material-symbols-outlined">home_work</span><br>
-              <h6>Service request</h6>         
-          </div>
-        </a>
-    </div>
-    <br><br>
-    <div class='extra-service-offer-container'>
-      <div class='text-offer-section'>
-        <div>
-          <h3>We do our best facilities to provide to you</h3>
-          <hr>
-          <h6>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</h6>
-        </div><br>
-        <button type='button' class='btn btn-primary' name='contact-us-btn' confirm='Are your sure?' id='contact-us-btn'>Contact now</button>
-      </div>
       
-      <div class="service-div-container">
-        <div class="service-div right hidden" name="service-div">
-          <span class="material-symbols-outlined">devices</span>
-          <div>
-            <h6>Private workspace</h6>
-          </div>
+      <a hidden class='service-nav-btn hidden' href='Requests/new-service-request'>
+        <div class='nav-container' name='nav-container' href='Requests/new-service-request'>
+          <span class='material-symbols-outlined'>home_work</span><br>
+            <h6>Service request</h6>         
         </div>
-        <div class="service-div right hidden" name="service-div">
-          <span class="material-symbols-outlined">local_parking</span>
-          <div>
-            <h6>Parking area</h6>
-          </div>
+      </a>-->
+  </div>
+  <br><br>
+  <div class='extra-service-offer-container'>
+    <div class='text-offer-section'>
+      <div>
+        <h3>We do our best facilities to provide to you</h3>
+        <hr>
+        <h6>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</h6>
+      </div><br>
+      <button type='button' class='btn btn-primary' name='contact-us-btn' confirm='Are your sure?' id='contact-us-btn'>Contact now</button>
+    </div>
+    
+    <div class='service-div-container'>
+      <div class='service-div right hidden' name='service-div'>
+        <span class='material-symbols-outlined'>devices</span>
+        <div>
+          <h6>Private workspace</h6>
         </div>
-        <div class="service-div right hidden" name="service-div">
-          <span class="material-symbols-outlined">coffee</span>
-          <div>
-            <h6>Breakfast</h6>
-          </div>
+      </div>
+      <div class='service-div right hidden' name='service-div'>
+        <span class='material-symbols-outlined'>local_parking</span>
+        <div>
+          <h6>Parking area</h6>
         </div>
-        <div class="service-div right hidden" name="service-div">
-          <span class="material-symbols-outlined">wifi</span>
-          <div>
-            <h6>Wireless</h6>
-          </div>
+      </div>
+      <div class='service-div right hidden' name='service-div'>
+        <span class='material-symbols-outlined'>coffee</span>
+        <div>
+          <h6>Breakfast</h6>
         </div>
-        <div class="service-div right hidden" name="service-div">
-          <span class="material-symbols-outlined">electrical_services</span>
-          <div>
-            <h6>Electricity</h6>
-          </div>
+      </div>
+      <div class='service-div right hidden' name='service-div'>
+        <span class='material-symbols-outlined'>wifi</span>
+        <div>
+          <h6>Wireless</h6>
         </div>
-        <div class="service-div right hidden" name="service-div">
-          <span class="material-symbols-outlined">pool</span>
-          <div>
-            <h6>Swimming pools</h6>
-          </div>
+      </div>
+      <div class='service-div right hidden' name='service-div'>
+        <span class='material-symbols-outlined'>electrical_services</span>
+        <div>
+          <h6>Electricity</h6>
         </div>
-        <div class="service-div right hidden" name="service-div">
-          <span class="material-symbols-outlined">nature_people</span>
-          <div>
-            <h6>Community</h6>
-          </div>
+      </div>
+      <div class='service-div right hidden' name='service-div'>
+        <span class='material-symbols-outlined'>pool</span>
+        <div>
+          <h6>Swimming pools</h6>
         </div>
-        <div class="service-div right hidden" name="service-div">
-          <span class="material-symbols-outlined">exercise</span>
-          <div>
-            <h6>Exercise space</h6>
-          </div>
+      </div>
+      <div class='service-div right hidden' name='service-div'>
+        <span class='material-symbols-outlined'>nature_people</span>
+        <div>
+          <h6>Community</h6>
         </div>
-        <div class="service-div right hidden" name="service-div">
-          <span class="material-symbols-outlined">more_horiz</span>
-          <div>
-            <h6>So much more</h6>
-          </div>
+      </div>
+      <div class='service-div right hidden' name='service-div'>
+        <span class='material-symbols-outlined'>exercise</span>
+        <div>
+          <h6>Exercise space</h6>
+        </div>
+      </div>
+      <div class='service-div right hidden' name='service-div'>
+        <span class='material-symbols-outlined'>more_horiz</span>
+        <div>
+          <h6>So much more</h6>
         </div>
       </div>
     </div>
+  </div>
 </div>
-  <!--</div> idk?-->
+<!--</div> idk?-->
 </section>
 <div class='green-hz-spacer'></div>
 <section class='nav-section'>
-  <div class='nav-section-container'>
-    
-    <div class='additional-info-container hidden'>
-      <div class='img-container' id='orange-man-img-container'>
-        <img src="resources/orange-man.png">
-      </div>
-      <div class='hz-img-caption hidden'>
-        <h3>We do our best facilities to provide to you</h3>
-        <h6>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab.</h6>
-        <br>
-        <button type='button' class='btn btn-primary' name='contact-us-btn' confirm='Are your sure?' id='contact-us-btn'>Contact now</button>
-      </div>
+<div class='nav-section-container'>
+  
+  <div class='additional-info-container hidden'>
+    <div class='img-container' id='orange-man-img-container'>
+      <img src='resources/orange-man.png'>
     </div>
-    
-    <br>
-    <div class='additional-info-container'>
-      <div class='img-container right hidden' id='pfm-logo-img-container'>
-        <img src="resources/programmed_logo.png">
-      </div>
-      <div class='img-container right hidden' id='orange-man-img-container'>
-        <img src="resources/orange_lady.png">
-      </div>
-    </div><br><br>
-    
-    <div class='img-container fade hidden' id='rohin-art-work-container'>
-      <div class="mask" name='rohin-art-work-container-caption'>
-        <h6 id='rohin-art-work-txt-subst'></h6>
-      </div>
-
-      <img src="resources/rohin-art-work.png" id='rohin-art-work'>
+    <div class='hz-img-caption hidden'>
+      <h3>We do our best facilities to provide to you</h3>
+      <h6>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab.</h6>
+      <br>
+      <button type='button' class='btn btn-primary' name='contact-us-btn' confirm='Are your sure?' id='contact-us-btn'>Contact now</button>
     </div>
   </div>
+  
+  <br>
+  <div class='additional-info-container'>
+    <div class='img-container right hidden' id='pfm-logo-img-container'>
+      <img src='resources/programmed_logo.png'>
+    </div>
+    <div class='img-container right hidden' id='orange-man-img-container'>
+      <img src='resources/orange_lady.png'>
+    </div>
+  </div><br><br>
+  
+  <div class='img-container fade hidden' id='rohin-art-work-container'>
+    <div class='mask' name='rohin-art-work-container-caption'>
+      <h6 id='rohin-art-work-txt-subst'></h6>
+    </div>
+
+    <img src='resources/rohin-art-work.png' id='rohin-art-work'>
+  </div>
+</div>
 </section>
 
 <br><br><br><br>
 
 
-  <!--My custom javascripts-->
-  <script defer src="home_page.js"></script>
+<!--My custom javascripts-->
+<script defer src='home_page.js'></script>

@@ -1,16 +1,30 @@
+body{
+    background-color: white !important;
+}
 /* Font styling*/
 h1, h2, h3{
-    font-family: 'Univers Next Pro', sans-serif;
-    font-size: larger !important;
+    font-family: 'Univers Next Pro', sans-serif !important;
+}
+
+h1{
+    font-size: xx-large !important;
+}
+
+h2, h3{
+    font-size: x-large !important;
 }
 
 h4, h5, h6, p{
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif !important;
     font-size: medium !important;
 }
 
 button, a, input, i{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+button{
+    font-size: medium !important;
 }
 /* End font styling*/
 
@@ -23,7 +37,7 @@ button, a, input, i{
 }
 
 .hero-img-container .mask, #homepage-hero-img{
-    grid-column: 1 !important;
+    grid-column: 1  !important;
     grid-row: 1 !important;
 }
 
@@ -35,7 +49,7 @@ button, a, input, i{
     max-height: 1000px !important;
     
     display: block !important;
-    z-index: -1 !important;
+    z-index: 0 !important;
 }
 
 .text-white h1{
@@ -50,7 +64,11 @@ button, a, input, i{
 }
 
 .hero-img-container .mask{
-    z-index: 0 !important;
+    z-index: 2 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
 
     background-color: rgba(0, 0, 0, 0.3) !important;
     backdrop-filter: blur(4.5px) !important;
@@ -60,15 +78,16 @@ button, a, input, i{
     border: none !important;
     width: 100% !important;
     height: 100% !important;
-    padding: 0 50px;
+    padding: 0 50px !important;
 
     text-align: center !important;
 
     transition: .82s ease-in-out !important;
+    color: white !important;
 }
 
 #hero-txt-subst{
-    padding: 0 20%;
+    padding: 0 20% !important;
     cursor: pointer !important;
 }
 
@@ -77,6 +96,10 @@ button, a, input, i{
     backdrop-filter: blur(18px) !important;
     -webkit-backdrop-filter: blur(18px) !important;
     box-shadow: 0 1px 12px rgba(0, 0, 0, 0.02) !important;
+}
+
+.hero-img-container .mask, .hero-img-container .mask a{
+    color: white !important;
 }
 
 .text-white a{
@@ -99,6 +122,7 @@ button, a, input, i{
     font-family: 'Roboto', sans-serif;
     text-align: center !important;
     font-style: normal !important;
+    color: white !important;
 }
 
 .text-white a:hover, .text-white a:focus, .text-white a:active{
@@ -109,34 +133,38 @@ button, a, input, i{
     color: #3D3935 !important;
 }
 
+#right-arrow-icon{
+    margin-left: 5px !important;
+}
+
 
 /*Nav section*/
 .nav-section{
+    background-color: white !important;
     margin-top: 60px !important;
     display: flex !important;
     flex-direction: column !important;
     
     align-items: center !important;
     justify-content: center !important;
-    padding: 0 50px;
+    padding: 0 50px !important;
 }
 .tri-nav-icons{
     display: grid !important;
     /*grid-template-columns: auto auto auto !important;
     grid-gap: 85px !important;*/
 
-    --spacer: 2rem;
-    padding: 10px var(--spacer) var(--spacer);
-    gap: var(--spacer);
-    grid-auto-flow: column;
-    grid-auto-columns: 29.5%;
+    --spacer: 2rem !important;
+    padding: 10px var(--spacer) var(--spacer) !important;
+    gap: var(--spacer) !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: 29.5% !important;
 
-    overflow-x: scroll;
-    overscroll-behavior-inline: contain;
-    height: max-content;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
+    overflow-x: scroll !important;
+    overscroll-behavior-inline: contain !important;
+    height: max-content !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .nav-container{
@@ -171,16 +199,11 @@ button, a, input, i{
     padding: 2px !important;
 }
 
-
 .nav-container div img{
     max-height: 50px;
     min-height: 48px;
     width: auto;
     aspect-ratio: 1/1 !important;
-}
-
-.nav-container h6{
-    font-size: large !important;
 }
 
 .nav-container:hover, .nav-container:active, .nav-container:focus{
@@ -189,7 +212,8 @@ button, a, input, i{
 }
 
 .nav-container span, .nav-container h6{
-    color: #3D3935;
+    color: #3D3935 !important;
+    font-size: large !important;
 }
 
 .nav-container span{
@@ -202,22 +226,22 @@ button, a, input, i{
     color: #a2cd40;
 }*/
 
-.nav-container:hover > h6{
-    color: #a2cd40 !important;
+.nav-container:hover > *{
+    color: #a2cd40;
 }
 
 .nav-section-container{
     width: 100% !important;
     display: flex !important;
     flex-direction: column !important;
-    max-width: 1080px !important;
+    max-width: 980px !important;
 }
 
 .extra-service-offer-container{
     cursor: pointer !important;
     display: flex !important;
-    flex-direction: row;
-    align-items: flex-start;
+    flex-direction: row !important;
+    align-items: flex-start !important;
 
     box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px 0px !important;
     border: solid transparent !important;
@@ -225,11 +249,10 @@ button, a, input, i{
     padding: 10px 0px !important;
 
     background-color: white !important;
-    height: fit-content;
 }
 
 .text-offer-section{
-    width: 30%;
+    width: 30% !important;
     color: #3D3935 !important;
 
     padding: 15px !important;
@@ -239,7 +262,12 @@ button, a, input, i{
     font-weight: lighter !important;
 }
 
-#contact-us-btn{
+button, .btn.btn-primary, #contact-us-btn{
+    background-color: #a2cd40 !important;
+    border: none !important;
+}
+
+#contact-us-btn,  .btn.btn-primary{
     background-color: #a2cd40 !important;
     border: solid transparent !important;
     border-radius: 20px !important;
@@ -247,7 +275,8 @@ button, a, input, i{
     border-width: 3px !important;
 }
 
-#contact-us-btn:hover, #contact-us-btn:active, #contact-us-btn:focus{
+#contact-us-btn:hover, #contact-us-btn:active, #contact-us-btn:focus, #contact-us-btn::selection,
+.btn.btn-primary:hover, .btn.btn-primary:active, .btn.btn-primary:focus, .btn.btn-primary::selection{
     border: solid #c2de80 !important;
     border-width: 3px !important;
     background-color: #84BD00 !important;
@@ -255,13 +284,13 @@ button, a, input, i{
 
 .service-div-container{
     display: grid !important;
-    grid-template-columns: auto auto auto;
-    grid-gap: 15px;
+    grid-template-columns: auto auto auto !important;
+    grid-gap: 15px !important;
 
-    margin-left: 30px;
-    padding: 10px;
-    width: 75%;
-    height: min-content;
+    margin-left: 30px !important;
+    padding: 10px !important;
+    width: 75% !important;
+    height: min-content !important;
     overflow-y: scroll !important;
 }
 
@@ -269,10 +298,9 @@ button, a, input, i{
     display: flex !important;
     flex-direction: row !important;
     justify-content: flex-start !important;
-    align-items: center;
 
 
-    padding: 20px 10px;
+    padding: 20px 10px !important;
     width: 100% !important;
     color: #3D3935 !important;
 
@@ -297,7 +325,7 @@ button, a, input, i{
 .service-div span{
     grid-row: unset !important;
     color: #84BD00 !important;
-    font-size: 40px;
+    font-size: 40px !important;
     font-weight: lighter !important;
 }
 
@@ -310,6 +338,11 @@ button, a, input, i{
     width: 80% !important;
 }
 
+.service-div div h6{
+    transform: translateY(50%) !important;
+    font-size: medium;
+}
+
 .service-nav-btn{
     text-decoration: none !important;
     color: transparent !important;
@@ -318,7 +351,7 @@ button, a, input, i{
 
 /*Spacer styling*/
 .green-hz-spacer{
-    height: 80px;
+    height: 80px !important;
     background-color: #a2cd40 !important;
     margin: 80px 0px !important;
 }
@@ -352,7 +385,7 @@ button, a, input, i{
     justify-content: center !important;
     align-items: flex-start !important;
 
-    z-index: -1 !important;
+    /*z-index: -1 !important;*/
     cursor: pointer !important;
 }
 
@@ -373,7 +406,7 @@ img{
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    z-index: -1 !important;
+    z-index: 1 !important;
 }
 
 #rohin-art-work-container img, .img-container .mask{
@@ -381,7 +414,7 @@ img{
 }
 
 #rohin-art-work-container .mask{
-    z-index: 2 !important;
+    z-index: 10 !important;
     display: grid !important;
     align-items: center !important;
     justify-self: center !important;
@@ -396,6 +429,7 @@ img{
     transition: .45s ease-in-out !important;
     color: white !important;
     font-weight: bold !important;
+    z-index: 10 !important;
 }
 
 #rohin-art-work-container h6{
@@ -414,7 +448,7 @@ img{
 }
 
 #rohin-art-work-container img{
-    z-index: -1 !important;
+    z-index: 1 !important;
 }
 /*End of additional info section*/
 
@@ -444,7 +478,6 @@ img{
 }
 
 .show{
-    transition: 1.05s ease-in-out;
     opacity: 1;
     filter: blur(0);
     transform: translateX(0);
@@ -481,80 +514,77 @@ img{
 /*End of animation styling*/
 
 
-
 /*Mobile responsive design styling*/
 /*Request grid menu*/
 @media (max-width: 800px) {
     /*hero image*/
     .hero-img-container .mask{
-        padding: 0 10px;
+        padding: 0 10px !important;
     }
     #hero-txt-subst{
-        padding: 0px 0px;
+        padding: 0px 0px !important;
     }
 
     .text-white a{
-        font-size: medium;
+        font-size: medium !important;
     }
 
     /*Nav section*/
     .nav-section{
-        padding: 0 40px;
+        padding: 0 40px !important;
     }
 
     .tri-nav-icons{
         /*grid-template-columns: auto auto auto !important;
         grid-gap: 85px !important;*/
     
-        --spacer: 2rem;
-        padding: 10px var(--spacer) var(--spacer);
-        gap: var(--spacer);
-        grid-auto-flow: row;
-        grid-auto-columns: 100%;
+        --spacer: 2rem !important;
+        grid-auto-flow: row !important;
+        grid-auto-columns: 100% !important;
     }
 
     /*xtra service section*/
     .extra-service-offer-container{
-        flex-direction: column;
-        height: fit-content;
-        align-items: center;
-        justify-content: center;
+        flex-direction: column !important;
+        height: fit-content !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 
     .text-offer-section{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
 
-        width: 100%;
+        width: 100% !important;
     }
 
     #contact-us-btn{
-        font-size: small;
+        font-size: small !important;
     }
 
     .service-div-container{
-        grid-gap: 10px;
-        grid-template-columns: repeat(1, 1fr);
-        grid-gap: 5px;
+        grid-gap: 10px !important;
+        grid-template-columns: repeat(1, 1fr) !important;
+        grid-gap: 5px !important;
         
-        margin-left: 0px;
-        padding: 10px;
-        width: 100%;
+        margin-left: 0px !important;
+        padding: 10px !important;
+        width: 100% !important;
 
-        padding: 10px 50px;
-        overflow-y: visible;
+        padding: 10px 50px !important;
+        overflow-y: visible !important;
         height: 100% !important;
     }
 
     .service-div{
-        padding: 0px 10px;
+        padding: 0px 10px !important;
     }
 
     .service-div span{
-        font-size: 30px;
+        font-size: 30px !important;
     }
     .service-div h6{
         font-size: small !important;
@@ -562,7 +592,7 @@ img{
 
     /*spacer*/
     .green-hz-spacer{
-        height: 40px;
+        height: 40px !important;
     }
 
     /*Additional info section styling*/
