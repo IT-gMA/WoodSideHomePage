@@ -9,6 +9,9 @@
     --clr-dark-green: #315F35 !important;
     --clr-safety-orange: #F57F25 !important;
 
+    --clr-semi-transparent-light-grey-20: rgba(255,255,255,0.2) !important;
+    --clr-semi-transparent-light-grey-95: rgba(255,255,255,0.95) !important;
+
     --ff-univers-pro: 'Univers Next Pro', sans-serif !important;
     --ff-roboto: 'Roboto', sans-serif !important;
 
@@ -152,7 +155,7 @@ section{
 }
 
 .loading-spinner div h6{
-    color: #3D3935 !important;
+    color: var(--border-solid-charcoal) !important;
     text-align: center !important;
 }
 
@@ -493,7 +496,7 @@ section{
 
 .advertised-content .img-container img{
     max-width: 100% !important;
-    aspect-ratio: 1 / 1 !important;
+    /*aspect-ratio: 1 / 1 !important;*/
     transform: scale(1.1) !important;
 }
 
@@ -675,7 +678,7 @@ section{
 
 .item-img-container, .item-img-container img{
     max-width: 100%;
-    aspect-ratio: 1/1;
+    aspect-ratio: 1/1 !important;
     border: none;
     border-radius: 20px 0px 0px 0px;
 }
@@ -753,12 +756,12 @@ section{
 }
 
 .dropdown-menu{
-    background-color: rgba(255,255,255,0.2) !important;
+    background-color: var(--clr-semi-transparent-light-grey-95) !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
     box-shadow: 0 1px 12px rgba(0, 0, 0, 0.06) !important;
 
-    border: solid #E9E9E9 !important;
+    border: solid var(--clr-pfm-light-grey-400)!important;
     border-width: .2px !important;
 }
 
@@ -1147,6 +1150,7 @@ section{
         width: 80% !important;
         padding-left: .6em !important;
         border-radius: 10px !important;
+        border-width: .55 !important;
     
         font-size: 0.6em;
     }
@@ -1267,7 +1271,7 @@ section{
     }
 
     .weekly-menu-hero-img img{
-        aspect-ratio: 1 / 1 !important;
+        /*aspect-ratio: 1 / 1 !important;*/
         transform: translate(10%) !important;
     }
 
@@ -1384,5 +1388,6 @@ section{
         width: 65% !important;
         margin: 0 2.5% !important;
         font-size: 0.55em;
+        border-width: .55 !important;
     }
   }
