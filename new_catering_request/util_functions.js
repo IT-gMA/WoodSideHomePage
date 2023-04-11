@@ -9,3 +9,7 @@ function is_valid_digit(digit){
 function is_whitespace(str) {
     return !str.trim().length;
 }
+function extract_integers(input_str){
+    if (input_str.match(/\d+/g) == null) return null;
+    return parseInt(input_str.match(/\d+/g));
+}

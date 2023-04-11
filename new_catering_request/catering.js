@@ -445,10 +445,11 @@ $(document).ready(function () {
     _hide_elements_on_load();
     _render_body_content();
     $(document).on('keyup', 'input[name=item-quantity-input]', function (e) {
-        !DIGIT_REGEX.test($(this).val()) ? $(this).val(null) : null;
+        //!DIGIT_REGEX.test($(this).val()) ? $(this).val(null) : null;
+        !DIGIT_REGEX.test($(this).val()) ? $(this).val(extract_integers($(this).val())) : null;
 
         const _valid_digit = is_valid_digit($(this).val());
-        console.log(_valid_digit);
+        //console.log(_valid_digit);
         const _parent_div = $(this).parent().parent();
 
         if ($(this).val() && _valid_digit){
@@ -464,7 +465,8 @@ $(document).ready(function () {
         const _input_field = $(this).parent().children().eq(1);
         let _valid_digit = is_valid_digit(!_input_field.val() ? 'none' : _input_field.val());
         if (!_valid_digit){
-            _input_field.val(null);
+            _input_field.val(extract_integers(_input_field.val()));
+            //_input_field.val(null);
         }
         let _curr_quantity = _input_field.val();
         const _min_quantity = parseInt($(this).parent().parent().children().eq(2).text());
@@ -493,7 +495,8 @@ $(document).ready(function () {
         const _input_div = _parent_div.children().eq(3).children().eq(0);
         console.log(_input_div);
 
-        const _selected_quantity = parseInt(_input_div.find('.item-quantity-input').val());
+        const _selected_quantity = extract_integers(_input_div.find('.item-quantity-input').val());
+        if (_selected_quantity == null) return;
         const _item_id = _parent_div.children().eq(0).text();
         const _item_name = _parent_div.children().eq(2).children().eq(0).text();
         const _menu_type = _parent_div.children().eq(5).text();
