@@ -236,7 +236,7 @@ section{
 
 .weekly-menu-hero-title h1{
     font-weight: 300 !important;
-    font-size: xx-large !important;
+    font-size: 3em !important;
 }
 
 .hero-section-action-btn-container{
@@ -446,7 +446,7 @@ section{
 }
 
 .advertised-content-container-header .header-text-container h4{
-    font-size: large !important;
+    font-size: 2em !important;
     font-weight: bold !important;
 }
 
@@ -536,6 +536,7 @@ section{
 
 .quick-menu-display h1{
     text-align: center;
+    font-size: x-large !important;
 }
 
 .menu-desc-text{
@@ -543,6 +544,10 @@ section{
     width: 70%;
     font-style: italic;
     color: var(--clr-programmed-charcoal-400);
+}
+
+.menu-desc-text h6{
+    font-weight: lighter !important;
 }
 
 .menu-item-container{
@@ -1003,6 +1008,10 @@ section{
         padding: 2px !important;
     }
 
+    .weekly-menu-hero-title h1{
+        font-size: 1.85em !important;
+    }
+
     .hero-section-action-btn-container{
         grid-template-columns: 100% !important;
         grid-gap: 15px !important;
@@ -1104,6 +1113,10 @@ section{
         width: 0 !important;
     }
 
+    .advertised-content-container-header .header-text-container h4{
+        font-size: 1.5em !important;
+    }
+
     .advertised-content .img-caption{
         text-align: center !important;
         padding: 4rem !important;
@@ -1193,6 +1206,10 @@ section{
         height: 2rem;
     }
 
+    .quick-menu-display h1{
+        font-size: large !important;
+    }
+
     .quick-menu-display a h5{
         font-size: x-small !important;
     }
@@ -1273,7 +1290,7 @@ section{
     }
 
     .weekly-menu-hero-title h1{
-        font-size: large !important;
+        font-size: 1.5em !important;
     }
 
     .weekly-menu-hero-title{
@@ -1323,8 +1340,12 @@ section{
     .advertised-content-container-header .header-text-container h1{
         font-size: 2em !important;
     }
+
+    .advertised-content-container-header .header-text-container h4{
+        font-size: 1em !important;
+    }
     
-    .advertised-content-container-header .header-text-container h4, .advertised-content-container-header .header-text-container h5, .advertised-content .img-caption p{
+    .advertised-content-container-header .header-text-container h5, .advertised-content .img-caption p{
         font-size: small !important;
     }
 
@@ -1399,5 +1420,11 @@ section{
         margin: 0 2.5% !important;
         font-size: 0.55em;
         border-width: .55 !important;
+    }
+
+
+    /*Regular menu display*/
+    .quick-menu-display h1{
+        font-size: medium !important;
     }
   }
