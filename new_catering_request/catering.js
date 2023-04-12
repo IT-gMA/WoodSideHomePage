@@ -4,6 +4,23 @@ let MY_CART = [];
 let is_cart_btn_dragged = false;
 let screen_width = window.innerWidth;
 let screen_height = window.innerHeight;
+const BUTTON_LOADING_SPINNER = `<div style='position: relative; 
+                                            display: flex;
+                                            align-items: center !important;
+                                            justify-content: center !important;
+                                            width:100% !important; 
+                                            padding: 0px !important; 
+                                            margin: 0 !important;'>
+                                    <div style='position: relative;
+                                                display: flex !important;
+                                                align-items: center !important;
+                                                justify-content: center !important;
+                                                max-width: 2.5em; !important'>
+                                        <img src='https://i.ibb.co/Vp2hJGW/loading-spinner.gif' style='position: relative; max-width:100%;'>
+                                        <br>
+                                    </div>
+                                </div>`;
+const USER_ID = '70acd4d5-2e15-4b48-9145-f4caf659eb31';                                
 
 window.addEventListener('resize', function() {
     screen_width = window.innerWidth;
@@ -285,6 +302,7 @@ function _build_preview_menu(menu_items, preview_item_card_container_name_attr, 
                         <h6 hidden>${menu_item['notes']}</h6>       <!--6-->
                         <h6 hidden>${menu_item['menu_type_frk']}</h6>       <!--7-->
                         <h6 hidden>${menu_item['menu_section']}</h6>       <!--8-->
+                        <h6 hidden>${menu_item['menu_type_id']}</h6>       <!--9-->
                     </div>`;
     });
     _markup += "</div><br>";
@@ -313,14 +331,50 @@ function _render_animation(){
     document.querySelectorAll('.hidden-animate').forEach((elem) => {observer.observe(elem);});
 }
 
-function _add_to_cart(item_name, item_id, menu_type, menu_section, item_price, selected_quantity){
+function _insert_user_cart_table(cart_item){
+    $.ajax({
+        type: 'POST',
+        url: 'https://prod-26.australiasoutheast.logic.azure.com:443/workflows/779a6d6f7b494f7a8cd90edd02613794/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=InKgiyYo3AIjM5sPr4o12uL_neRc7MSG8zg7rC7T6LE',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({
+            'tenant_id': USER_ID,
+            'cart_item': cart_item['id'],
+            'quantity': cart_item['ordered_quantity'],
+            'catering_menu': cart_item['menu_type_id'],
+            'menu_type': cart_item['menu_type']
+        }),
+        complete: function (response){
+            console.log(response.status);
+            if (![200].includes(response.status)) return alert('Failed add new item at this time');
+            alert(`${cart_item['ordered_quantity']} of ${cart_item['name']} has been added to your shopping cart`);
+            MY_CART.push(cart_item);
+
+            _process_num_cart_items();
+        },
+        /*success: function (response, status, xhr){
+            console.log(status)
+            if (![200].includes(status)) return alert('Failed add new item at this time');
+            _process_num_cart_items();
+            console.log(response);
+            alert(`${_selected_quantity} of ${_item_name} has been added to your shopping cart`);
+            MY_CART.push(new_cart_item);
+        },*/
+        /*error: function(response){
+            alert('Failed add new item at this time');
+        },*/
+    });
+}
+
+function _add_to_cart(item_name, item_id, menu_type, menu_type_id, menu_section, item_price, selected_quantity){
     let _matched_item = null;
     // check whether this item already exists in the cart
     MY_CART.forEach(function(cart_item){
-        if (cart_item['id'] == item_id && cart_item['name'] == item_name && cart_item['menu_type'] == menu_type && cart_item['menu_section'] == menu_section){
+        if (cart_item['id'] == item_id && cart_item['name'] == item_name && cart_item['menu_type_id'] == menu_type_id && cart_item['menu_section'] == menu_section){
             _matched_item = cart_item;
             cart_item['ordered_quantity'] += selected_quantity;
             cart_item['total_price'] += parseFloat(parseInt(selected_quantity) * parseFloat(item_price));
+            cart_item['last_modified'] = new Date();
         }
     });
     if (_matched_item != null){
@@ -328,15 +382,18 @@ function _add_to_cart(item_name, item_id, menu_type, menu_section, item_price, s
         return;
     }
     // this item doesn't exist in the cart
-    MY_CART.push({
+    const new_cart_item = {
         'id': item_id,
         'name': item_name,
         'price': parseFloat(item_price),
         'menu_type': menu_type,
+        'menu_type_id': menu_type_id,
         'menu_section': menu_section,
         'ordered_quantity': parseInt(selected_quantity),
         'total_price': parseFloat(parseInt(selected_quantity) * parseFloat(item_price)),
-    });
+        'last_modified': new Date(),
+    };
+    _insert_user_cart_table(new_cart_item);
 }
 
 function _process_num_cart_items(){
@@ -353,6 +410,7 @@ function _render_body_content(){
         accept: 'application/json;odata=verbose',
         success: function (response1, status1, xhr1){
             let _menu_items = [];
+            console.log(response1.value);
             response1.value.forEach(function(menu_item){
                 _menu_items.push({
                     'id': menu_item.prg_cateringitemid,
@@ -364,8 +422,9 @@ function _render_body_content(){
                     'notes': menu_item.prg_notes,
                     'menu_type_frk': menu_item.prg_menutype,
                     'menu_section': menu_item.prg_menusection,
-                })
-            })
+                    'shown_in_preview': menu_item.crcfc_show_in_preview,
+                });
+            });
             //_menu_items.forEach((v) => console.log(v));
             $.ajax({
                 type: 'POST',
@@ -373,6 +432,7 @@ function _render_body_content(){
                 contentType: 'application/json',
                 accept: 'application/json;odata=verbose',
                 success: function (response, status, xhr){
+                    const _catering_menu_dict = {};
                     const _keyMap = {  crcfc_is_regular_menu: 'is_regular_menu', 
                                         crcfc_is_emergency: 'is_emergency',
                                         prg_cateringmenuid: 'id',
@@ -391,7 +451,9 @@ function _render_body_content(){
                                                                                 [_keyMap[key] || key, value])
                                             ));
                     _menu_types.forEach(function(menu_type){
-                        menu_type['quick_card_menu'] = _menu_items.filter(menu_item => String(menu_item.menu_type_frk).trim() == String(menu_type.name).trim());
+                        _catering_menu_dict[`${menu_type['id']}`] = menu_type['name'];
+                        menu_type['quick_card_menu'] = _menu_items.filter(menu_item => (String(menu_item.menu_type_frk).trim() == String(menu_type.name).trim() && menu_item.shown_in_preview));
+                        menu_type['quick_card_menu'].forEach((menu_item) => menu_item['menu_type_id'] = menu_type['id']);
                     });                          
 
                     let _weekly_menus = _menu_types.filter(menu_type => !menu_type['is_regular_menu'] && !menu_type['is_emergency']);
@@ -405,6 +467,17 @@ function _render_body_content(){
                     _render_regular_menus(_regular_menus);
                     _render_regular_menus(_priority_menus);
 
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://prod-01.australiasoutheast.logic.azure.com:443/workflows/1896be5cf2c34e59bdad0c3a17cc4414/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=YRyamaJ-ffJQwasjPU_SXR5QzGFFLoFnrEJ8tT1OTi4',
+                        contentType: 'application/json',
+                        accept: 'application/json;odata=verbose',
+                        success: function (response, status, xhr){
+
+                        }
+                    });
+
                     _quick_ui_styling();
                     // render document animations
                     _render_animation();
@@ -412,9 +485,7 @@ function _render_body_content(){
                     _process_num_cart_items();
 
                     _ready_page_for_contents();
-                    
                     document.querySelectorAll('[name=top-nav-prev]').forEach((e) => {console.log(e)});
-
                     _render_card_swipe_btns('[name=top-nav-prev]', '[name=top-nav-nxt]', $('span[name=top-nav-prev]'), $('span[name=top-nav-nxt]'), '[name=in-page-nav-menu-container]', 0.2);
                 },
             });
@@ -441,6 +512,24 @@ function _hide_elements_on_load(){
         $(this).hide();
     });
     //$('.in-page-nav-menu').hide();
+}
+
+
+function prepare_cart_table_update(input_dom, cart_btn, complete=false){
+    const _parent_div = input_dom.closest('.item-input-container');
+    const _add_btn = _parent_div.find('[name=add-quantity-btn]');
+    const _reduce_btn = _parent_div.find('[name=reduce-quantity-btn]');
+    if (!complete){
+        [_add_btn, _reduce_btn, input_dom, cart_btn].forEach((elem) => elem.attr('disabled', true));
+        cart_btn.empty();
+        //cart_btn.append(BUTTON_LOADING_SPINNER);
+        cart_btn.append('Processing...');
+    }else{
+        [_add_btn, _reduce_btn, input_dom].forEach((elem) => elem.attr('disabled', true));
+        input_dom.val(null);
+        cart_btn.empty();
+        cart_btn.append('Add to cart');
+    }
 }
 
 $(document).ready(function () {
@@ -492,25 +581,24 @@ $(document).ready(function () {
     });
 
     $(document).on('click', 'button[name=add-to-cart-btn]', function(e) {
-        $(this).attr('disabled', true);        
         const _parent_div = $(this).parent();
         const _input_div = _parent_div.children().eq(3).children().eq(0);
-        console.log(_input_div);
+        prepare_cart_table_update(_input_div.find('.item-quantity-input'), $(this));
 
         const _selected_quantity = extract_integers(_input_div.find('.item-quantity-input').val());
         if (_selected_quantity == null) return;
         const _item_id = _parent_div.children().eq(0).text();
         const _item_name = _parent_div.children().eq(2).children().eq(0).text();
         const _menu_type = _parent_div.children().eq(7).text();
+        const _menu_type_id = _parent_div.children().eq(9).text();
         const _menu_section = _parent_div.children().eq(8).text();
         const _item_price = parseFloat(_input_div.children().eq(3).text());
+
         //console.log(_selected_quantity);
         //console.log(_item_name);
-        _add_to_cart(_item_name, _item_id, _menu_type, _menu_section, _item_price, _selected_quantity);
+        _add_to_cart(_item_name, _item_id, _menu_type, _menu_type_id, _menu_section, _item_price, _selected_quantity);
         // clear existing inputs
-        _input_div.find('.item-quantity-input').val(null);
         MY_CART.forEach((cart_item) => {console.log(cart_item)});
-        alert(`${_selected_quantity} of ${_item_name} has been added to your shopping cart`);
-        _process_num_cart_items();
+        prepare_cart_table_update(_input_div.find('.item-quantity-input'), $(this), true);
     });
 });
