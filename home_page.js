@@ -2,12 +2,12 @@ const transition_delay = 200; // ms
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         //console.log(entry);
-        entry.isIntersecting ? entry.target.classList.add('show') : entry.target.classList.remove('show');
+        entry.isIntersecting ? entry.target.classList.add('show-animate') : entry.target.classList.remove('show-animate');
         //entry.isIntersecting ? console.log('seen') : console.log('out of sight');
     });
 });
 
-const hidden_elems = document.querySelectorAll('.hidden');
+const hidden_elems = document.querySelectorAll('.hidden-animate');
 
 hidden_elems.forEach((elem) => {
     observer.observe(elem);
