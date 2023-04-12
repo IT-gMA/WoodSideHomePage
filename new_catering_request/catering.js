@@ -217,7 +217,7 @@ function _render_regular_menus(regular_menu_list){
 
 function _build_preview_menu(menu_items, preview_item_card_container_name_attr, preview_item_card_menu_name_attr, menu_type){
     // bottom hidden
-    let _markup = `<div class='menu-item-container bottom hidden snap-inline' name='${preview_item_card_menu_name_attr}'>`;
+    let _markup = `<div class='menu-item-container bottom hidden-animate snap-inline' name='${preview_item_card_menu_name_attr}'>`;
 
     // construct a card container for each item in this menu type
     menu_items.forEach((menu_item) => {
@@ -308,9 +308,9 @@ function _quick_ui_styling(){
 function _render_animation(){
     // Animation control
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {entry.isIntersecting ? entry.target.classList.add('show') : entry.target.classList.remove('show');});
+        entries.forEach((entry) => {entry.isIntersecting ? entry.target.classList.add('show-animate') : entry.target.classList.remove('show-animate');});
     });
-    document.querySelectorAll('.hidden').forEach((elem) => {observer.observe(elem);});
+    document.querySelectorAll('.hidden-animate').forEach((elem) => {observer.observe(elem);});
 }
 
 function _add_to_cart(item_name, item_id, menu_type, menu_section, item_price, selected_quantity){

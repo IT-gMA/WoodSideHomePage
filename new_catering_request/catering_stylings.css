@@ -75,57 +75,57 @@ section{
 }
 
 /*Web page animation*/
-.hidden{
+.hidden-animate{
     opacity: 0;
     transition: 1.05s ease-in-out;
     filter: blur(5px);
     transform: translateX(-100%);
 }
 
-.right.hidden{
+.right.hidden-animate{
     transform: translateX(100%);
 }
 
-.fade.hidden{
+.fade.hidden-animate{
     transform: translateX(0);
     transform: translateY(0);
     transition: 1.5s ease-in-out;
     transform: translateZ(-100%);
 }
 
-.top.hidden{
+.top.hidden-animate{
     transform: translateX(0);
     transform: translateY(-20%);
 }
 
-.bottom.hidden{
+.bottom.hidden-animate{
     transform: translateX(0);
     transform: translateY(40%);
 }
 
-.show{
+.show-animate{
     transition: 1.05s ease-in-out;
     opacity: 1;
     filter: blur(0);
     transform: translateX(0);
 }
 
-.right.show{
+.right.show-animate{
     transform: translateX(0);
 }
 
-.top.show, .bottom.show{
+.top.show-animate, .bottom.show-animate{
     transform: translateY(0);
 }
 
-.fade.show{
+.fade.show-animate{
     transform: translateX(0);
     transform: translateY(0);
     transform: translateZ(0);
 }
 
 @media(prefers-reduced-motions){
-    .hidden{
+    .hidden-animate{
         transition: none !important;
     }
 }
