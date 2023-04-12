@@ -516,7 +516,7 @@ img{
 
 /*Mobile responsive design styling*/
 /*Request grid menu*/
-@media (max-width: 800px) {
+@media (max-width: 780px) {
     /*hero image*/
     .hero-img-container .mask{
         padding: 0 10px !important;
@@ -545,49 +545,39 @@ img{
 
     /*xtra service section*/
     .extra-service-offer-container{
-        flex-direction: column !important;
-        height: fit-content !important;
-        align-items: center !important;
-        justify-content: center !important;
+        display: grid !important;
+        grid-template-columns: 30% auto;
     }
 
-    .text-offer-section{
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-
-        width: 100% !important;
+    .service-div-container, .text-offer-section{
+        width: auto !important;
+    }
+    .text-offer-section, .text-offer-section div h3{
+        font-size: 1.15em !important;
+    }
+    .text-offer-section, .text-offer-section div h6, #contact-us-btn{
+        font-size: .9em !important;
     }
 
     #contact-us-btn{
-        font-size: small !important;
+        padding: .1rem .8rem !important;
     }
 
     .service-div-container{
-        grid-gap: 10px !important;
-        grid-template-columns: repeat(1, 1fr) !important;
-        grid-gap: 5px !important;
+        grid-template-columns: 1fr 1fr !important;
+        grid-gap: 1rem !important;
         
         margin-left: 0px !important;
-        padding: 10px !important;
-        width: 100% !important;
 
-        padding: 10px 50px !important;
-        overflow-y: visible !important;
-        height: 100% !important;
-    }
-
-    .service-div{
-        padding: 0px 10px !important;
+        padding: 1rem !important;
+        overflow-y: auto !important;
     }
 
     .service-div span{
-        font-size: 30px !important;
+        font-size: 2em !important;
     }
     .service-div h6{
-        font-size: small !important;
+        font-size: .8em !important;
     }
 
     /*spacer*/
@@ -626,6 +616,20 @@ img{
     }
   }
 
+@media (max-width: 550px) {
+    /*xtra service section*/
+    .extra-service-offer-container{
+        grid-template-columns: 37.5% auto;
+        grid-gap: .5em !important;
+    }
+
+    .service-div-container{
+        grid-template-columns: 1fr !important;
+        grid-gap: .45rem !important;
+
+        padding: .55rem !important;
+    }
+}
 
 @media (max-width: 450px) {
     /*hero image*/
@@ -645,6 +649,37 @@ img{
 
     .text-white a, #hero-txt-subst{
         font-size: .9em !important;
+    }
+
+
+    /*xtra service section*/
+    .extra-service-offer-container{
+        grid-template-columns: 1fr !important;
+        height: fit-content !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .text-offer-section{
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+
+    #contact-us-btn{
+        font-size: small !important;
+    }
+
+    .service-div-container{
+        grid-gap: .65rem !important;
+        grid-template-columns: 1fr !important;
+        grid-gap: 5px !important;
+        
+        margin-left: 0px !important;
+        padding: 1rem !important;
+        overflow-y: auto !important;
     }
 }
 
