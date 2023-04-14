@@ -79,16 +79,34 @@ function _format_new_elem_hrz_position(pos){
 
 _drag_element(document.getElementById('cart-btn-container'));
 
-/*const date = new Date();
-let _day = date.getDate();
-let _month = date.getMonth() + 1;
-let _year = date.getFullYear();*/
-
 function _query_nth_week_of_the_month(){
     const today = new Date();
     const nth_week = parseInt(Math.ceil(today.getDate() / 7) - 1);
     //console.log(`Today is in week ${nth_week - 1} of the month.`);
     return nth_week < 1 ? 0 : nth_week > 3 ? 3 : nth_week;
+}
+
+function process_modal_section_render(modal, show=true){
+    modal.css('display', `${show ? 'flex' : 'none'}`);
+    modal.css('opacity', `${show ? '1' : '0'}`);
+    $('body').css('overflow', `${show ? 'hidden' : 'auto'}`);
+    //$('body').css('height', `${show ? '100vh' : 'auto'}`);
+    
+}
+
+function catering_cart_ajax_event(complete=false){
+    const cart_popup_modal = $('section[name=cart-menu-modal-container]');
+    const _selected_item_txt = cart_popup_modal.find('[name=selected-item-txt]');
+    const _footer = $('div[name=cart-menu-modal-footer]');
+
+    _selected_item_txt.css('opacity', `${complete ? '1' : '0'}`);
+    _footer.find('button').attr('disabled', !complete);
+    cart_popup_modal.find('[name=search-txt-field]').attr('disabled', !complete);
+    cart_popup_modal.find('[name=search-txt-field]').val(null);
+    $('span[name=cart-menu-loading-spinner]').css('display', `${complete ? 'none' : 'grid'}`);
+
+    // css: .table-container .overflow-scroll --> default: display: grid
+    $('div[name=cart-menu-table]').css('display', `${complete ? 'grid' : 'none'}`);
 }
 
 function _toggle_card_swipe(nxt_btn, prev_btn, card_item, actual_width){
@@ -97,6 +115,66 @@ function _toggle_card_swipe(nxt_btn, prev_btn, card_item, actual_width){
 
     prev_btn.attr('disabled', card_item.scrollLeft < 1);
     nxt_btn.attr('disabled', card_item.scrollLeft >= actual_width - 10);
+}
+
+function _cal_cart_total_price(cart_json_data){
+    let total_price = 0.0;
+    cart_json_data.forEach((item) => total_price += item['total_price']);
+    return total_price;
+}
+
+function _append_cart_item(cart_item){
+    $('div[name=cart-menu-table]').append(`<div class='cart-item-info-container'
+                                    name='cart-item-info-container'
+                                    data-cartid='${cart_item['cart_id']}' 
+                                    data-cateringitem='${cart_item['id']}' 
+                                    data-cateringmenu='${cart_item['menu_type_id']}'
+                                    data-menusection='${cart_item['menu_section']}'
+                                    data-totalprice='${cart_item['total_price']}'
+                                    data-price='${cart_item['price']}'
+                                    data-quantity='${cart_item['ordered_quantity']}'
+                                    data-minquantity='${cart_item['min_quantity']}'>
+                                <div class='img-container cart-item'>
+                                    <img src='${cart_item['img_url']}'>
+                                </div>          <!--0-->
+                                <div class='cart-item-info-content'>
+                                    <div class='cart-item-info-content-inner'>
+                                        <div class='cart-item-desc-content'>
+                                            <h5 class='to-be-searched-data' name='cart-item-name'>${cart_item['name']}</h5>
+                                            <h6>
+                                                ${cart_item['menu_type']}<br>
+                                                ${cart_item['menu_section']}
+                                            <h6>
+                                            <p>$${parseFloat(cart_item['price']).toFixed(2)} - ${cart_item['unit']}</p>
+                                        </div>          <!--0-->
+                                        <span class="material-symbols-outlined remove-cart-item-btn" name='remove-single-cart-item-btn'>delete</span>
+                                    </div>
+
+                                    <div class='cart-item-price-content'>      
+                                        <h6 name='single-item-total-price-msg'>$${parseFloat(cart_item['total_price']).toFixed(2)}</h6>     <!--0-->
+                                        <div>                            
+                                            <span class='material-symbols-outlined circular' name='reduce-quantity-btn'  data-fromcart='1'>remove</span>   <!--0-->                  
+                                                <input name='item-quantity-input'   data-minquantity='${cart_item['min_quantity']}'     data-fromcart='1'
+                                                        class='item-quantity-input' placeholder='at least ${cart_item['min_quantity']}' 
+                                                        value='${cart_item['ordered_quantity']}' data-fromcart='1' data-isvalid='1'>     <!--1-->
+                                                    <span class='material-symbols-outlined circular' name='add-quantity-btn'  data-fromcart='1'>add</span>          <!--2-->
+                                            </div>     <!--1-->
+                                        </div>       <!--1-->
+                                    </div>
+                                </div>`);
+}
+
+function _construct_cart_popup_modal(cart_json_data){
+    const cart_popup_modal = $('section[name=cart-menu-modal-container]');
+    const _selected_item_txt = cart_popup_modal.find('[name=selected-item-txt]');
+    _selected_item_txt.css('opacity', '0');
+    $('span[name=cart-menu-loading-spinner]').css('display', 'none');
+    cart_json_data.forEach(function(cart_item){
+        _append_cart_item(cart_item);
+    });
+
+    _recalculate_cart_subtotal(true);    
+    _selected_item_txt.css('opacity', '1');
 }
 
 function _render_card_swipe_btns(preview_item_card_menu_prev_btn_attr, preview_item_card_menu_nxt_btn_attr, prev_btn, nxt_btn ,preview_item_card_menu_div_attr, scroll_factor=null){
@@ -283,7 +361,7 @@ function _build_preview_menu(menu_items, preview_item_card_container_name_attr, 
                                 <div>
                                     <span class='material-symbols-outlined circular' 
                                             name='reduce-quantity-btn'>remove</span>                <!--0-->                  
-                                    <input name='item-quantity-input' 
+                                    <input name='item-quantity-input'   data-minquantity='${_min_quantity}'
                                             class='item-quantity-input' 
                                             placeholder='at least ${_min_quantity}'>                <!--1-->
                                     <span class='material-symbols-outlined circular' 
@@ -303,6 +381,7 @@ function _build_preview_menu(menu_items, preview_item_card_container_name_attr, 
                         <h6 hidden>${menu_item['menu_type_frk']}</h6>       <!--7-->
                         <h6 hidden>${menu_item['menu_section']}</h6>       <!--8-->
                         <h6 hidden>${menu_item['menu_type_id']}</h6>       <!--9-->
+                        <h6 hidden>${menu_item['unit']}</h6>               <!--10-->
                     </div>`;
     });
     _markup += "</div><br>";
@@ -331,25 +410,115 @@ function _render_animation(){
     document.querySelectorAll('.hidden-animate').forEach((elem) => {observer.observe(elem);});
 }
 
-function _insert_user_cart_table(cart_item){
+function compose_cart_item_list(cart_items){
+    let values = [];
+    cart_items.forEach(function(cart_item){
+        const cart_item_container = cart_item['cart_item_container'];
+        const og_quantity = parseInt(cart_item_container.attr('data-quantity'));
+        const min_quantity = parseInt(cart_item_container.find('data-minquantity'));
+        let new_quantity = extract_integers(cart_item_container.find('[name=item-quantity-input]').val());
+        if (new_quantity != og_quantity || new_quantity == null){
+            // update when this item has new quantity changed to null or other than its og quantity
+            let _updates = {
+                            'tenant_id': USER_ID,
+                            'cart_item': cart_item_container.attr('data-cateringitem'),
+                            'quantity': cart_item.hasOwnProperty('is_removed') || new_quantity == null || new_quantity <= 0 || new_quantity < min_quantity ? 0 : new_quantity,
+                            'catering_menu': cart_item_container.attr('data-cateringmenu'),
+                            'menu_type': cart_item_container.attr('data-menusection'),
+                            'cart_id': cart_item_container.attr('data-cartid'),
+                        };
+            //values.push(_updates);
+            _updates['new_price'] = _updates['quantity']  * parseFloat(cart_item_container.attr('data-price'));
+            cart_item['updates'] = _updates;
+            values.push(_updates);
+        }
+    });
+    return values;
+}
+
+function remap_cart_modal_table(cart_items){
+    cart_items.forEach(function(cart_item){
+        const cart_item_container = cart_item['cart_item_container'];
+        const og_quantity = parseInt(cart_item_container.attr('data-quantity'));
+        const min_quantity = parseInt(cart_item_container.attr('data-minquantity'));
+        
+        const _new_updates = cart_item['updates'];
+        if (_new_updates == null) return;
+        const _new_quantity = parseInt( _new_updates['quantity']);
+        console.log('new quantity is ' + _new_quantity);
+        if (cart_item.hasOwnProperty('is_removed') || _new_quantity < min_quantity || _new_quantity == null) return cart_item_container.remove();
+
+        cart_item_container.attr('data-quantity', _new_quantity);
+        cart_item_container.attr('data-totalprice', _new_updates['new_price']);
+
+        cart_item_container.find('[name=item-quantity-input]').val(_new_quantity);
+        cart_item_container.find('[name=single-item-total-price-msg]').text(`$${parseFloat(_new_updates['new_price']).toFixed(2)}`);
+    });
+}
+
+function multi_update_user_cart_table(cart_items){
+    catering_cart_ajax_event();
+    const cart_popup_modal = $('section[name=cart-menu-modal-container]');
+    const values = compose_cart_item_list(cart_items);
+    console.log('returned values');
+    console.log(values);
+
+    console.log('returned cart items');
+    console.log(cart_items);
+    /*remap_cart_modal_table(cart_items);
+    _recalculate_cart_subtotal();
+    _process_num_cart_items();
+    return catering_cart_ajax_event(true);*/
+    
     $.ajax({
         type: 'POST',
-        url: 'https://prod-26.australiasoutheast.logic.azure.com:443/workflows/779a6d6f7b494f7a8cd90edd02613794/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=InKgiyYo3AIjM5sPr4o12uL_neRc7MSG8zg7rC7T6LE',
+        url: 'https://prod-24.australiasoutheast.logic.azure.com:443/workflows/8b393c145e1749efb9d1a85dc57f54c3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=65Nh0tbsKkXj5pTOQ0nX3cVuPI68sJ5jDLphkgF0las',
         contentType: 'application/json',
         dataType: 'json',
-        data: JSON.stringify({
-            'tenant_id': USER_ID,
-            'cart_item': cart_item['id'],
-            'quantity': cart_item['ordered_quantity'],
-            'catering_menu': cart_item['menu_type_id'],
-            'menu_type': cart_item['menu_type']
-        }),
+        data: JSON.stringify({'value': values}),
         complete: function (response){
-            console.log(response.status);
-            if (![200].includes(response.status)) return alert('Failed add new item at this time');
-            alert(`${cart_item['ordered_quantity']} of ${cart_item['name']} has been added to your shopping cart`);
-            MY_CART.push(cart_item);
+            if (![200].includes(response.status)) return alert('Failed to update cart at this time');
 
+            remap_cart_modal_table(cart_items);
+            _process_num_cart_items();
+            //alert('Failed to update cart at this time');
+            catering_cart_ajax_event(true);
+            _recalculate_cart_subtotal(true);
+        }
+    });
+}
+
+function single_update_user_cart_table(cart_item, parent_div, input_div, cart_item_container){
+    let _data_dict = {
+        'tenant_id': USER_ID,
+        'cart_item': cart_item['id'],
+        'quantity': cart_item['ordered_quantity'],
+        'catering_menu': cart_item['menu_type_id'],
+        'menu_type': cart_item['menu_type'],
+        //'cart_id': cart_item['cart_id'],
+    }
+    if (cart_item['cart_id'] != null) _data_dict['cart_id'] = cart_item['cart_id'];
+    $.ajax({
+        type: 'POST',
+        url: 'https://prod-24.australiasoutheast.logic.azure.com:443/workflows/8b393c145e1749efb9d1a85dc57f54c3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=65Nh0tbsKkXj5pTOQ0nX3cVuPI68sJ5jDLphkgF0las',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({'value': [_data_dict]}),
+        complete: function (response){
+            console.log(response);
+            prepare_cart_table_update(input_div.find('.item-quantity-input'), parent_div.find('[name=add-to-cart-btn]'), true);
+
+            if (![200].includes(response.status)) return alert(`${cart_item['cart_id'] == null ? 'Failed add new item at this time' : 'Unable to add ' + cart_item['name']}`);
+
+            alert(`${cart_item['ordered_quantity']} of ${cart_item['name']} has been added to your shopping cart`);
+            if (cart_item['cart_id'] == null){
+                cart_item['cart_id'] = response.responseJSON[0];    // assign to newly generated cart id
+                _append_cart_item(cart_item);
+            }else{
+                cart_item_container.find('[name=item-quantity-input]').val(cart_item['ordered_quantity']);
+                cart_item_container.find('[name=single-item-total-price-msg]').text(cart_item['ordered_quantity'] > 0 ? `$${parseFloat(cart_item['total_price']).toFixed(2)}` : 'Item has been cleared');
+            }
+            _recalculate_cart_subtotal(true);
             _process_num_cart_items();
         },
         /*success: function (response, status, xhr){
@@ -359,46 +528,59 @@ function _insert_user_cart_table(cart_item){
             console.log(response);
             alert(`${_selected_quantity} of ${_item_name} has been added to your shopping cart`);
             MY_CART.push(new_cart_item);
-        },*/
-        /*error: function(response){
+        },
+        error: function(response){
             alert('Failed add new item at this time');
         },*/
     });
 }
 
-function _add_to_cart(item_name, item_id, menu_type, menu_type_id, menu_section, item_price, selected_quantity){
+function _add_to_cart(item_name, item_id, menu_type, menu_type_id, menu_section, item_price, selected_quantity, parent_div, input_div){
     let _matched_item = null;
-    // check whether this item already exists in the cart
-    MY_CART.forEach(function(cart_item){
-        if (cart_item['id'] == item_id && cart_item['name'] == item_name && cart_item['menu_type_id'] == menu_type_id && cart_item['menu_section'] == menu_section){
-            _matched_item = cart_item;
-            cart_item['ordered_quantity'] += selected_quantity;
-            cart_item['total_price'] += parseFloat(parseInt(selected_quantity) * parseFloat(item_price));
-            cart_item['last_modified'] = new Date();
-        }
-    });
-    if (_matched_item != null){
-        // existing item has already been added above thus making the variable _matched_item not null -> halts the function
-        return;
+    const cart_popup_modal = $('section[name=cart-menu-modal-container]');
+    const cart_menu_table = $('div[name=cart-menu-table]');
+    const _min_quantity = input_div.find('.item-quantity-input').attr('data-minquantity');
+
+    const matching_items = cart_menu_table.find(`[data-cateringitem='${item_id}'][data-cateringmenu='${menu_type_id}']`);
+    console.log(`${matching_items.length > 0 ? 'already exists' : 'new item'}`);
+    if (matching_items.length > 0){
+        const _matched_item = matching_items.first();
+        const total_quantity = parseInt(selected_quantity) + parseInt(_matched_item.data('quantity'));
+        const _added_price = parseInt(selected_quantity) * parseFloat(item_price);
+        single_update_user_cart_table({
+            'cart_id': _matched_item.data('cartid'),
+            'id': item_id,
+            'name': item_name,
+            'ordered_quantity': total_quantity,
+            'menu_type_id': menu_type_id,
+            'menu_type': menu_type,
+            'total_price': total_quantity * parseFloat(item_price),
+            'added_price': _added_price,
+            'last_modified': new Date(),
+        }, parent_div, input_div, _matched_item);
+    }else{
+        single_update_user_cart_table({
+            'cart_id': null,
+            'id': item_id,
+            'name': item_name,
+            'price': parseFloat(item_price),
+            'img_url': parent_div.find('#menu-item-thbn-img').attr('src'),
+            'unit': parent_div.children().eq(10).text(),
+            'min_quantity': _min_quantity,
+            'menu_type': menu_type,
+            'menu_type_id': menu_type_id,
+            'menu_section': menu_section,
+            'ordered_quantity': parseInt(selected_quantity),
+            'total_price': parseFloat(parseInt(selected_quantity) * parseFloat(item_price)),
+            'last_modified': new Date(),
+        }, parent_div, input_div, _matched_item);
     }
-    // this item doesn't exist in the cart
-    const new_cart_item = {
-        'id': item_id,
-        'name': item_name,
-        'price': parseFloat(item_price),
-        'menu_type': menu_type,
-        'menu_type_id': menu_type_id,
-        'menu_section': menu_section,
-        'ordered_quantity': parseInt(selected_quantity),
-        'total_price': parseFloat(parseInt(selected_quantity) * parseFloat(item_price)),
-        'last_modified': new Date(),
-    };
-    _insert_user_cart_table(new_cart_item);
 }
 
 function _process_num_cart_items(){
     //const sum_item_quantity = MY_CART.reduce((accumulator, _v) => {return accumulator + _v.ordered_quantity;}, 0);
-    const sum_item_quantity = MY_CART.length;
+    //const sum_item_quantity = MY_CART.length;
+    const sum_item_quantity = $('div[name=cart-menu-table]').find('[name=cart-item-info-container]').length;
     _CART_BUTTON.children('[name=cart-item-num]').text(sum_item_quantity > 99 ? '99+' : String(sum_item_quantity));
 }
 
@@ -410,7 +592,6 @@ function _render_body_content(){
         accept: 'application/json;odata=verbose',
         success: function (response1, status1, xhr1){
             let _menu_items = [];
-            console.log(response1.value);
             response1.value.forEach(function(menu_item){
                 _menu_items.push({
                     'id': menu_item.prg_cateringitemid,
@@ -468,25 +649,50 @@ function _render_body_content(){
                     _render_regular_menus(_priority_menus);
 
 
+                    // query cart table
                     $.ajax({
                         type: 'POST',
-                        url: 'https://prod-01.australiasoutheast.logic.azure.com:443/workflows/1896be5cf2c34e59bdad0c3a17cc4414/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=YRyamaJ-ffJQwasjPU_SXR5QzGFFLoFnrEJ8tT1OTi4',
+                        url: 'https://prod-00.australiasoutheast.logic.azure.com:443/workflows/201e678df63c4a3781aa22c9165aec3f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=hI1jHMrdXzuLBYTPpla1vTkJo5x6DtHs82GaNEfDhmI',
                         contentType: 'application/json',
-                        accept: 'application/json;odata=verbose',
-                        success: function (response, status, xhr){
+                        accept: 'application/json;data=verbose',
+                        data: JSON.stringify({'tenant_id': USER_ID,}),
+                        success: function (cart_query_response, cart_query_status, cart_query_xhr){
+                            if (String(cart_query_status) != 'success') return MY_CART = [];
+                            cart_query_response.value.forEach(function(cart_item){
+                                const _fk_menu_item = _menu_items.find(item => item['id'] == cart_item._crcfc_cart_item_value);
+                                const _fk_catering_menu = _catering_menu_dict[`${cart_item._crcfc_catering_menu_value}`];
+                                if (_fk_menu_item == undefined || typeof _fk_menu_item == 'undefined' || _fk_catering_menu == undefined || typeof _fk_catering_menu == 'undefined' || parseInt(cart_item.statecode) != 0) return;
+                                MY_CART.push({
+                                    'cart_id': String(cart_item.crcfc_appusercateringcartid),
+                                    'id': String(cart_item._crcfc_cart_item_value),
+                                    'name': _fk_menu_item['name'],
+                                    'price': parseFloat(_fk_menu_item['price']),
+                                    'menu_type_id': cart_item._crcfc_catering_menu_value,
+                                    'menu_type': cart_item.crcfc_menu_type,
+                                    'menu_section':_fk_menu_item['menu_section'],
+                                    'ordered_quantity': parseInt(cart_item.crcfc_quantity),
+                                    'total_price': parseFloat(parseInt(cart_item.crcfc_quantity) * parseFloat(_fk_menu_item['price'])),
+                                    'last_modified': new Date(cart_item.crcfc_last_updated),
+                                    'img_url': _fk_menu_item['img_url'],
+                                    'unit': _fk_menu_item['unit'],
+                                    'min_quantity': _fk_menu_item['min_quantity'] <= 0 || _fk_menu_item['min_quantity'] == null ? 1 : parseInt(_fk_menu_item['min_quantity']),
+                                });
+                            });
+                            _construct_cart_popup_modal(MY_CART);
+                            _quick_ui_styling();
+                            _process_num_cart_items();
+                            // render document animations
+                            _render_animation();
 
-                        }
+                            _ready_page_for_contents();
+                            document.querySelectorAll('[name=top-nav-prev]').forEach((e) => {console.log(e)});
+                            _render_card_swipe_btns('[name=top-nav-prev]', '[name=top-nav-nxt]', $('span[name=top-nav-prev]'), $('span[name=top-nav-nxt]'), '[name=in-page-nav-menu-container]', 0.2);
+                        },
+                        complete: function(){
+                            // render shopping cart
+                            _process_num_cart_items();
+                        },
                     });
-
-                    _quick_ui_styling();
-                    // render document animations
-                    _render_animation();
-                    // render shopping cart
-                    _process_num_cart_items();
-
-                    _ready_page_for_contents();
-                    document.querySelectorAll('[name=top-nav-prev]').forEach((e) => {console.log(e)});
-                    _render_card_swipe_btns('[name=top-nav-prev]', '[name=top-nav-nxt]', $('span[name=top-nav-prev]'), $('span[name=top-nav-nxt]'), '[name=in-page-nav-menu-container]', 0.2);
                 },
             });
         }
@@ -519,36 +725,83 @@ function prepare_cart_table_update(input_dom, cart_btn, complete=false){
     const _parent_div = input_dom.closest('.item-input-container');
     const _add_btn = _parent_div.find('[name=add-quantity-btn]');
     const _reduce_btn = _parent_div.find('[name=reduce-quantity-btn]');
+    $('button[name=open-cart-button]').attr('disabled', !complete);
+    $('button[name=open-cart-button]').parent().css('opacity', `${complete ? '1' : '0.65'}`);
     if (!complete){
         [_add_btn, _reduce_btn, input_dom, cart_btn].forEach((elem) => elem.attr('disabled', true));
         cart_btn.empty();
-        //cart_btn.append(BUTTON_LOADING_SPINNER);
-        cart_btn.append('Processing...');
+        cart_btn.append(BUTTON_LOADING_SPINNER);
+        //cart_btn.append('Processing...');
     }else{
-        [_add_btn, _reduce_btn, input_dom].forEach((elem) => elem.attr('disabled', true));
+        [_add_btn, _reduce_btn, input_dom].forEach((elem) => elem.attr('disabled', false));
         input_dom.val(null);
         cart_btn.empty();
         cart_btn.append('Add to cart');
     }
 }
 
+function _recalculate_cart_subtotal(perma=false){
+    let _subtotal = 0;
+    const _subtotal_text_msg = $('section[name=cart-menu-modal-container]').find('[name=selected-item-txt]');
+    $('div[name=cart-item-info-container]').each(function(){
+        const _item_price = parseFloat($(this).attr('data-price'));
+        const _min_quantity = parseInt($(this).attr('data-minquantity'));
+        let _selected_quantity = extract_integers($(this).find('[name=item-quantity-input]').val());
+        if (_selected_quantity == null) return $(this).find('[name=single-item-total-price-msg]').text('Removed');
+
+        if (_selected_quantity >= _min_quantity){
+            _subtotal += _item_price * _selected_quantity;
+            $(this).find('[name=single-item-total-price-msg]').text(`$${parseFloat(_item_price * _selected_quantity).toFixed(2)}`);
+        }else{
+            $(this).find('[name=single-item-total-price-msg]').text(`Must be at least ${_min_quantity}`);
+        }
+    });
+    console.log(_subtotal);
+    const _msg = _subtotal > 0 ? `Subtotal: $${parseFloat(_subtotal).toFixed(2)}` : "You don't have any item in your cart right now";
+    _subtotal_text_msg.text(_msg);
+    _subtotal_text_msg.parent().children().eq(1).text(_subtotal);
+
+    if (perma) _subtotal_text_msg.attr('data-cartsumprice', _subtotal);
+}
+
+
+function _reset_cart_items(){
+   let _subtotal = 0;
+   const cart_popup_modal = $('section[name=cart-menu-modal-container]');
+    const _selected_item_txt = cart_popup_modal.find('[name=selected-item-txt]');
+    $('div[name=cart-item-info-container]').each(function(idx){
+        const _total_price = parseFloat($(this).attr('data-totalprice'));
+        _subtotal += _total_price;
+        //const _selected_quantity = parseInt($(this).attr('data-quantity'));
+        $(this).find('[name=item-quantity-input]').val($(this).attr('data-quantity'));
+        $(this).find('[name=single-item-total-price-msg]').text(`$${_total_price.toFixed(2)}`);
+    });
+    
+    const _cart_price_msg = parseFloat(_selected_item_txt.attr('data-cartsumprice')) <= 0 ? "You don't have any item in your cart right now" : `Subtotal: $${parseFloat(_selected_item_txt.attr('data-cartsumprice')).toFixed(2)}`;
+    _selected_item_txt.text(_cart_price_msg);
+    _selected_item_txt.parent().children().eq(1).text(_selected_item_txt.attr('data-cartsumprice'));
+}
+
 $(document).ready(function () {
+    $('html, body').scrollTop(0);
     _hide_elements_on_load();
     _render_body_content();
     $(document).on('keyup', 'input[name=item-quantity-input]', function (e) {
+        if ($(this).attr('data-fromcart') == '1') return _recalculate_cart_subtotal();
         //!DIGIT_REGEX.test($(this).val()) ? $(this).val(null) : null;
         !DIGIT_REGEX.test($(this).val()) ? $(this).val(extract_integers($(this).val())) : null;
 
         const _valid_digit = is_valid_digit($(this).val());
         //console.log(_valid_digit);
         const _parent_div = $(this).parent().parent();
+        if ($(this).attr('data-fromcart') == '1') return change_cart_item_price($(this), _valid_digit, parseInt($(this).attr('data-minquantity')));
 
         if ($(this).val() && _valid_digit){
-            _parent_div.children().eq(1).css('color', `${parseInt($(this).val()) >= parseInt(_parent_div.children().eq(2).text()) ? 'transparent' : 'red'}`);
+            _parent_div.children().eq(1).css('color', `${parseInt($(this).val()) >= parseInt($(this).attr('data-minquantity')) ? 'transparent' : 'red'}`);
         }else{
             _parent_div.children().eq(1).css('color', `${_valid_digit || !$(this).val() ? 'transparent' : 'red'}`);
         }
-        disable_individual_btn(_parent_div.parent().parent().children().eq(4), _valid_digit && parseInt($(this).val()) >= parseInt(_parent_div.children().eq(2).text()));
+        disable_individual_btn(_parent_div.parent().parent().children().eq(4), _valid_digit && parseInt($(this).val()) >= parseInt($(this).attr('data-minquantity')));
     });
 
     $(document).on('click', 'span[name=add-quantity-btn], span[name=reduce-quantity-btn]', function(e){
@@ -560,7 +813,7 @@ $(document).ready(function () {
             //_input_field.val(null);
         }
         let _curr_quantity = _input_field.val();
-        const _min_quantity = parseInt($(this).parent().parent().children().eq(2).text());
+        const _min_quantity = parseInt(_input_field.attr('data-minquantity'));
         /*console.log(_this_name_attr);
         console.log(_input_field.val());
         console.log(_min_quantity);*/
@@ -576,7 +829,9 @@ $(document).ready(function () {
             _input_field.val(_curr_quantity);
             _input_field.parent().parent().children().eq(1).css('color', `${_curr_quantity >= _min_quantity || _curr_quantity == null ?  'transparent' : 'red'}`);
         }
+        if ($(this).attr('data-fromcart') == '1') return _recalculate_cart_subtotal();
         _valid_digit = is_valid_digit(_input_field.val());
+
         disable_individual_btn($(this).parent().parent().parent().parent().children().eq(4), _valid_digit && parseInt(_input_field.val()) >= _min_quantity);
     });
 
@@ -596,9 +851,77 @@ $(document).ready(function () {
 
         //console.log(_selected_quantity);
         //console.log(_item_name);
-        _add_to_cart(_item_name, _item_id, _menu_type, _menu_type_id, _menu_section, _item_price, _selected_quantity);
+        console.log(_input_div);
+        _add_to_cart(_item_name, _item_id, _menu_type, _menu_type_id, _menu_section, _item_price, _selected_quantity, 
+                        _parent_div, _input_div);
         // clear existing inputs
-        MY_CART.forEach((cart_item) => {console.log(cart_item)});
-        prepare_cart_table_update(_input_div.find('.item-quantity-input'), $(this), true);
+        //prepare_cart_table_update(_input_div.find('.item-quantity-input'), $(this), true);
+        //MY_CART.forEach((cart_item) => {console.log(cart_item)});
+    });
+
+
+    // Cart functions
+    $('.modal-section').on('click', function(e){
+        if ( e.target == this){
+            process_modal_section_render($(this), false);
+            if ($(this).attr('name') == 'cart-menu-modal-container') _reset_cart_items();
+        }
+    });
+
+    $('.close-modal-btn').on('click', function(e){
+        process_modal_section_render($(this).parent().parent().parent(), false);
+        if ($(this).parent().parent().parent().attr('name') == 'cart-menu-modal-container'){
+            _reset_cart_items();
+        } 
+    });
+
+    $('button[name=open-cart-button]').click(function(event){
+        process_modal_section_render($('section[name=cart-menu-modal-container]'));
+    });
+
+    $(document).on('click', 'span[name=remove-single-cart-item-btn], button[name=clear-cart-btn], button[name=save-cart-change-btn]', function(event){
+        const cart_menu_table_dom = $('div[name=cart-menu-table]');
+        let updated_cart_items = [];
+        if ($(this).attr('name') == 'remove-single-cart-item-btn'){
+            const parent_cart_container = $(this).closest('[name=cart-item-info-container]');
+            const item_info_content  = parent_cart_container.find('.cart-item-info-content').first();
+            parent_cart_container.find('[name=item-quantity-input]').val(0);
+            updated_cart_items.push({'cart_item_container': parent_cart_container, 'is_removed': true,'updates': null,});
+        }else if ($(this).attr('name') == 'clear-cart-btn'){
+            $('div[name=cart-item-info-container]').each(function(idx){
+                $(this).find('[name=item-quantity-input]').val(0);
+                updated_cart_items.push({
+                    'cart_item_container': $(this),
+                    'is_removed': true,
+                    'updates': null,
+                });
+            });
+        }else if ($(this).attr('name') == 'save-cart-change-btn') {
+            $('div[name=cart-item-info-container]').each(function(idx){
+                updated_cart_items.push({
+                    'cart_item_container': $(this),
+                    'updates': null,
+                });
+            });
+        }
+        multi_update_user_cart_table(updated_cart_items);
+    });
+
+    $(document).on('keyup', 'input[name=search-cart-item-txt-field]', function(){
+        const searched_value = $(this).val().toLowerCase().trim();
+        $(this).closest('.modal-body').find('[name=cart-item-info-container]').each(function (index) {
+            //if (!index) return;
+
+            $(this).find('.to-be-searched-data').each(function (idx) {
+                const value_found_here = $(this).text().toLowerCase().trim();
+                const _is_matched = value_found_here.includes(searched_value);
+                console.log(`found: ${value_found_here}`);
+                console.log(`matched: ${_is_matched}`);
+                $(this).closest('[name=cart-item-info-container]').css('display', `${_is_matched ? 'grid' : 'none'}`);
+                //_is_matched ? $(this).closest('[name=cart-item-info-container]').show() : $(this).closest('[name=cart-item-info-container]').hide();
+                //$(this).closest('[name=cart-item-info-container]').toggle(_is_matched);
+                return !_is_matched;
+            });
+        });
     });
 });
