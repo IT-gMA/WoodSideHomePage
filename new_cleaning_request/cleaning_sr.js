@@ -416,14 +416,14 @@ $(document).ready(function(){
         }else if (elem_name_attr == 'square-meterage-input'){
             _parent_input_container.find('.input-err-msg').css('opacity', `${!$(this).val() || REAL_NUM_REGEX.test($(this).val()) ? '0' : '1'}`)
             valid_square_meterage = !$(this).val() || REAL_NUM_REGEX.test($(this).val());
-        }else if (['cost-code-input', 'building-num-input'].includes(elem_name_attr)){
+        }else if (['cost-code-input'].includes(elem_name_attr)){
             _parent_input_container.find('.input-err-msg').css('opacity', `${!$(this).val() || REGEX.test($(this).val()) ? '0' : '1'}`);
             if(elem_name_attr == 'cost-code-input'){
                 valid_cost_code = $(this).val() != null && REGEX.test($(this).val());
             }
-            if (elem_name_attr == 'building-num-input'){
+            /*if (elem_name_attr == 'building-num-input'){
                 valid_building = $(this).val() != null && REGEX.test($(this).val());
-            }
+            }*/
         }else if (elem_name_attr == 'cleaning-request-input'){
             _parent_input_container.find('.input-err-msg').css('opacity', `${$(this).val() ? '0' : '1'}`)
             valid_cleaning_rq = $(this).val();
@@ -450,19 +450,6 @@ $(document).ready(function(){
         _this_btn_dom.attr('disabled', true);
         _this_btn_dom.empty();
         _this_btn_dom.append(BUTTON_LOADING_SPINNER);
-        /*const _email_data = clean_white_space($('input[name=email-input]').val());
-        const _name_data = clean_white_space($('input[name=full-name-input]').val(), false);
-        const _phone_num_data = $('input[name=phone-num-input]').val() ? clean_white_space($('input[name=phone-num-input]').val()) : '';
-        const _cost_code_data = clean_white_space($('input[name=cost-code-input]').val());
-
-        const _site_location_data = selected_site_location;
-        const _building_data = clean_white_space($('input[name=building-num-input]').val());
-        const _cleaning_type_name_data = selected_cleaning_type_name;
-        const _cleaning_type_id_data = selected_cleaning_type;
-        const _clean_request_data = $('input[name=cleaning-request-input]').val();
-        const _preferred_datetime = $('input[name=datetime-input]').val() ? convert_to_datetime($('input[name=datetime-input]').val()) : null;
-        const _approx_meterage_data = $('input[name=square-meterage-input]').val() ? Number($('input[name=square-meterage-input]').val()) : null;
-        const _extra_remark_data = $('textarea[name=extra-remark-input]').val() ? String($('textarea[name=extra-remark-input]').val()) : '';*/
         let data_schema = {
             "email_data": clean_white_space($('input[name=email-input]').val()),
             "name_data": clean_white_space($('input[name=full-name-input]').val(), false),
