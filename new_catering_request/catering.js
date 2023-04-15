@@ -726,6 +726,7 @@ function prepare_cart_table_update(input_dom, cart_btn, complete=false){
     const _reduce_btn = _parent_div.find('[name=reduce-quantity-btn]');
     $('button[name=open-cart-button]').attr('disabled', !complete);
     $('button[name=open-cart-button]').parent().css('opacity', `${complete ? '1' : '0.65'}`);
+    input_dom.parent().parent().children().eq(1).css('color', 'transparent');
     if (!complete){
         [_add_btn, _reduce_btn, input_dom, cart_btn].forEach((elem) => elem.attr('disabled', true));
         cart_btn.empty();
@@ -736,6 +737,7 @@ function prepare_cart_table_update(input_dom, cart_btn, complete=false){
         input_dom.val(null);
         cart_btn.empty();
         cart_btn.append('Add to cart');
+        cart_btn.attr('disabled', false);
     }
 }
 
