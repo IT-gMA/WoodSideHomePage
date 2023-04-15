@@ -73,6 +73,9 @@ function convert_to_datetime(dt_str){
 function clean_white_space(input_string, all=true){
     return input_string.replace(/\s+/g, all ? '' : ' ');
 }
+function is_whitespace(str) {
+    return !str.trim().length;
+}
 // End of util functions
 
 function _render_datetime_input_field(){
@@ -418,15 +421,11 @@ $(document).ready(function(){
             valid_square_meterage = !$(this).val() || REAL_NUM_REGEX.test($(this).val());
         }else if (['cost-code-input'].includes(elem_name_attr)){
             _parent_input_container.find('.input-err-msg').css('opacity', `${!$(this).val() || REGEX.test($(this).val()) ? '0' : '1'}`);
-            if(elem_name_attr == 'cost-code-input'){
-                valid_cost_code = $(this).val() != null && REGEX.test($(this).val());
-            }
-            /*if (elem_name_attr == 'building-num-input'){
-                valid_building = $(this).val() != null && REGEX.test($(this).val());
-            }*/
-        }else if (elem_name_attr == 'cleaning-request-input'){
-            _parent_input_container.find('.input-err-msg').css('opacity', `${$(this).val() ? '0' : '1'}`)
-            valid_cleaning_rq = $(this).val();
+            if(elem_name_attr == 'cost-code-input') valid_cost_code = $(this).val() != null && REGEX.test($(this).val());
+        }else if (['cleaning-request-input', 'building-num-input'].includes(elem_name_attr)){
+            _parent_input_container.find('.input-err-msg').css('opacity', `${!is_whitespace($(this).val()) ? '0' : '1'}`);
+            if (elem_name_attr == 'building-num-input') valid_building = !is_whitespace($(this).val());
+            if (elem_name_attr == 'cleaning-request-input') valid_cleaning_rq = !is_whitespace($(this).val());
         }
         enable_submit_button();
     });
