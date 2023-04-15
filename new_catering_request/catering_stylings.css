@@ -1454,9 +1454,17 @@ section{
     justify-content: center !important;
 }
 
+.modal-section .modal-content .modal-header .modal-title{
+    order: 1 !important;
+}
+.modal-section .modal-content .modal-header span{
+    order: 2 !important;
+}
+
 .modal-section{
     position: fixed !important;
-    z-index: 100 !important;
+    top: 0 !important;
+    z-index: 200483647 !important;
     display: none;
 
     background-color: var(--clr-semi-transparent-pfm-green-100) !important;
@@ -1484,7 +1492,8 @@ section{
 
     border: var(--border-solid-primary-200) !important;
     border-radius: .6rem !important;
-
+    
+    max-width: 1000px !important;
     overflow-y: scroll !important;
 }
 

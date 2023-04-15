@@ -279,7 +279,7 @@ function _render_regular_menus(regular_menu_list){
                         <h6>${regular_menu['sub-title']}</h6>
                     </div><br>`;
         // render the horizontal card menu container
-        _markup += _build_preview_menu(regular_menu['quick_card_menu'], _preview_item_card_container_name_attr, _preview_item_card_menu_name_attr, _html_name);
+        _markup += _build_preview_menu(regular_menu['quick_card_menu'], _preview_item_card_container_name_attr, _preview_item_card_menu_name_attr, _html_name, regular_menu['icon_name']);
         // card swipe buttons
         _markup += `<div class='card-menu-swiper' name='card-menu-swiper'>
                         <button class='card-menu-swipe-btn' name='${_preview_item_card_prev_btn_name_attr}'>
@@ -310,7 +310,7 @@ function _render_regular_menus(regular_menu_list){
     });
 }
 
-function _build_preview_menu(menu_items, preview_item_card_container_name_attr, preview_item_card_menu_name_attr, menu_type){
+function _build_preview_menu(menu_items, preview_item_card_container_name_attr, preview_item_card_menu_name_attr, menu_type, menu_type_name){
     // bottom hidden
     let _markup = `<div class='menu-item-container bottom hidden-animate snap-inline' name='${preview_item_card_menu_name_attr}'>`;
 
@@ -319,8 +319,7 @@ function _build_preview_menu(menu_items, preview_item_card_container_name_attr, 
         menu_item['menu_type'] = String(menu_type);
         // for any item that has a metric of unit restriction
         const _min_quantity = !is_valid_digit(String(menu_item['min_quantity'])) ? 1 : parseInt(menu_item['min_quantity']) > 0 ? menu_item['min_quantity'] : 1;
-
-        const _unit_metric_markup = menu_item['unit'] == null || menu_item['unit'] == 'Each' ? '<h6 hidden></h6>' : "<h6 style='font-size: 0.8em; padding: 1px;'>" + menu_item['unit'] + "</h6>";
+        menu_item['unit'] = menu_item['unit'] == null || is_whitespace(menu_item['unit']) ? 'Each' : menu_item['unit'];
         const _popup_remark = menu_item['notes'] != null && !is_whitespace(menu_item['notes']) ? 
         `<div class='dropdown dropup'>
             <a class='nav-link' id='item-info-dropdown-btn' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
@@ -352,8 +351,8 @@ function _build_preview_menu(menu_items, preview_item_card_container_name_attr, 
                         <!--Name/description and price-->
                         <div class='menu-item-desc'>
                             <h6 id='menu-item-title' class='menu-item-title'>${menu_item['name']}</h6>      <!--0-->
-                            ${_unit_metric_markup}                                                          <!--1-->
-                            <h6>$${parseFloat(menu_item['price']).toFixed(2)}</h6>                          <!--2-->
+                            <h6>${menu_type_name}<br><span style='font-size: small; color: #84BD00;'>${menu_item['menu_section']}</span></h6>                                         <!--1-->
+                            <h6 style='font-size: smaller;'>${menu_item['unit']} - $${parseFloat(menu_item['price']).toFixed(2)}</h6>                          <!--2-->
                             ${_popup_remark}                                                                <!--3-->
                         </div>      <!--2-->
                         <div class='item-input-container'>
@@ -372,7 +371,7 @@ function _build_preview_menu(menu_items, preview_item_card_container_name_attr, 
                                 <p hidden name='float-price'>${parseFloat(menu_item['price'])}</p>           <!--3-->
                             </div>
                         </div>      <!--3-->
-                        <button disabled type='button' class='btn btn-primary' 
+                        <button type='button' class='btn btn-primary' 
                                 name='add-to-cart-btn' confirm='Are your sure?' 
                                 id='add-to-cart-btn'>Add to cart
                         </button>   <!--4-->
@@ -801,7 +800,7 @@ $(document).ready(function () {
         }else{
             _parent_div.children().eq(1).css('color', `${_valid_digit || !$(this).val() ? 'transparent' : 'red'}`);
         }
-        disable_individual_btn(_parent_div.parent().parent().children().eq(4), _valid_digit && parseInt($(this).val()) >= parseInt($(this).attr('data-minquantity')));
+        disable_individual_btn(_parent_div.parent().parent().children().eq(4), !$(this).val() || _valid_digit && parseInt($(this).val()) >= parseInt($(this).attr('data-minquantity')));
     });
 
     $(document).on('click', 'span[name=add-quantity-btn], span[name=reduce-quantity-btn]', function(e){
@@ -832,16 +831,16 @@ $(document).ready(function () {
         if ($(this).attr('data-fromcart') == '1') return _recalculate_cart_subtotal();
         _valid_digit = is_valid_digit(_input_field.val());
 
-        disable_individual_btn($(this).parent().parent().parent().parent().children().eq(4), _valid_digit && parseInt(_input_field.val()) >= _min_quantity);
+        disable_individual_btn($(this).parent().parent().parent().parent().children().eq(4), !_input_field.val() || _valid_digit && parseInt(_input_field.val()) >= _min_quantity);
     });
 
     $(document).on('click', 'button[name=add-to-cart-btn]', function(e) {
         const _parent_div = $(this).parent();
         const _input_div = _parent_div.children().eq(3).children().eq(0);
         prepare_cart_table_update(_input_div.find('.item-quantity-input'), $(this));
-
-        const _selected_quantity = extract_integers(_input_div.find('.item-quantity-input').val());
-        if (_selected_quantity == null) return;
+        const _min_quantity = parseInt(_input_div.find('.item-quantity-input').attr('data-minquantity'));
+        let _selected_quantity = extract_integers(_input_div.find('.item-quantity-input').val());
+        if (_selected_quantity == null || !_input_div.find('.item-quantity-input').val()) _selected_quantity = _min_quantity;
         const _item_id = _parent_div.children().eq(0).text();
         const _item_name = _parent_div.children().eq(2).children().eq(0).text();
         const _menu_type = _parent_div.children().eq(7).text();
