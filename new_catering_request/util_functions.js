@@ -13,3 +13,8 @@ function extract_integers(input_str){
     if (input_str.match(/\d+/g) == null) return null;
     return parseInt(input_str.match(/\d+/g));
 }
+
+function extract_doubles(input_str){
+    if (input_str.match(/\d+/g) == null) return null;
+    return parseInt(input_str.match(/\d+/g));
+}
