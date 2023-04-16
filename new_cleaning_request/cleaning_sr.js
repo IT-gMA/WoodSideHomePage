@@ -171,6 +171,7 @@ function _render_cleaning_service_type_modal(){
                 $('table[name=cleaning-type-table]').append(`<tr class="table-row">
                                                                 <td>
                                                                     <input ${selected_cleaning_type != null && selected_cleaning_type == String(data['service_id']) ? 'checked' : ''}
+                                                                        data-uid='${data['service_id']}' data-name='${data['service_name']}'
                                                                         class='form-check-input checkbox modal-td-radio-chkbox' type='radio' name='cleaning-type-chkbox'/>  
                                                                 </td>                           <!--0-->
                                                                 <td class='to-be-searched-data'>${data['service_name']}</td>   <!--1-->
@@ -203,6 +204,7 @@ function _render_cleaning_frequencies_modal(){
                 $('table[name=cleaning-freq-table]').append(`<tr class="table-row">
                                                                 <td>
                                                                     <input ${selected_freq_id != null && selected_freq_id == String(data['freq_id']) ? 'checked' : ''}
+                                                                        data-uid='${data['freq_id']}' data-name='${data['freq_name']}'
                                                                         class='form-check-input checkbox modal-td-radio-chkbox' type='radio' name='cleaning-freq-chkbox'/>  
                                                                 </td>                           <!--0-->
                                                                 <td class='to-be-searched-data'>${data['freq_name']}</td>   <!--1-->
@@ -242,6 +244,7 @@ function _render_site_location_modal(){
                 $('table[name=site-location-table]').append(`<tr class="table-row">
                                                                 <td>
                                                                     <input ${selected_site_location != null && selected_site_location == String(data['sr_id']) ? 'checked' : ''}
+                                                                        data-uid='${data['sr_id']}' data-name='${data['site_name']}'
                                                                         class='form-check-input checkbox modal-td-radio-chkbox' type='radio' name='site-location-chkbox'/>  
                                                                 </td>                           <!--0-->
                                                                 <td class='to-be-searched-data'>${data['site_name']}</td>   <!--1-->
@@ -365,12 +368,12 @@ $(document).ready(function(){
             const select_btn = $(this);
             const _parent_modal = select_btn.parent().parent().parent();
             if (_parent_modal.attr('name') == 'site-location-modal-container'){
-                $('span[name=site-location-content]').find('[name=site-location-name-input-field]').val($('input[name=site-location-chkbox]:checked').length > 0 ? $('input[name=site-location-chkbox]:checked').parent().parent().children().eq(1).text() : null);
+                $('span[name=site-location-content]').find('[name=site-location-name-input-field]').val($('input[name=site-location-chkbox]:checked').length > 0 ? $('input[name=site-location-chkbox]:checked').attr('data-name') : null);
             }else if (_parent_modal.attr('name') == 'cleaning-type-modal-container'){
-                $('span[name=cleaning-type-content]').find('[name=cleaning-type-input-field]').val($('input[name=cleaning-type-chkbox]:checked').length > 0 ? $('input[name=cleaning-type-chkbox]:checked').parent().parent().children().eq(1).text() : null);
+                $('span[name=cleaning-type-content]').find('[name=cleaning-type-input-field]').val($('input[name=cleaning-type-chkbox]:checked').length > 0 ? $('input[name=cleaning-type-chkbox]:checked').attr('data-name') : null);
             }
             else if (_parent_modal.attr('name') == 'cleaning-freq-modal-container'){
-                $('span[name=service-frequency-content]').find('[name=cleaning-freq-input-field]').val($('input[name=cleaning-freq-chkbox]:checked').length > 0 ? $('input[name=cleaning-freq-chkbox]:checked').parent().parent().children().eq(1).text() : null);
+                $('span[name=service-frequency-content]').find('[name=cleaning-freq-input-field]').val($('input[name=cleaning-freq-chkbox]:checked').length > 0 ? $('input[name=cleaning-freq-chkbox]:checked').attr('data-name') : null);
             }
         }
         process_modal_section_render($(this).parent().parent().parent(), false);
@@ -382,22 +385,22 @@ $(document).ready(function(){
             const table_row = $(this).parent().parent();
             const _modal_body = $(this).closest('.modal-section');
             if ($(this).attr('name') == 'site-location-chkbox'){
-                selected_site_location = table_row.children().eq(3).text();
+                selected_site_location = $(this).attr('data-uid');
                 //selected_site_location = table_row.children().eq(2).text();
-                selected_site_location_name = table_row.children().eq(1).text();
+                selected_site_location_name = $(this).attr('data-name');
                 //_modal_body.find('[name=save-modal-change-btn]').attr('disabled', false);
             }else if ($(this).attr('name') == 'cleaning-type-chkbox'){
-                selected_cleaning_type = table_row.children().eq(3).text();
-                selected_cleaning_type_name = table_row.children().eq(1).text();
+                selected_cleaning_type = $(this).attr('data-uid');
+                selected_cleaning_type_name = $(this).attr('data-name');
                 //_modal_body.find('[name=save-modal-change-btn]').attr('disabled', false);
             }
             else if ($(this).attr('name') == 'cleaning-freq-chkbox'){
-                selected_freq_id = table_row.children().eq(3).text();
-                selected_freq_name = table_row.children().eq(1).text();
+                selected_freq_id = $(this).attr('data-uid');
+                selected_freq_name = $(this).attr('data-name');
                 //_modal_body.find('[name=save-modal-change-btn]').attr('disabled', false);
             }
             _modal_body.find('[name=save-modal-change-btn]').attr('disabled', false);
-            _describe_selected_modal_item(_modal_body, table_row.children().eq(1).text());      // the 2nd row data always contains the item's name
+            _describe_selected_modal_item(_modal_body, $(this).attr('data-name'));      // the 2nd row data always contains the item's name
         }
     });
 

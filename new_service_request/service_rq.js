@@ -158,12 +158,8 @@ function _render_property_info_modal(){
                                                                     prg_streetnumberandname: 'street_name',
                                                                     prg_propertyrequestid: 'property_uid',
                                                                     prg_suburb: 'suburb',
+                                                                    prg_name: 'property_num',
                                                         });
-            //
-            /*PROPERTY_INFO = _property_rqs.filter((data, idx, self) => 
-                                idx == self.findIndex((t) => (
-                                    t['location_code'] == data['location_code'] && t['street_name'] == data['street_name'] && t['street_name'] != null
-                                )));*/
             PROPERTY_INFO = _property_rqs.filter((data) => (data['street_name'] != null && !is_whitespace(data['street_name'])));
 
             _ready_modal_table_content($('section[name=property-info-modal-container]'), selected_property_name);
@@ -175,12 +171,11 @@ function _render_property_info_modal(){
                                                                         data-uid='${data['property_uid']}' data-name='${data['street_name']}'
                                                                         class='form-check-input checkbox modal-td-radio-chkbox' type='radio' name='property-info-chkbox'/>  
                                                                 </td>                           <!--0-->
-                                                                <td>${data['location_code']}</td>   <!--1-->
+                                                                <td>${data['property_num']}</td>   <!--1-->
                                                                 <td class='to-be-searched-data'>${data['street_name']}</td>     <!--2-->
                                                                 <td class='to-be-searched-data'>${data['suburb']}</td>       <!--3-->
                                                             </tr>`);
             });
-            //$('section[name=property-info-modal-container]').find('[name=save-modal-change-btn]').attr('disabled', selected_cleaning_type == null);
         },
     });
 }
@@ -383,44 +378,38 @@ $(document).ready(function(){
     });
 
     $('button[name=submit-form-btn]').click(function(event){
-        return;
         const _this_btn_dom = $(this);
         _this_btn_dom.attr('disabled', true);
         _this_btn_dom.empty();
         _this_btn_dom.append(BUTTON_LOADING_SPINNER);
         let data_schema = {
-            "email_data": clean_white_space($('input[name=email-input]').val()),
+            "phone_num_data": clean_white_space($('input[name=phone-num-input]').val()),
+            "email_data": !$('input[name=email-input]').val() || is_whitespace($('input[name=email-input]').val()) ? '' : clean_white_space($('input[name=email-input]').val()),
             "name_data": clean_white_space($('input[name=full-name-input]').val(), false),
-            "phone_num_data": $('input[name=phone-num-input]').val() ? clean_white_space($('input[name=phone-num-input]').val()) : '',
-            "cost_code_data":clean_white_space($('input[name=cost-code-input]').val()),
 
-            "site_location_data": selected_trade_group,
-            "building_data": clean_white_space($('input[name=building-num-input]').val()),
-            "cleaning_type_id_data": selected_cleaning_type,
-            "cleaning_type_name_data": selected_cleaning_type_name,
-            "clean_request_data": $('input[name=cleaning-request-input]').val(),
-            "extra_remark_data": $('textarea[name=extra-remark-input]').val() ? String($('textarea[name=extra-remark-input]').val()) : '',
-            "cleaning_frequency_data": "2b3a8da5-070e-ed11-b83d-00224810bc50",
-            "approx_meterage_data": $('input[name=square-meterage-input]').val() ? Number($('input[name=square-meterage-input]').val()) : null,
-            //"preferred_datetime_data": _preferred_datetime == null ? '' : _preferred_datetime,
+            "has_health_safety_risk": has_health_safety_risk,
+            "health_safety_risk_desc": !$('textarea[name=risk-desc-input]').val() ? '' : $('textarea[name=risk-desc-input]').val(),
+            "trade_group_data": selected_trade_group,
+            "property_info_data": selected_property,
+            "location_on_property": $('input[name=property-location-input]').val(),
+            "issue_title": $('input[name=issue-title-request-input]').val(),
+            "issue_desc": $('textarea[name=issue-desc-input]').val(),
         };
-        $('input[name=datetime-input]').val() ?  data_schema['preferred_datetime_data'] = convert_to_datetime($('input[name=datetime-input]').val()) : null;
-        if (selected_property != null) data_schema['cleaning_frequency_data'] = selected_property;
-        
+        console.log(data_schema);
         $.ajax({
             type: 'POST',
-            url: 'https://prod-18.australiasoutheast.logic.azure.com:443/workflows/24040b719ab74eeda9f4369db94e12f2/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=0SiedekJvkohC8McnK3DOBmKptLf_Y8zYumDR_6BXdw',
+            url: 'https://prod-01.australiasoutheast.logic.azure.com:443/workflows/58791740c609464d8070ed6b5349efb3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=tuCr2DJwyRxpSIys2Gc06zrThNHdUiGRPqauxfp3pPs',
             contentType: 'application/json',
             dataType: 'json',
             data: JSON.stringify(data_schema),
             complete: function(response){
                 _this_btn_dom.empty();
                 _this_btn_dom.append('Submit');
-                alert(`New cleaning request ${response.responseText} has been made`);
+                alert(`New service request ${response.responseText} has been made`);
                 location.reload();
             },
             success: function(response){
-                alert(`New cleaning request ${response.responseText} has been made`);
+                alert(`New service request ${response.responseText} has been made`);
                 location.reload();
             },
             /*error: function(response){
