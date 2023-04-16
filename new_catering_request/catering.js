@@ -788,11 +788,11 @@ $(document).ready(function () {
     _hide_elements_on_load();
     _render_body_content();
     $(document).on('keyup', 'input[name=item-quantity-input]', function (e) {
-        if ($(this).attr('data-fromcart') == '1') return _recalculate_cart_subtotal();
         //!DIGIT_REGEX.test($(this).val()) ? $(this).val(null) : null;
         !DIGIT_REGEX.test($(this).val()) ? $(this).val(extract_integers($(this).val())) : null;
 
         const _valid_digit = is_valid_digit($(this).val());
+        if ($(this).attr('data-fromcart') == '1') return _recalculate_cart_subtotal();
         //console.log(_valid_digit);
         const _parent_div = $(this).parent().parent();
         if ($(this).attr('data-fromcart') == '1') return change_cart_item_price($(this), _valid_digit, parseInt($(this).attr('data-minquantity')));
