@@ -5,10 +5,6 @@ function is_whitespace(str) {
 function is_valid_digit(digit){
     return DIGIT_REGEX.test(digit.trim()) && digit != '' && digit != null;
 }
-
-function is_whitespace(str) {
-    return !str.trim().length;
-}
 function extract_integers(input_str){
     if (input_str.match(/\d+/g) == null) return null;
     return parseInt(input_str.match(/\d+/g));
@@ -17,4 +13,8 @@ function extract_integers(input_str){
 function extract_doubles(input_str){
     if (input_str.match(/\d+/g) == null) return null;
     return parseInt(input_str.match(/\d+/g));
+}
+
+function get_relative_path(menu){
+    return `${window.location.origin}/Requests/Catering-Order/?id=${menu['id']}`;
 }

@@ -209,7 +209,7 @@ function _render_weekly_menu(weekly_menu_json){
     // here only its corresponding menu type content is added
     const _foreground_markup = `<h1>${weekly_menu_json['title']}</h1><br>
                                 <h6>${weekly_menu_json['sub-title']}</h6><br>
-                                <a href='${weekly_menu_json['url']}'>
+                                <a href='${get_relative_path(weekly_menu_json)}'>
                                     <button type='button' class='btn btn-primary' name='explore-menu-btn' id='explore-menu-btn'>Explore now</button>
                                 </a>`;
     $('div[name=weekly-specials-container]').find('.menu-desc').append(_foreground_markup);
@@ -221,7 +221,7 @@ function _render_weekly_menu(weekly_menu_json){
     $('.weekly-menu-hero-title').find('h1').append(weekly_menu_json['title']);
 
     // render in page navigation menu
-    $('div[name=in-page-nav-menu-container]').append(`<a href='${weekly_menu_json['url']}'>
+    $('div[name=in-page-nav-menu-container]').append(`<a href='${get_relative_path(weekly_menu_json)}'>
                                                 <div>
                                                     <img src='${weekly_menu_json['icon_url']}'>
                                                     <h6>${weekly_menu_json['icon_name']}</h6>
@@ -289,7 +289,7 @@ function _render_regular_menus(regular_menu_list){
                             <span class='material-symbols-outlined'>arrow_back_ios</span>
                         </button>
                     </div><br>
-                    <a href='${regular_menu['url']}'>       <!--Link to respective menu content page-->
+                    <a href='${get_relative_path(regular_menu)}'>       <!--Link to respective menu content page-->
                         <h5>View all</h5>
                     </a>
                 </div>
