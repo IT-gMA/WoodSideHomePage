@@ -167,6 +167,11 @@ button{
     justify-content: center !important;
 }
 
+#nav-menu-label{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 .nav-container{
     display: flex;
     padding: .5rem 1rem !important;

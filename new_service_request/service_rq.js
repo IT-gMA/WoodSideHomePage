@@ -12,7 +12,7 @@ const FILE_UPLOAD_DOM = $('input[name=file-upload-field]');
 const LOGGED_SERVICE_CONTACT_UID = 'bb7c040e-85da-ed11-a7c7-000d3acb5309';      //For testing
 let _is_valid_datetime = false;
 const _datetime_input = $('input[name=datetime-input]');
-const FORM_DOM = $('form[name=cleaning-request-form]');
+const FORM_DOM = $('form[name=service-request-form]');
 const INSET_BOX_SHADOW_BOTTOM = 'inset 0px -25px 20px -20px rgba(0, 0, 0, 0.2)';
 const INSET_BOX_SHADOW_TOP  = 'inset 0px 25px 20px -20px rgba(0, 0, 0, 0.2)';
 const MOBILE_SCREEN_WIDTH = 780;
@@ -262,7 +262,7 @@ function form_scrolling_event_listener(){
     if (FORM_DOM.scrollTop() <= 5){
         FORM_DOM.css('box-shadow', INSET_BOX_SHADOW_BOTTOM);
     }
-    else if (FORM_DOM.scrollTop() > FORM_DOM.height()*1.05){
+    else if (FORM_DOM.scrollTop() > FORM_DOM.height() * 0.6){
         FORM_DOM.css('box-shadow', INSET_BOX_SHADOW_TOP);
     }
 }
@@ -472,10 +472,10 @@ $(document).ready(function(){
                 }
                 location.reload();
             },
-            success: function(response){
+            /*success: function(response){
                 alert(`New service request ${response.responseText} has been made`);
                 location.reload();
-            },
+            },*/
             /*error: function(response){
                 alert('Failed to submit a new cleaning request at this time');
             },*/

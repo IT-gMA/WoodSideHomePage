@@ -212,7 +212,6 @@ form{
     font-weight: lighter !important;
     opacity: 0;
     font-size: smaller !important;
-    text-align: center !important;
     text-align: left !important;
 }
 
@@ -222,6 +221,30 @@ form{
     grid-gap: 1em !important;
     max-width: 150px !important;
 }
+
+/*
+for power portal web styling
+.input-field-container .input-field-content .checkbox-field-content{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-gap: 4em !important;
+    margin-left: 4em !important;
+}
+
+.input-field-container .checkbox-field-content .form-check{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-gap: .5em !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.input-field-container .checkbox-field-content .form-check .form-check-input.checkbox, 
+.input-field-container .input-field-content .checkbox-field-content .form-check label{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+*/
 
 .input-field-container .input-field-content .checkbox-field-content .form-check label{
     font-weight: bold !important;
