@@ -352,7 +352,7 @@ input[type='datetime-local']::-webkit-calendar-picker-indicator{
 
 .form-container .img-container img{
     max-width: 100% !important;
-    content: url('https://i.ibb.co/6nmRKJ4/service-maintenance-illustration-desktop.webp');
+    content: url('https://i.ibb.co/M6tTbqy/cleaning-illustration-desktop.webp');
     border-radius: var(--right-rounded-border-radius) !important;
     aspect-ratio: 2 / 6.25  !important;
 }
@@ -546,7 +546,7 @@ table tr td{
     }
 
     .form-container .img-container img{
-        content: url('https://i.ibb.co/QYn8SP8/service-maintenance-illustration-mobile.webp');
+        content: url('https://i.ibb.co/P5D8xp0/cleaning-illustration-mobile.webp');
         border-radius: var(--top-rounded-border-radius) !important;
         aspect-ratio: 8 / 2 !important;
     }
