@@ -44,14 +44,14 @@
 <!--/head-->
 
 <!--From power portals-->
-<div hidden class="row sectionBlockLayout" style="display: flex; flex-wrap: wrap; padding: 8px; margin: 0px; min-height: 15px; background: rgb(193, 255, 15);"></div>
-<div hidden class="row sectionBlockLayout text-left" style="display: flex; flex-wrap: wrap; margin: 0px; min-height: auto; padding: 8px;">
-  <div hidden class="container" style="display: flex; flex-wrap: wrap;">
-    <div hidden class="page-header"><h2>New Service Request</h2></div>
+<div hidden class='row sectionBlockLayout' style='display: flex; flex-wrap: wrap; padding: 8px; margin: 0px; min-height: 15px; background: rgb(193, 255, 15);'></div>
+<div hidden class='row sectionBlockLayout text-left' style='display: flex; flex-wrap: wrap; margin: 0px; min-height: auto; padding: 8px;'>
+  <div hidden class='container' style='display: flex; flex-wrap: wrap;'>
+    <div hidden class='page-header'><h2>New Service Request</h2></div>
   </div>
 </div>
-<div hidden class="row sectionBlockLayout text-left" style="display: flex; flex-wrap: wrap; padding: 8px; margin: 0px; min-height: 100px;">
-  <div hidden class="container" style="display: flex; flex-wrap: wrap;"><div class="col-md-12 columnBlockLayout" style="flex-grow: 1; display: flex; flex-direction: column; min-width: 300px;">
+<div hidden class='row sectionBlockLayout text-left' style='display: flex; flex-wrap: wrap; padding: 8px; margin: 0px; min-height: 100px;'>
+  <div hidden class='container' style='display: flex; flex-wrap: wrap;'><div class='col-md-12 columnBlockLayout' style='flex-grow: 1; display: flex; flex-direction: column; min-width: 300px;'>
     <!--{% entityform name: 'New Service Request' %}-->
   </div>
 </div>
@@ -195,7 +195,7 @@
 
   <div class='form-container'>
     <div class='overflow'>
-      <form action='' name='service-request-form'>
+      <form action='' name='service-request-form' enctype="multipart/form-data">
         <div class='form-component'>
           <h5>Description of issue</h5>
 
@@ -255,13 +255,13 @@
             <div class='input-field-content'>
               <!--<textarea rows='3' placeholder='The more details you provide us with, the better we can assist you' name='risk-desc-input'></textarea>-->
               <div class='checkbox-field-content'>
-                <div class="form-check">
-                  <input name="health-and-safety-checkbox" class="form-check-input checkbox" type="radio" id="no-health-n-safety-checkbox" checked data-choice="no">
-                  <label class="form-check-label" for="no-health-n-safety-checkbox">No</label>
+                <div class='form-check'>
+                  <input name='health-and-safety-checkbox' class='form-check-input checkbox' type='radio' id='no-health-n-safety-checkbox' checked data-choice='no'>
+                  <label class='form-check-label' for='no-health-n-safety-checkbox'>No</label>
                 </div>
-                <div class="form-check">
-                  <input name="health-and-safety-checkbox" class="form-check-input checkbox" type="radio" id="yes-health-n-safety-checkbox" data-choice="yes">
-                  <label class="form-check-label" for="yes-health-n-safety-checkbox">Yes</label>
+                <div class='form-check'>
+                  <input name='health-and-safety-checkbox' class='form-check-input checkbox' type='radio' id='yes-health-n-safety-checkbox' data-choice='yes'>
+                  <label class='form-check-label' for='yes-health-n-safety-checkbox'>Yes</label>
                 </div>
               </div>
             </div>
@@ -273,7 +273,17 @@
               <textarea rows='3' placeholder='The more details you provide us with, the better we can assist you' name='risk-desc-input'></textarea>
             </div>
             <h6 class='input-err-msg'></h6>
-          </span>
+          </span><br><hr>
+          <span class='input-field-container' name='sr-file-upload-content'>
+            <label>Attachment (at most 5MB)</label> <!--0-->
+            <div class='input-field-content'>
+              <input type='file' class='custom-file-input' id='service-rq-file-upload-field' aria-describedby='customFileInput' name='file-upload-field' aria-label='Attach a file...' accept='*'/>
+              <div>
+                <span class='material-symbols-outlined clear-input' name='clear-sr-file-uploads'>delete</span>
+              </div>
+            </div>        <!--1-->
+            <h6 class='input-err-msg'>Total content must not exceed 5MB</h6>    <!--2-->
+          </span><hr>
         </div><br><br>
         <div class='form-component'>
           <h5>Your contact detail</h5>
@@ -298,7 +308,7 @@
             </div>
             <h6 class='input-err-msg'>Invalid email address</h6>
           </span>
-          <span class='input-field-container' style="display: none;">
+          <span class='input-field-container' style='display: none;'>
             <label>Cost code<span>  *</span></label>
             <div class='input-field-content'>
               <input name='cost-code-input' class='input-txt-field'>

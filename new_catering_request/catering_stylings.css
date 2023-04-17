@@ -224,7 +224,8 @@ section{
 }
 
 .notice-container div li{
-    font-weight: lighter !important;
+    font-weight: 400 !important;
+    text-align: center !important;
 }
 
 .notice-container hr{

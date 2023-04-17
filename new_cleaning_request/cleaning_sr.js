@@ -465,11 +465,12 @@ $(document).ready(function(){
             "clean_request_data": $('input[name=cleaning-request-input]').val(),
             "extra_remark_data": $('textarea[name=extra-remark-input]').val() ? String($('textarea[name=extra-remark-input]').val()) : '',
             "cleaning_frequency_data": "2b3a8da5-070e-ed11-b83d-00224810bc50",
-            "approx_meterage_data": $('input[name=square-meterage-input]').val() ? Number($('input[name=square-meterage-input]').val()) : null,
+            //"approx_meterage_data": $('input[name=square-meterage-input]').val() ? Number($('input[name=square-meterage-input]').val()) : null,
             //"preferred_datetime_data": _preferred_datetime == null ? '' : _preferred_datetime,
         };
         $('input[name=datetime-input]').val() ?  data_schema['preferred_datetime_data'] = convert_to_datetime($('input[name=datetime-input]').val()) : null;
         if (selected_freq_id != null) data_schema['cleaning_frequency_data'] = selected_freq_id;
+        if ($('input[name=square-meterage-input]').val()) data_schema['approx_meterage_data'] = Number($('input[name=square-meterage-input]').val());
         
         $.ajax({
             type: 'POST',
@@ -481,12 +482,18 @@ $(document).ready(function(){
                 _this_btn_dom.empty();
                 _this_btn_dom.append('Submit');
                 alert(`New cleaning request ${response.responseText} has been made`);
+                if ([200].includes(response.status)){
+                    alert(`New cleaning request ${response.responseText} has been made`);
+                    //return window.location = `${window.location.origin}/request-submitted/`;
+                }else{
+                    alert('Failed to submit a cleaning request at this time');
+                }
                 location.reload();
             },
-            success: function(response){
+            /*success: function(response){
                 alert(`New cleaning request ${response.responseText} has been made`);
                 location.reload();
-            },
+            },*/
             /*error: function(response){
                 alert('Failed to submit a new cleaning request at this time');
             },*/

@@ -8,6 +8,8 @@ const EMAIL_REGEX = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})
 const EARLIEST = 9;
 const LATEST = 17;
 
+const FILE_UPLOAD_DOM = $('input[name=file-upload-field]');
+const LOGGED_SERVICE_CONTACT_UID = 'bb7c040e-85da-ed11-a7c7-000d3acb5309';      //For testing
 let _is_valid_datetime = false;
 const _datetime_input = $('input[name=datetime-input]');
 const FORM_DOM = $('form[name=cleaning-request-form]');
@@ -40,6 +42,8 @@ let valid_request_title = false;
 let valid_request_desc =  false;
 let valid_property_location = false;
 let has_health_safety_risk = false;
+let valid_upload_size = true;
+let file_content = null;
 
 
 // Util functions
@@ -75,6 +79,21 @@ function clean_white_space(input_string, all=true){
 }
 function is_whitespace(str) {
     return !str.trim().length;
+}
+
+const convert_to_base64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});
+
+function get_base64_contents(b64_str){
+    // return a list where:
+    // [0]: mimetype
+    // [1]: the base64 content string
+    const b64_content_sections = b64_str.split(',');
+    return [b64_content_sections[0].match(/[^:\s*]\w+\/[\w-+\d.]+(?=[;| ])/)[0], b64_content_sections[1]];
 }
 // End of util functions
 
@@ -234,7 +253,7 @@ function process_modal_section_render(modal, show=true){
 
 function enable_submit_button(){
     $('button[name=submit-form-btn]').attr('disabled', selected_trade_group == null || selected_property == null ||
-                                                        !valid_property_location || !valid_request_title || !valid_request_desc ||
+                                                        !valid_property_location || !valid_request_title || !valid_request_desc || !valid_upload_size ||
                                                         !valid_email || !valid_name || !valid_phonenum);
 }
 
@@ -255,6 +274,35 @@ $(document).ready(function(){
     $('.input-form-section').css('opacity', '1');
     FORM_DOM.on('scroll', form_scrolling_event_listener);
     $(window).on('resize', form_scrolling_event_listener);
+
+    // file upload functions
+    FILE_UPLOAD_DOM.parent().children().eq(1).css('display', 'none');
+    FILE_UPLOAD_DOM.on('change', async function(event){
+        const uploaded_files = event.target.files;
+        $(this).parent().children().eq(1).css('display', `${uploaded_files.length > 0 ? 'block' : 'none'}`);
+        let total_size = 0;     // start at 0 MB
+        // Calculate total size of selected files
+        for (let i = 0; i < uploaded_files.length; i++) {
+            total_size += uploaded_files[i].size;
+        }
+
+        // Check if total size exceeds 5MB
+        valid_upload_size = (total_size <= 5 * 1024 * 1024);
+        $(this).closest('.input-field-container').find('.input-err-msg').css('opacity', `${valid_upload_size ? '0' : '1'}`);
+        $('button[name=submit-form-btn]').attr('disabled', true);
+        if (uploaded_files.length > 0) file_content = await convert_to_base64(this.files[0]);
+        enable_submit_button();
+        //if (total_size > 5 * 1024 * 1024) fileUpload.val(null);
+    });
+
+    $('span[name=clear-sr-file-uploads]').on('click', function(event){
+        FILE_UPLOAD_DOM.val(null);
+        $(this).closest('.input-field-container').find('.input-err-msg').css('opacity', '0');
+        valid_upload_size = true;
+        file_content = null;
+        enable_submit_button();
+        $(this).parent().css('display', 'none');
+    });
 
     $(MODAL_ACTIVATE_ELEMS).find('.click-to-open-modal').each(function(idx){
         let _modal_dialog = $('section[name=trade-group-modal-container]');
@@ -377,7 +425,7 @@ $(document).ready(function(){
         });
     });
 
-    $('button[name=submit-form-btn]').click(function(event){
+    $('button[name=submit-form-btn]').click(async function(event){
         const _this_btn_dom = $(this);
         _this_btn_dom.attr('disabled', true);
         _this_btn_dom.empty();
@@ -386,6 +434,7 @@ $(document).ready(function(){
             "phone_num_data": clean_white_space($('input[name=phone-num-input]').val()),
             "email_data": !$('input[name=email-input]').val() || is_whitespace($('input[name=email-input]').val()) ? '' : clean_white_space($('input[name=email-input]').val()),
             "name_data": clean_white_space($('input[name=full-name-input]').val(), false),
+            "logged_service_contact": LOGGED_SERVICE_CONTACT_UID,
 
             "has_health_safety_risk": has_health_safety_risk,
             "health_safety_risk_desc": !$('textarea[name=risk-desc-input]').val() ? '' : $('textarea[name=risk-desc-input]').val(),
@@ -395,7 +444,17 @@ $(document).ready(function(){
             "issue_title": $('input[name=issue-title-request-input]').val(),
             "issue_desc": $('textarea[name=issue-desc-input]').val(),
         };
+        if (file_content != null) {
+            const _base64_content = get_base64_contents(file_content);
+            data_schema['attachment_content'] = _base64_content[1];
+            data_schema['attachment_mime_type'] = _base64_content[0];
+            console.log(data_schema['attachment_mime_type']);
+            console.log(data_schema['attachment_content']);
+            data_schema['attachment_name'] = FILE_UPLOAD_DOM.val().split('\\').pop();
+            data_schema['attachment_title'] = `SERVICE REQUEST ${new Date()} FILE UPLOAD: ${data_schema['issue_title']}`;
+        }
         console.log(data_schema);
+        //return console.log(`JSON: ${JSON.stringify(data_schema)}`);
         $.ajax({
             type: 'POST',
             url: 'https://prod-01.australiasoutheast.logic.azure.com:443/workflows/58791740c609464d8070ed6b5349efb3/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=tuCr2DJwyRxpSIys2Gc06zrThNHdUiGRPqauxfp3pPs',
@@ -405,7 +464,12 @@ $(document).ready(function(){
             complete: function(response){
                 _this_btn_dom.empty();
                 _this_btn_dom.append('Submit');
-                alert(`New service request ${response.responseText} has been made`);
+                if ([200].includes(response.status)){
+                    alert(`New service request ${response.responseText} has been made`);
+                    //return window.location = `${window.location.origin}/request-submitted/`;
+                }else{
+                    alert('Failed to submit a service request at this time');
+                }
                 location.reload();
             },
             success: function(response){
