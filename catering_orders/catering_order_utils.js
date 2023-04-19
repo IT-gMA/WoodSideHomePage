@@ -1,3 +1,6 @@
+const CATERING_MENU_UID = new URLSearchParams(window.location.search).get("id");
+console.log(`CATERING_MENU_UID: ${CATERING_MENU_UID}`);
+
 const DIGIT_REGEX = new RegExp("^[0-9]+$");
 function is_whitespace(str) {
     return !str.trim().length;
