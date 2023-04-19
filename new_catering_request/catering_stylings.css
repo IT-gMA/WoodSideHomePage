@@ -1482,7 +1482,7 @@ section{
 
 .modal-section .modal-content{
     position: relative !important; 
-    top: auto !important;
+    top: 2.5%;
     display: flex !important;
     flex-direction: column !important;
 
@@ -1496,6 +1496,20 @@ section{
     
     max-width: 1000px !important;
     min-height: max-content !important;
+
+    -webkit-animation-name: animatetop !important;
+    -webkit-animation-duration: 0.4s !important;
+    animation-name: animatetop !important;
+    animation-duration: 0.4s !important;
+}
+
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
 }
 
 .modal-section .modal-content div{
