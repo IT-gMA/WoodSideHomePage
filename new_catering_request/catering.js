@@ -448,10 +448,13 @@ function remap_cart_modal_table(cart_items){
         if (cart_item.hasOwnProperty('is_removed') || _new_quantity < min_quantity || _new_quantity == null) return cart_item_container.remove();
 
         cart_item_container.attr('data-quantity', _new_quantity);
+        //console.log(`new quanityt is ${_new_quantity} and container's data-quantity updated to ${cart_item_container.attr('data-quantity')}`);
         cart_item_container.attr('data-totalprice', _new_updates['new_price']);
 
         cart_item_container.find('[name=item-quantity-input]').val(_new_quantity);
         cart_item_container.find('[name=single-item-total-price-msg]').text(`$${parseFloat(_new_updates['new_price']).toFixed(2)}`);
+        //console.log(`matched cart_item_container:`);
+        //console.log(cart_item_container);
     });
 }
 
@@ -459,15 +462,6 @@ function multi_update_user_cart_table(cart_items){
     catering_cart_ajax_event();
     const cart_popup_modal = $('section[name=cart-menu-modal-container]');
     const values = compose_cart_item_list(cart_items);
-    console.log('returned values');
-    console.log(values);
-
-    console.log('returned cart items');
-    console.log(cart_items);
-    /*remap_cart_modal_table(cart_items);
-    _recalculate_cart_subtotal();
-    _process_num_cart_items();
-    return catering_cart_ajax_event(true);*/
     
     $.ajax({
         type: 'POST',
@@ -514,13 +508,13 @@ function single_update_user_cart_table(cart_item, parent_div, input_div, cart_it
                 cart_item['cart_id'] = response.responseJSON[0];    // assign to newly generated cart id
                 _append_cart_item(cart_item);
             }else{
+                console.log(`total quantity: ${cart_item['ordered_quantity']}, type is ${typeof cart_item['ordered_quantity']}`);
                 let cart_item_updates = {
                     'cart_item_container': cart_item_container,
                     'updates': cart_item['ordered_quantity'] <= 0 ? null : {'quantity': cart_item['ordered_quantity'], 'new_price': cart_item['ordered_quantity'] * parseFloat(cart_item_container.attr('data-price'))},
                 };
                 if (cart_item['ordered_quantity'] <= 0) cart_item_updates['is_removed'] = true;
                 remap_cart_modal_table([cart_item_updates]);
-                console.log(cart_item_container.attr('data-quantity'));
             }
             _recalculate_cart_subtotal(true);
             _process_num_cart_items();
@@ -546,10 +540,9 @@ function _add_to_cart(item_name, item_id, menu_type, menu_type_id, menu_section,
     const _min_quantity = input_div.find('.item-quantity-input').attr('data-minquantity');
 
     const matching_items = cart_menu_table.find(`[data-cateringitem='${item_id}'][data-cateringmenu='${menu_type_id}']`);
-    console.log(`${matching_items.length > 0 ? 'already exists' : 'new item'}`);
     if (matching_items.length > 0){
         const _matched_item = matching_items.first();
-        const total_quantity = parseInt(selected_quantity) + parseInt(_matched_item.data('quantity'));
+        const total_quantity = parseInt(selected_quantity) + parseInt(_matched_item.attr('data-quantity'));
         const _added_price = parseInt(selected_quantity) * parseFloat(item_price);
         single_update_user_cart_table({
             'cart_id': _matched_item.data('cartid'),
