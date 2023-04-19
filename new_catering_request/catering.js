@@ -445,7 +445,6 @@ function remap_cart_modal_table(cart_items){
         const _new_updates = cart_item['updates'];
         if (_new_updates == null) return;
         const _new_quantity = parseInt( _new_updates['quantity']);
-        console.log('new quantity is ' + _new_quantity);
         if (cart_item.hasOwnProperty('is_removed') || _new_quantity < min_quantity || _new_quantity == null) return cart_item_container.remove();
 
         cart_item_container.attr('data-quantity', _new_quantity);
@@ -510,13 +509,18 @@ function single_update_user_cart_table(cart_item, parent_div, input_div, cart_it
 
             if (![200].includes(response.status)) return alert(`${cart_item['cart_id'] == null ? 'Failed add new item at this time' : 'Unable to add ' + cart_item['name']}`);
 
-            alert(`${cart_item['ordered_quantity']} of ${cart_item['name']} has been added to your shopping cart`);
+            alert(`${cart_item['input_quantity']} of ${cart_item['name']} has been added to your shopping cart`);
             if (cart_item['cart_id'] == null){
                 cart_item['cart_id'] = response.responseJSON[0];    // assign to newly generated cart id
                 _append_cart_item(cart_item);
             }else{
-                cart_item_container.find('[name=item-quantity-input]').val(cart_item['ordered_quantity']);
-                cart_item_container.find('[name=single-item-total-price-msg]').text(cart_item['ordered_quantity'] > 0 ? `$${parseFloat(cart_item['total_price']).toFixed(2)}` : 'Item has been cleared');
+                let cart_item_updates = {
+                    'cart_item_container': cart_item_container,
+                    'updates': cart_item['ordered_quantity'] <= 0 ? null : {'quantity': cart_item['ordered_quantity'], 'new_price': cart_item['ordered_quantity'] * parseFloat(cart_item_container.attr('data-price'))},
+                };
+                if (cart_item['ordered_quantity'] <= 0) cart_item_updates['is_removed'] = true;
+                remap_cart_modal_table([cart_item_updates]);
+                console.log(cart_item_container.attr('data-quantity'));
             }
             _recalculate_cart_subtotal(true);
             _process_num_cart_items();
@@ -557,6 +561,7 @@ function _add_to_cart(item_name, item_id, menu_type, menu_type_id, menu_section,
             'total_price': total_quantity * parseFloat(item_price),
             'added_price': _added_price,
             'last_modified': new Date(),
+            'input_quantity': parseInt(selected_quantity),
         }, parent_div, input_div, _matched_item);
     }else{
         single_update_user_cart_table({
@@ -573,6 +578,7 @@ function _add_to_cart(item_name, item_id, menu_type, menu_type_id, menu_section,
             'ordered_quantity': parseInt(selected_quantity),
             'total_price': parseFloat(parseInt(selected_quantity) * parseFloat(item_price)),
             'last_modified': new Date(),
+            'input_quantity': parseInt(selected_quantity),
         }, parent_div, input_div, _matched_item);
     }
 }
