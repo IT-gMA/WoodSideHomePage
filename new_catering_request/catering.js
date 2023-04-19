@@ -1,4 +1,5 @@
 const CARD_CHILDREN_WIDTH_FACTOR = 0.25;
+const PLACEHOLDER_IMG_URL = 'https://i.ibb.co/VMPPhzc/place-holder-catering-item-img.webp';
 const _CART_BUTTON = $('div[name=shopping-cart-button]');
 let MY_CART = [];
 let is_cart_btn_dragged = false;
@@ -597,7 +598,7 @@ function _render_body_content(){
                     'name': menu_item.prg_cateringitemdescription,
                     'price': menu_item.prg_priceperunit,
                     'min_quantity': menu_item.prg_minimumorderquantity,
-                    'img_url': menu_item.crcfc_img_url,
+                    'img_url': menu_item.crcfc_img_url ?? PLACEHOLDER_IMG_URL,
                     'unit': menu_item.prg_unit,
                     'notes': menu_item.prg_notes,
                     'menu_type_frk': menu_item.prg_menutype,
@@ -672,7 +673,7 @@ function _render_body_content(){
                                     'ordered_quantity': parseInt(cart_item.crcfc_quantity),
                                     'total_price': parseFloat(parseInt(cart_item.crcfc_quantity) * parseFloat(_fk_menu_item['price'])),
                                     'last_modified': new Date(cart_item.crcfc_last_updated),
-                                    'img_url': _fk_menu_item['img_url'],
+                                    'img_url': _fk_menu_item['img_url'] ?? PLACEHOLDER_IMG_URL,
                                     'unit': _fk_menu_item['unit'],
                                     'min_quantity': _fk_menu_item['min_quantity'] <= 0 || _fk_menu_item['min_quantity'] == null ? 1 : parseInt(_fk_menu_item['min_quantity']),
                                 });
