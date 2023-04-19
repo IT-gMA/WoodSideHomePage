@@ -119,7 +119,7 @@ function _query_nth_week_of_the_month(){
 }
 
 function process_modal_section_render(modal, show=true){
-    modal.css('display', `${show ? 'flex' : 'none'}`);
+    modal.css('display', `${show ? 'block' : 'none'}`);
     modal.css('opacity', `${show ? '1' : '0'}`);
     $('body').css('overflow', `${show ? 'hidden' : 'auto'}`);
     //$('body').css('height', `${show ? '100vh' : 'auto'}`);

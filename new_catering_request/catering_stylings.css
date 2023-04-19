@@ -1464,6 +1464,8 @@ section{
 
 .modal-section{
     position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
     top: 0 !important;
     z-index: 200483647 !important;
     display: none;
@@ -1473,21 +1475,19 @@ section{
     -webkit-backdrop-filter: blur(12px) !important;
     color: var(--clr-programmed-charcoal-400) !important;
 
-    min-width: 100vw !important;
-    min-height: 100vh !important;
-    height: max-content !important;
-    width: 100vw !important;
+    align-items: center !important;
+    justify-content: center !important;
     overflow-y: scroll !important;
 }
 
 .modal-section .modal-content{
-    position: sticky !important;
+    position: relative !important; 
     top: auto !important;
     display: flex !important;
     flex-direction: column !important;
 
     width: 75% !important;
-    max-width: 950px !important;
+    margin: auto !important;
     background-color: white !important;
     cursor: pointer !important;
 
@@ -1495,7 +1495,7 @@ section{
     border-radius: .6rem !important;
     
     max-width: 1000px !important;
-    overflow-y: scroll !important;
+    min-height: max-content !important;
 }
 
 .modal-section .modal-content div{
