@@ -1,7 +1,7 @@
 // retrieve user id
 function get_user_id(){
     const elem_user_id = '{{user.id}}';
-    return elem_user_id.includes('{{') && elem_user_id.includes('}}') ? '70acd4d5-2e15-4b48-9145-f4caf659eb31' : elem_user_id;
+    return elem_user_id.includes('{{') && elem_user_id.includes('}}') ? 'bb7c040e-85da-ed11-a7c7-000d3acb5309' : elem_user_id;
 }
 const USER_ID = get_user_id(); 
 
@@ -273,8 +273,51 @@ function form_scrolling_event_listener(){
     }
 }
 
+function hide_body_on_load(complete=true){
+    if(!complete) return $('.input-form-section').hide();
+    $('.input-form-section').show();
+    $('.loading-page').hide();
+}
+
+function auto_fill_personal_data_fields(user_data_dict){
+    function _is_key_value_valid(data, key_name){
+        return data.hasOwnProperty(`${key_name}`) && data[`${key_name}`] != null && !is_whitespace(data[`${key_name}`]) && typeof data[`${key_name}`] != 'undefined' && data[`${key_name}`] != undefined;
+    }
+
+    if (_is_key_value_valid(user_data_dict, 'emailaddress1') && validate_email(user_data_dict['emailaddress1'])){
+        valid_email = true;
+        $('input[name=email-input]').val(user_data_dict['emailaddress1']);
+    }
+    if (_is_key_value_valid(user_data_dict, 'yomifullname')){
+        valid_name = true;
+        $('input[name=full-name-input]').val(user_data_dict['yomifullname']);
+    }
+    if (_is_key_value_valid(user_data_dict, 'telephone1') && valid_phonenum(user_data_dict['telephone1'])){
+        valid_phonenum = true;
+        $('input[name=phone-num-input]').val(user_data_dict['telephone1']);
+    }
+}
+
+function _render_body_content(){
+    $.ajax({
+        type: 'POST',
+        url: 'https://prod-07.australiasoutheast.logic.azure.com:443/workflows/dee907a219c948b6b94c89105a4af6df/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=mOwgwhEPiunPZqhZvxlVNWShpCbGVZzvRUlcQ_RDYxQ',
+        contentType: 'application/json',
+        accept: 'application/json;odata=verbose',
+        data: JSON.stringify({'user_id': USER_ID}),
+        success: function (response, status, xhr){
+            if(!['success'].includes(String(status))) return;
+            auto_fill_personal_data_fields(response);
+            hide_body_on_load();
+        },
+    });
+}
+
 
 $(document).ready(function(){
+    hide_body_on_load(false);
+    _render_body_content();
+
     _render_datetime_input_field();
     $('span[name=loading-spinner]').parent().parent().remove();
     $('.input-form-section').css('opacity', '1');

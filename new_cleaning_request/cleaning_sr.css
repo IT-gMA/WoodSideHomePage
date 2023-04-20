@@ -121,7 +121,10 @@ body{
     height: 100vh !important;
 }
 
-.input-form-section, .form-content-container, .modal-section .modal-content, .modal-section .modal-content .modal-footer, .loading-spinner div{
+.input-form-section{
+    display: flex;
+}
+.form-content-container, .modal-section .modal-content, .modal-section .modal-content .modal-footer, .loading-spinner div{
     display: flex !important;
 }
 
@@ -373,6 +376,38 @@ input[type='datetime-local']::-webkit-calendar-picker-indicator{
 
 .loading-spinner div h6{
     color: var(--border-solid-charcoal) !important;
+    text-align: center !important;
+}
+
+/*page loading spinner*/
+.loading-spinner.loading-page{
+    display: block;
+    width: 100vw !important;
+    height: 100vh !important;
+
+    z-index: 11 !important;;
+}
+
+.loading-spinner.loading-page div{
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    margin: auto !important;
+    transform: translateY(15vh) !important;
+}
+
+.loading-spinner.loading-page div img{
+    max-width: 100% !important;
+}
+
+.loading-spinner.loading-page div .material-symbols-outlined{
+    color: var(--clr-green-primary-400) !important;
+}
+
+.loading-spinner.loading-page div h6{
+    color: var(--clr-programmed-charcoal-400) !important;
     text-align: center !important;
 }
 
