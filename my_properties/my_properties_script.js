@@ -168,31 +168,31 @@ $(document).ready(function(){
     });
 
     $('button[name=submit-form-btn]').click(function(event){
-        $(this).attr('disabled', true);
+        const this_btn = $(this);
+        this_btn.attr('disabled', true);
         $('.input-field-container').attr('disabled', true);
-        $(this).empty();
-        $(this).append(BUTTON_LOADING_SPINNER);
+        this_btn.empty();
+        this_btn.append(BUTTON_LOADING_SPINNER);
 
         const _street_name_data = clean_white_space($('input[name=street-name-request-input]').val());
         const _street_num_data = clean_white_space($('input[name=street-num-request-input]').val());
         const _suburb_data = clean_white_space($('input[name=suburb-request-input]').val());
         $.ajax({
-        type: 'POST',
-        url: 'https://prod-15.australiasoutheast.logic.azure.com:443/workflows/5ece9881cb354d50a1d2be8e7eb419a1/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=fBilZIo3IMgiL5oFXXzOeBPK0B3egEURfJ74z2vv_Zs',
-        contentType: 'application/json',
-        accept: 'application/json;odata=verbose',
-        data: JSON.stringify({'user_id': USER_ID, 
-                                'street_name': _street_name_data, 
-                                'street_num': _street_num_data,
-                                'suburb': _suburb_data,
-                                'street_num_name': `${_street_num_data} ${_street_name_data}`}),
+            type: 'POST',
+            url: 'https://prod-15.australiasoutheast.logic.azure.com:443/workflows/5ece9881cb354d50a1d2be8e7eb419a1/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=fBilZIo3IMgiL5oFXXzOeBPK0B3egEURfJ74z2vv_Zs',
+            contentType: 'application/json',
+            accept: 'application/json;odata=verbose',
+            data: JSON.stringify({'user_id': USER_ID, 
+                                    'street_name': _street_name_data, 
+                                    'street_num': _street_num_data,
+                                    'suburb': _suburb_data,
+                                    'street_num_name': `${_street_num_data} ${_street_name_data}`}),
         complete: function(response){
-            $(this).attr('disabled', true);
+            this_btn.attr('disabled', true);
             $('.input-field-container').attr('disabled', true);
             $('.input-field-container').val(null);
-            $(this).empty();
-            $(this).append('Submit');
-            
+            this_btn.empty();
+            this_btn.append('Submit');
             if ([200].includes(response.status)){
                 alert(`Your property ${_street_num_data} ${_street_name_data} has successfully been registered`);
                 //return window.location = `${window.location.origin}/new-property-pending/`;
