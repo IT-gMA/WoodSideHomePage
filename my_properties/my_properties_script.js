@@ -174,9 +174,9 @@ $(document).ready(function(){
         this_btn.empty();
         this_btn.append(BUTTON_LOADING_SPINNER);
 
-        const _street_name_data = clean_white_space($('input[name=street-name-request-input]').val());
-        const _street_num_data = clean_white_space($('input[name=street-num-request-input]').val());
-        const _suburb_data = clean_white_space($('input[name=suburb-request-input]').val());
+        const _street_name_data = clean_white_space($('input[name=street-name-request-input]').val(), false);
+        const _street_num_data = clean_white_space($('input[name=street-num-request-input]').val(), false);
+        const _suburb_data = clean_white_space($('input[name=suburb-request-input]').val(), false);
         $.ajax({
             type: 'POST',
             url: 'https://prod-15.australiasoutheast.logic.azure.com:443/workflows/5ece9881cb354d50a1d2be8e7eb419a1/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=fBilZIo3IMgiL5oFXXzOeBPK0B3egEURfJ74z2vv_Zs',
