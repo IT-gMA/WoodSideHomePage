@@ -1,3 +1,10 @@
+// retrieve user id
+function get_user_id(){
+    const elem_user_id = '{{user.id}}';
+    return elem_user_id.includes('{{') && elem_user_id.includes('}}') ? '70acd4d5-2e15-4b48-9145-f4caf659eb31' : elem_user_id;
+}
+const USER_ID = get_user_id(); 
+
 const REGEX = new RegExp("^[a-zA-Z0-9]+$");
 const STRING_REGEX = /^[a-zA-Z\s]+$/;
 const NUMBER_REGEX = new RegExp("^[0-9.]+$");

@@ -1,3 +1,10 @@
+// retrieve user id
+function get_user_id(){
+    const elem_user_id = '{{user.id}}';
+    return elem_user_id.includes('{{') && elem_user_id.includes('}}') ? '70acd4d5-2e15-4b48-9145-f4caf659eb31' : elem_user_id;
+}
+const USER_ID = get_user_id(); 
+  
 const CARD_CHILDREN_WIDTH_FACTOR = 0.25;
 const PLACEHOLDER_IMG_URL = 'https://i.ibb.co/VMPPhzc/place-holder-catering-item-img.webp';
 const _CART_BUTTON = $('div[name=shopping-cart-button]');
@@ -20,14 +27,13 @@ const BUTTON_LOADING_SPINNER = `<div style='position: relative;
                                         <img src='https://i.ibb.co/Vp2hJGW/loading-spinner.gif' style='position: relative; max-width:100%;'>
                                         <br>
                                     </div>
-                                </div>`;
-const USER_ID = '70acd4d5-2e15-4b48-9145-f4caf659eb31';                                
+                                </div>`;                                
 
 window.addEventListener('resize', function() {
     screen_width = window.innerWidth;
     screen_height = window.innerHeight;
   });
-  
+ 
 function _drag_element(elem){
     let initial_hrz_pos = 0, initial_vert_pos = 0, curr_hrz_pos = 0, curr_vert_pos = 0;
     elem.onmousedown = dragMouseDown;

@@ -1,5 +1,12 @@
+// retrieve user id
+function get_user_id(){
+    const elem_user_id = '{{user.id}}';
+    return elem_user_id.includes('{{') && elem_user_id.includes('}}') ? '70acd4d5-2e15-4b48-9145-f4caf659eb31' : elem_user_id;
+}
+const USER_ID = get_user_id(); 
+
 const CARD_CHILDREN_WIDTH_FACTOR = 0.25;
-const SEARCH_AND_FILTER_MARKUP = `<div class='search-filter-container inpage-search-n-filter' style='padding-right: 1em;'>
+const SEARCH_AND_FILTER_MARKUP = `<div class='search-filter-container inpage-search-n-filter'>
 <div class='search-bar-container'>
   <span class='material-symbols-outlined'>search</span>
   <input class='search-text-field' type='text' name='search-catering-item-txt-field' placeholder='Search for an item'>
@@ -33,6 +40,14 @@ const SEARCH_AND_FILTER_MARKUP = `<div class='search-filter-container inpage-sea
       </div>
     </div>
   </div>
+  <div class='dropdown'>
+    <button class='sort-n-filter-dropdown-btn' type='button' id='filter-dropdown-menu' data-bs-toggle='dropdown' aria-expanded='false'>
+      <span class='material-symbols-outlined'>tune</span>
+    </button>
+    <div class='dropdown-menu dropdown-menu-end dropdown-menu-lg-start' aria-labelledby='filter-dropdown-menu' name='filter-sort-dropdown-menu'>
+      
+    </div>
+  </div>
 </div>
 </div>`;
 const PLACEHOLDER_IMG_URL = 'https://i.ibb.co/VMPPhzc/place-holder-catering-item-img.webp';
@@ -56,8 +71,7 @@ const BUTTON_LOADING_SPINNER = `<div style='position: relative;
                                         <img src='https://i.ibb.co/Vp2hJGW/loading-spinner.gif' style='position: relative; max-width:100%;'>
                                         <br>
                                     </div>
-                                </div>`;
-const USER_ID = '70acd4d5-2e15-4b48-9145-f4caf659eb31';                                
+                                </div>`;                              
 
 window.addEventListener('resize', function() {
     screen_width = window.innerWidth;
@@ -236,6 +250,31 @@ function _render_card_swipe_btns(preview_item_card_menu_prev_btn_attr, preview_i
     });
 }
 
+function _render_filter_options(filter_options, is_menu_section=false){
+    filter_opt_ids = '';
+
+    filter_options.forEach(function(filter_option, idx){
+        $('div[name=filter-sort-dropdown-menu]').append(`
+        <div class='dropdown-item'>
+            <input class='form-check-input product-sort-and-filter-opt menu-section-sort-option' type='checkbox' name='filter-option-checkbox' id='${filter_option.id}'>
+            <label class='form-check-label'>${filter_option.value}</label>
+        </div>
+        `);
+        filter_opt_ids += `#${filter_option.id}${idx < filter_options.length - 1 ? ', ' : ''}`;
+    });
+    
+    if (!is_menu_section) return;
+    let _filtered_menu_types = [];
+    $(document).on('change keyup', filter_opt_ids, function(event){
+        $('input[name=search-catering-item-txt-field]').val(null);
+        $(this).prop('checked') ? _filtered_menu_types.push($(this).parent().find('label').text().toLowerCase()) : _filtered_menu_types.pop($(this).parent().find('label').text().toLowerCase());
+        $('.item-container').each(function(){
+            _filtered_menu_types.includes($(this).find('[name=catering-item-menu-section-data]').text().toLowerCase()) ? $(this).show() : $(this).hide();
+        });
+        if ($('input[name=filter-option-checkbox]:checked').length < 1) return $('.item-container').show();
+    });
+}
+
 function _render_weekly_menu(weekly_menu_json){
     // since the html for this special menu type has already been written in the calling html document
     // here only its corresponding menu type content is added
@@ -387,7 +426,7 @@ function _build_preview_menu(menu_items, preview_item_card_container_name_attr, 
                         <i hidden>${menu_item['menu_type']}</i>     <!--5-->
                         <h6 hidden>${menu_item['notes']}</h6>       <!--6-->
                         <h6 hidden>${menu_item['menu_type_frk']}</h6>       <!--7-->
-                        <h6 hidden>${menu_item['menu_section']}</h6>       <!--8-->
+                        <h6 hidden name='catering-item-menu-section-data'>${menu_item['menu_section']}</h6>       <!--8-->
                         <h6 hidden>${menu_item['menu_type_id']}</h6>       <!--9-->
                         <h6 hidden>${menu_item['unit']}</h6>               <!--10-->
                         <h6 hidden name='createdon-data'>${menu_item['createdon']}</h6>     <!--11-->
@@ -588,6 +627,7 @@ function _render_body_content(){
         success: function(response, status, xhr){
             let _menu_items = [];
             let _menu_types = [];
+            let _menu_section_filter_options = [];
             const _keyMap = {  crcfc_is_regular_menu: 'is_regular_menu', 
                                         crcfc_is_emergency: 'is_emergency',
                                         prg_cateringmenuid: 'id',
@@ -605,6 +645,7 @@ function _render_body_content(){
             const _shopping_cart_json = response['cart'];
             const _catering_item_json = response['catering_items'];
             const _catering_menu_json = response['catering_menu'];
+            
             _shopping_cart_json.forEach(function(cart_item){
                 MY_CART.push({
                     'cart_id': String(cart_item.cart_instance.crcfc_appusercateringcartid),
@@ -622,6 +663,7 @@ function _render_body_content(){
                     'min_quantity': cart_item.catering_item.prg_minimumorderquantity <= 0 || cart_item.catering_item.prg_minimumorderquantity == null ? 1 : cart_item.catering_item.prg_minimumorderquantity,
                 });
             });
+
             _catering_item_json.forEach(function(catering_item){
                 _menu_items.push({
                     'id': catering_item.prg_cateringitemid,
@@ -636,12 +678,21 @@ function _render_body_content(){
                     'menu_section': catering_item.prg_menusection,
                     'shown_in_preview': catering_item.crcfc_show_in_preview,
                     'createdon': catering_item.createdon,
-                })
+                });
+                _menu_section_filter_options.push({
+                    'value': catering_item.prg_menusection,
+                    'id': String(catering_item.prg_menusection).toLowerCase().replace(/\s+/g, '-').replace(/[^\w\s]/gi, ''),
+                });
             });
             _menu_items.sort(function(a, b){
                 return new Date(b.createdon) - new Date(a.createdon);
             });
-            console.log(_menu_items);
+            _menu_section_filter_options = _menu_section_filter_options.filter((obj, index, arr) => {
+                return index === arr.findIndex((o) => {
+                    return o.value === obj.value;
+                  });
+            });
+            //console.log(_menu_section_filter_options);
             _menu_types = [_catering_menu_json].map(menu_type => Object.fromEntries(
                                                     Object.entries(menu_type).map(([key, value]) => [_keyMap[key] || key, value])))[0];
             _menu_types['quick_card_menu'] = _menu_items;
@@ -654,7 +705,7 @@ function _render_body_content(){
             _render_animation();
 
             _ready_page_for_contents();
-            document.querySelectorAll('[name=top-nav-prev]').forEach((e) => {console.log(e)});
+            _render_filter_options(_menu_section_filter_options, true);
             //_render_card_swipe_btns('[name=top-nav-prev]', '[name=top-nav-nxt]', $('span[name=top-nav-prev]'), $('span[name=top-nav-nxt]'), '[name=in-page-nav-menu-container]', 0.2);
         }
     });
@@ -884,6 +935,7 @@ $(document).ready(function () {
         if ($(this).attr('name') == 'search-catering-item-txt-field'){
             _parent_div_class = '[name=regular-item-menu-section]';
             _filtered_item = '.item-container';
+            $('.menu-section-sort-option').prop('checked', false);
         }
         const searched_value = $(this).val().toLowerCase().trim();
         $(this).closest(_parent_div_class).find(_filtered_item).each(function (index) {

@@ -1631,9 +1631,11 @@ section{
 }
 
 .search-filter-container .filter-option-container{
-    display: flex !important;
+    display: grid !important;
     justify-content: flex-end !important;
     align-items: center !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-gap: 1em !important;
 }
 .sort-n-filter-dropdown-btn, .sort-n-filter-dropdown-btn:hover,
 .sort-n-filter-dropdown-btn:active, .sort-n-filter-dropdown-btn::after, .sort-n-filter-dropdown-btn:focus,
