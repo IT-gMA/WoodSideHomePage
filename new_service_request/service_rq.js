@@ -15,8 +15,7 @@ const EMAIL_REGEX = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})
 const EARLIEST = 9;
 const LATEST = 17;
 
-const FILE_UPLOAD_DOM = $('input[name=file-upload-field]');
-const LOGGED_SERVICE_CONTACT_UID = 'bb7c040e-85da-ed11-a7c7-000d3acb5309';      //For testing
+const FILE_UPLOAD_DOM = $('input[name=file-upload-field]');     //For testing
 let _is_valid_datetime = false;
 const _datetime_input = $('input[name=datetime-input]');
 const FORM_DOM = $('form[name=service-request-form]');
@@ -441,7 +440,7 @@ $(document).ready(function(){
             "phone_num_data": clean_white_space($('input[name=phone-num-input]').val()),
             "email_data": !$('input[name=email-input]').val() || is_whitespace($('input[name=email-input]').val()) ? '' : clean_white_space($('input[name=email-input]').val()),
             "name_data": clean_white_space($('input[name=full-name-input]').val(), false),
-            "logged_service_contact": LOGGED_SERVICE_CONTACT_UID,
+            "logged_service_contact": USER_ID,
 
             "has_health_safety_risk": has_health_safety_risk,
             "health_safety_risk_desc": !$('textarea[name=risk-desc-input]').val() ? '' : $('textarea[name=risk-desc-input]').val(),

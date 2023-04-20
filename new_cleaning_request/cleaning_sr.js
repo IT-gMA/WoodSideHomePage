@@ -459,6 +459,7 @@ $(document).ready(function(){
         _this_btn_dom.empty();
         _this_btn_dom.append(BUTTON_LOADING_SPINNER);
         let data_schema = {
+            "logged_service_contact": USER_ID,
             "email_data": clean_white_space($('input[name=email-input]').val()),
             "name_data": clean_white_space($('input[name=full-name-input]').val(), false),
             "phone_num_data": $('input[name=phone-num-input]').val() ? clean_white_space($('input[name=phone-num-input]').val()) : '',
