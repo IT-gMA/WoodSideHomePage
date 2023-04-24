@@ -447,9 +447,6 @@ $(document).ready(function(){
         }
         let _curr_quantity = _input_field.val();
         const _min_quantity = parseInt(_input_field.attr('data-minquantity'));
-        /*console.log(_this_name_attr);
-        console.log(_input_field.val());
-        console.log(_min_quantity);*/
         if (!_input_field.val()){
             _this_name_attr == 'add-quantity-btn' ? _input_field.val(_min_quantity) : null;
             _curr_quantity = parseInt(_input_field.val());

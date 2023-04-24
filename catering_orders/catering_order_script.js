@@ -850,6 +850,7 @@ $(document).ready(function () {
                 _curr_quantity = _min_quantity;
             }
             _input_field.val(_curr_quantity);
+            if ($(this).attr('data-fromcart') == '1') return _recalculate_cart_subtotal();
             _input_field.parent().parent().children().eq(1).css('color', `${_curr_quantity >= _min_quantity || _curr_quantity == null ?  'transparent' : 'red'}`);
         }
         if ($(this).attr('data-fromcart') == '1') return _recalculate_cart_subtotal();
