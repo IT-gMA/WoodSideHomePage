@@ -90,10 +90,11 @@ function _render_datetime_input_field(){
 
     // Earliest is 9am
     let min_time = convert_to_datetime(curr_datetime);
-    if (min_time.getHours() > LATEST){
+    /*if (min_time.getHours() > LATEST){
         min_time.setDate(min_time.getDate() + 1);
     }
-    min_time.setHours(EARLIEST, 0, 0, 0);
+    min_time.setHours(EARLIEST, 0, 0, 0);*/
+    min_time.setDate(min_time.getDate() + 1);
 
     // Latest time is 9pm
     let max_time = convert_to_datetime(curr_datetime);

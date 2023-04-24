@@ -178,6 +178,7 @@ function _render_property_info_modal(){
         contentType: 'application/json',
         async: false,
         accept: 'application/json;odata=verbose',
+        data: JSON.stringify({'user_id': USER_ID, 'approved_only': true}),
         success: function (response, status, xhr){
             const _property_rqs = format_json_data(response, {'_prg_propertylist_value@OData.Community.Display.V1.FormattedValue': 'location_code',
                                                                     prg_streetnumberandname: 'street_name',

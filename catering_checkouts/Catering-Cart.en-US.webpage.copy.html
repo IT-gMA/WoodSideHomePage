@@ -1,0 +1,256 @@
+<!--head-->
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<!--Custom font-->
+<link href='https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i' rel='stylesheet'>
+<link rel='preconnect' href='https://fonts.googleapis.com'>
+<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+<link href='https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap' rel='stylesheet'>
+<link href='https://fonts.cdnfonts.com/css/univers-next-pro' rel='stylesheet'>
+<!--End of custom font-->
+
+<link rel='stylesheet' href='checkout_styling.css'>         
+
+<!--CDN scripts-->
+<script src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'></script>
+<script src='https://code.jquery.com/jquery-3.6.1.min.js' 
+          integrity='sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ='
+          crossorigin='anonymous'>
+</script>
+<script src='https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+
+<!--Bootstrap templates-->
+<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65' crossorigin='anonymous'>
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js' integrity='sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4' crossorigin='anonymous'></script>
+
+<!--FontAwesome-->
+<script src='https://kit.fontawesome.com/b593de632a.js' crossorigin='anonymous'></script>
+<link href='https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css' rel='stylesheet'>
+
+<!--Google Material Icon Pack-->
+<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200' />
+
+<!---->
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 100,
+  'GRAD' -25,
+  'opsz' 48
+}
+</style>
+<!--/head-->
+
+
+<!--Body-->
+<!--Modals-->
+<section role='dialog' tabindex='-1' name='site-location-modal-container' class='modal-section'>
+  <div class='modal-content'>
+    <div class='modal-header'>
+      <h4 class='modal-title'>Look up records</h4>
+      <span class='material-symbols-outlined close-modal-btn'>cancel</span>
+    </div>
+    <div class='modal-hz-divider'></div>
+    <div class='modal-body'>
+      <h5 class='selected-item-txt' name='selected-item-txt'>*no selection made yet*</h5>
+      <h6>Choose one record and click select to continue</h6>
+      <br>
+      <div class='search-filter-container'>
+        <div class='search-bar-container'>
+          <span class='material-symbols-outlined'>search</span>
+          <input class='search-text-field' type='text' name='search-txt-field' placeholder='Search for location' id="site-location-search-textfield">
+        </div>
+      </div>
+      <br>
+      <div class='table-container'>
+        <div class='overflow-scroll'>
+          <table class='table table-hover' name='site-location-table'>
+            <thead class='sticky-top'>
+              <tr class='table-header'>
+              </tr>
+            </thead>
+            <!--tr...-->
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class='modal-hz-divider'></div>
+    <div class='modal-footer'>
+      <button type='button' class='btn btn-primary' name='save-modal-change-btn'>Save changes</button>
+    </div>
+  </div>
+</section>
+<!--End of modal-->
+<span class='loading-spinner' name='page-loading-spinner'>
+  <br>
+  <div>
+    <img src='https://i.ibb.co/Vp2hJGW/loading-spinner.gif'>
+    <div>
+      <span class='material-symbols-outlined'>restaurant</span>
+    </div><br>
+    <h6>Loading your cart...</h6>
+  </div>
+  <br>
+</span>
+
+<section name='cart-menu-modal-container' class='body-content-section cart-item-section'>
+  <div class="form-header">
+    <span>
+      <h2>Checkout</h2>
+      <div class='hrz-line'></div>
+    </span>
+    <br>
+    <br>
+  </div>
+  <div class='form-body'>
+    <h5 class='selected-item-txt' name='selected-item-txt' style='opacity: 0;' data-cartsumprice='0'>*no selection made yet*</h5>
+    <h6 hidden></h6>
+    <!--<h6>Choose one record and click select to continue</h6>-->
+    <br>
+    <div class='search-filter-container'>
+      <div class='search-bar-container'>
+        <span class='material-symbols-outlined'>search</span>
+        <input class='search-text-field' type='text' name='search-cart-item-txt-field' placeholder='Search for an item'>
+      </div>
+    </div>
+    <br>
+    <div class='table-container'>
+      <div class='overflow-scroll' name='cart-menu-table'>
+      </div>
+    </div>
+  </div>
+  <hr><br>
+</section>
+
+
+<section class='body-content-section input-form-section'>
+  <div class='form-content-container'>
+    <div class='form-container'>
+      <div class='overflow'>
+        <form action='' name='catering-request-form' enctype="multipart/form-data">
+          <div class='form-component'>
+            <h5>Order Details</h5>
+            <span class='input-field-container'>
+              <label>Catering Request<span>  *</span></label>
+              <div class='input-field-content'>
+                <input name='catering-title-request-input' class='input-txt-field'>
+              </div>
+              <h6 class='input-err-msg'>Request title must not be empty and no more than 25 words</h6>
+            </span>
+            <span class='input-field-container' name='site-location-content'>
+              <label>Site Location<span>  *</span></label>
+              <div class='input-field-content'>
+                <input placeholder='Select your site' class='click-to-open-modal click-to-open-modal-input' name='site-location-name-input-field'>
+                <div>
+                  <span class='material-symbols-outlined modal-btn click-to-open-modal' name='open-modal-btn'>frame_inspect</span>
+                </div>
+                <div>
+                  <span class='material-symbols-outlined clear-input' name='clear-input-btn'>delete</span>
+                </div>
+              </div>
+              <h6 class='input-err-msg'>???</h6>
+            </span>
+            <span class='input-field-container'>
+              <label>Build/Room<span>  *</span></label>
+              <div class='input-field-content'>
+                <input name='building-num-input' class='input-txt-field'>
+              </div>
+              <h6 class='input-err-msg'>Build/Room code must not be empty</h6>
+            </span>
+            <br>
+            <div class='disclaimer-content'>
+              <p>Requested delivery date and time<br>Please note the following minimum order notice periods per menu type:</p>
+              <li>Function Deliveries 24 Hours notice</li>
+              <li>Priority - Cyclone Food Deliveries 48 Hours notice</li>
+              <li>Consumable Deliveries 24 Hours notice</li>
+            </div>
+            <span class='input-field-container'>
+              <label>Function Menu Preferred Delivery Date</label>
+              <div class='input-field-content'>
+                <input type='datetime-local' name='datetime-input' min='' max='' value='' required id="function-menu-pref-time-input">
+                <!--<div>
+                  <span class='material-symbols-outlined modal-btn' name='open-modal-btn'>frame_inspect</span>
+                </div>-->
+                <div>
+                  <span class='material-symbols-outlined clear-input' name='clear-datetime-input-btn'>delete</span>
+                </div>
+              </div>
+              <h6 class='input-err-msg'>Must be between 9am and 5pm within 2 months from now</h6>
+            </span>
+            <br>
+            <span class='input-field-container'>
+              <label>Extra Remark</label>
+              <div class='input-field-content'>
+                <textarea rows='3' name='catering-remark-input' placeholder="Any additional comments" class='input-txt-field'></textarea>
+              </div>
+              <h6 class='input-err-msg'>???</h6>
+            </span>
+            <span class='input-field-container'>
+              <label>Specific Instruction</label>
+              <div class='input-field-content'>
+                <textarea rows='3' name='catering-instruction-input' placeholder="Any specific instruction" class='input-txt-field'></textarea>
+              </div>
+              <h6 class='input-err-msg'>???</h6>
+            </span>
+            <span class='input-field-container'>
+              <label>Dietary Remark</label>
+              <div class='input-field-content'>
+                <textarea rows='2' name='catering-dietary-input' placeholder="Any dietary condition we need to know" class='input-txt-field'></textarea>
+              </div>
+              <h6 class='input-err-msg'>???</h6>
+            </span>
+            <br><hr>
+          </div><br>
+          <div class='form-component'>
+            <h5>Your contact detail</h5>
+            <span class='input-field-container'>
+              <label>Name<span>  *</span></label>
+              <div class='input-field-content'>
+                <input name='full-name-input' class='input-txt-field'>
+              </div>
+              <h6 class='input-err-msg'>Name must not contain special characters</h6>
+            </span>
+            <span class='input-field-container'>
+              <label>Mobile<span>  *</span></label>
+              <div class='input-field-content'>
+                <input type='tel' name='phone-num-input' class='input-txt-field'>
+              </div>
+              <h6 class='input-err-msg'>Invalid phone number</h6>
+            </span>
+            <span class='input-field-container'>
+              <label>Email<span>  *</span></label>
+              <div class='input-field-content'>
+                <input type='email' name='email-input' class='input-txt-field'>
+              </div>
+              <h6 class='input-err-msg'>Invalid email address</h6>
+            </span>
+            <span class='input-field-container'>
+              <label>Cost code<span>  *</span></label>
+              <div class='input-field-content'>
+                <input name='cost-code-input' class='input-txt-field'>
+              </div>
+              <h6 class='input-err-msg'>Invalid cost code format</h6>
+            </span>
+          </div>
+        </form>
+      </div>
+  
+      <div class='img-container'>
+        <img>
+      </div>
+    </div>
+  
+    <br>
+    <div class='form-component button-container'>
+      <button disabled type='button' class='btn btn-primary' name='submit-form-btn'>Submit</button>
+    </div>
+  </div>
+  </section>
+<!--End of body-->
+
+
+<!--My scripts-->
+<script type='text/javascript' src='checkout_utils.js'></script>
+<script type='text/javascript' defer async src='checkout_script.js'></script>
