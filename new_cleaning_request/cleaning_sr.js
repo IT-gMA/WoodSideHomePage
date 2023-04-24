@@ -385,6 +385,8 @@ $(document).ready(function(){
                     $(this).val(selected_site_location_name);
                 }else if (content_name_attr == 'cleaning-type-content'){
                     $(this).val(selected_cleaning_type_name);
+                }else if (content_name_attr == 'service-frequency-content'){
+                    $(this).val(selected_freq_name);
                 }
             });
         }
