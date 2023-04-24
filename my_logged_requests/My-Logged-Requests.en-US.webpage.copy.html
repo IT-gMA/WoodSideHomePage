@@ -1,0 +1,281 @@
+<!--head-->
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<!--Custom font-->
+<link href='https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i' rel='stylesheet'>
+<link rel='preconnect' href='https://fonts.googleapis.com'>
+<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+<link href='https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap' rel='stylesheet'>
+<link href='https://fonts.cdnfonts.com/css/univers-next-pro' rel='stylesheet'>
+<!--End of custom font-->
+
+<link rel='stylesheet' href='logged_request_stylings.css'>         
+
+<!--CDN scripts-->
+<script src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'></script>
+<script src='https://code.jquery.com/jquery-3.6.1.min.js' 
+          integrity='sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ='
+          crossorigin='anonymous'>
+</script>
+<script src='https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+
+<!--Bootstrap templates-->
+<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65' crossorigin='anonymous'>
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js' integrity='sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4' crossorigin='anonymous'></script>
+
+<!--FontAwesome-->
+<script src='https://kit.fontawesome.com/b593de632a.js' crossorigin='anonymous'></script>
+<link href='https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css' rel='stylesheet'>
+
+<!--Google Material Icon Pack-->
+<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200' />
+
+<!---->
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 100,
+  'GRAD' -25,
+  'opsz' 48
+}
+</style>
+<!--/head-->
+
+<!--body-->
+<span class='loading-spinner' name='page-loading-spinner'>
+  <br>
+  <div>
+    <img src='https://i.ibb.co/Vp2hJGW/loading-spinner.gif'>
+    <span class='material-symbols-outlined'>archive</span>
+    <br>
+    <h6>Loading your previous requests...</h6>
+  </div>
+  <br>
+</span>
+<!--End of body-->
+
+<!--Modals-->
+<section role='dialog' tabindex='-1' class='modal-section'>
+  <div class='modal-content'>
+    <div class='modal-header'>
+      <h4 class='modal-title'>Additional Information</h4>
+      <span class='material-symbols-outlined close-modal-btn'>cancel</span>
+    </div>
+    <div class='modal-hz-divider'></div>
+    <div class='modal-body'>
+    </div>
+  </div>
+</section>
+
+<section class='body-content-section' id='hero-cover-section'>
+  <br><br>
+  <div class="text-content">
+    <span>
+      <h2>My Logged Requests</h2>
+      <div class='hrz-line'></div>
+    </span>
+    <br>
+    <br>
+  </div>
+  <div class='background-img'>
+    <img src='https://i.ibb.co/Dpwrbvq/my-logged-request-page-img1.webp'>
+  </div>
+  <br><br>
+</section>
+
+<section class='body-content-section form-content-section'>
+  <div class="text-content">
+    <span>
+      <h3 class="table-title"></h3>
+      <div class='hrz-line'></div>
+    </span>
+    <br>
+    <br>
+  </div>
+  <div class='search-filter-container inpage-search-n-filter'>
+    <div class='search-bar-container'>
+      <span class='material-symbols-outlined'>search</span>
+      <input class='search-text-field' type='text' name='search-catering-item-txt-field' placeholder='Search for an item'>
+    </div>
+    <div class='filter-option-container'>
+      <div class='dropdown'>
+        <button class='sort-n-filter-dropdown-btn' type='button' id='sort-dropdown-menu' data-bs-toggle='dropdown' aria-expanded='false'>
+          <span class='material-symbols-outlined'>sort</span>
+        </button>
+        <div class='dropdown-menu dropdown-menu-end dropdown-menu-lg-start' aria-labelledby='sort-dropdown-menu' name='sort-option-dropdown-menu'>
+          <div class='dropdown-item'>
+            <input class='form-check-input product-sort-and-filter-opt' type='radio' name='sort-option-radio-checkbox' id='sort-by-name-asc'>
+            <label class='form-check-label' name="sort-by-name-asc-label"></label>
+          </div>
+          <div class='dropdown-item'>
+            <input class='form-check-input product-sort-and-filter-opt' type='radio' name='sort-option-radio-checkbox' id='sort-by-name-desc'>
+            <label class='form-check-label' name="sort-by-name-desc-label"></label>
+          </div>
+          <div class='dropdown-item'>
+            <input class='form-check-input product-sort-and-filter-opt' type='radio' name='sort-option-radio-checkbox' id='sort-by-date-asc'>
+            <label class='form-check-label'>Date raised (New)</label>
+          </div>
+          <div class='dropdown-item'>
+            <input class='form-check-input product-sort-and-filter-opt' type='radio' name='sort-option-radio-checkbox' id='sort-by-date-desc'>
+            <label class='form-check-label'>Date raised (Old)</label>
+          </div>
+        </div>
+      </div>
+      <div class='dropdown' style="display: none;">
+        <button class='sort-n-filter-dropdown-btn' type='button' id='filter-dropdown-menu' data-bs-toggle='dropdown' aria-expanded='false'>
+          <span class='material-symbols-outlined'>tune</span>
+        </button>
+        <div class='dropdown-menu dropdown-menu-end dropdown-menu-lg-start' aria-labelledby='filter-dropdown-menu' name='filter-sort-dropdown-menu'>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class='overflow-scroll'>
+    <table class='table' name='maximo-rq-info-table'>
+      <thead class='sticky-top'>
+        <tr class='table-header'>
+        </tr>
+      </thead>
+      <!--tr...-->
+    </table>
+  </div>
+  <br><br>
+</section>
+
+<section class='body-content-section' id='hero-cover-section'>
+  <br>
+  <div class='background-img'>
+    <img src='https://i.ibb.co/3mnh5fV/my-logged-request-img2.webp'>
+  </div>
+  <br><br>
+</section>
+
+<section class='body-content-section form-content-section'>
+  <div class="text-content">
+    <span>
+      <h3 class="table-title"></h3>
+      <div class='hrz-line'></div>
+    </span>
+    <br>
+    <br>
+  </div>
+  <div class='search-filter-container inpage-search-n-filter'>
+    <div class='search-bar-container'>
+      <span class='material-symbols-outlined'>search</span>
+      <input class='search-text-field' type='text' name='search-catering-item-txt-field' placeholder='Search for an item'>
+    </div>
+    <div class='filter-option-container'>
+      <div class='dropdown'>
+        <button class='sort-n-filter-dropdown-btn' type='button' id='sort-dropdown-menu' data-bs-toggle='dropdown' aria-expanded='false'>
+          <span class='material-symbols-outlined'>sort</span>
+        </button>
+        <div class='dropdown-menu dropdown-menu-end dropdown-menu-lg-start' aria-labelledby='sort-dropdown-menu' name='sort-option-dropdown-menu'>
+          <div class='dropdown-item'>
+            <input class='form-check-input product-sort-and-filter-opt' type='radio' name='sort-option-radio-checkbox' id='sort-by-name-asc'>
+            <label class='form-check-label' name="sort-by-name-asc-label"></label>
+          </div>
+          <div class='dropdown-item'>
+            <input class='form-check-input product-sort-and-filter-opt' type='radio' name='sort-option-radio-checkbox' id='sort-by-name-desc'>
+            <label class='form-check-label' name="sort-by-name-desc-label"></label>
+          </div>
+          <div class='dropdown-item'>
+            <input class='form-check-input product-sort-and-filter-opt' type='radio' name='sort-option-radio-checkbox' id='sort-by-date-asc'>
+            <label class='form-check-label'>Date raised (New)</label>
+          </div>
+          <div class='dropdown-item'>
+            <input class='form-check-input product-sort-and-filter-opt' type='radio' name='sort-option-radio-checkbox' id='sort-by-date-desc'>
+            <label class='form-check-label'>Date raised (Old)</label>
+          </div>
+        </div>
+      </div>
+      <div class='dropdown' style="display: none;">
+        <button class='sort-n-filter-dropdown-btn' type='button' id='filter-dropdown-menu' data-bs-toggle='dropdown' aria-expanded='false'>
+          <span class='material-symbols-outlined'>tune</span>
+        </button>
+        <div class='dropdown-menu dropdown-menu-end dropdown-menu-lg-start' aria-labelledby='filter-dropdown-menu' name='filter-sort-dropdown-menu'>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class='overflow-scroll'>
+    <table class='table' name='service-rq-info-table'>
+      <thead class='sticky-top'>
+        <tr class='table-header'>
+        </tr>
+      </thead>
+      <!--tr...-->
+    </table>
+  </div>
+  <br><br>
+</section>
+
+<section class='body-content-section form-content-section'>
+  <div class="text-content">
+    <span>
+      <h3 class="table-title"></h3>
+      <div class='hrz-line'></div>
+    </span>
+    <br>
+    <br>
+  </div>
+  <div class='search-filter-container inpage-search-n-filter'>
+    <div class='search-bar-container'>
+      <span class='material-symbols-outlined'>search</span>
+      <input class='search-text-field' type='text' name='search-catering-item-txt-field' placeholder='Search for an item'>
+    </div>
+    <div class='filter-option-container'>
+      <div class='dropdown'>
+        <button class='sort-n-filter-dropdown-btn' type='button' id='sort-dropdown-menu' data-bs-toggle='dropdown' aria-expanded='false'>
+          <span class='material-symbols-outlined'>sort</span>
+        </button>
+        <div class='dropdown-menu dropdown-menu-end dropdown-menu-lg-start' aria-labelledby='sort-dropdown-menu' name='sort-option-dropdown-menu'>
+          <div class='dropdown-item'>
+            <input class='form-check-input product-sort-and-filter-opt' type='radio' name='sort-option-radio-checkbox' id='sort-by-name-asc'>
+            <label class='form-check-label' name="sort-by-name-asc-label"></label>
+          </div>
+          <div class='dropdown-item'>
+            <input class='form-check-input product-sort-and-filter-opt' type='radio' name='sort-option-radio-checkbox' id='sort-by-name-desc'>
+            <label class='form-check-label' name="sort-by-name-desc-label"></label>
+          </div>
+          <div class='dropdown-item'>
+            <input class='form-check-input product-sort-and-filter-opt' type='radio' name='sort-option-radio-checkbox' id='sort-by-date-asc'>
+            <label class='form-check-label'>Date raised (New)</label>
+          </div>
+          <div class='dropdown-item'>
+            <input class='form-check-input product-sort-and-filter-opt' type='radio' name='sort-option-radio-checkbox' id='sort-by-date-desc'>
+            <label class='form-check-label'>Date raised (Old)</label>
+          </div>
+        </div>
+      </div>
+      <div class='dropdown' style="display: none;">
+        <button class='sort-n-filter-dropdown-btn' type='button' id='filter-dropdown-menu' data-bs-toggle='dropdown' aria-expanded='false'>
+          <span class='material-symbols-outlined'>tune</span>
+        </button>
+        <div class='dropdown-menu dropdown-menu-end dropdown-menu-lg-start' aria-labelledby='filter-dropdown-menu' name='filter-sort-dropdown-menu'>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class='overflow-scroll'>
+    <table class='table' name='cleaning-rq-info-table'>
+      <thead class='sticky-top'>
+        <tr class='table-header'>
+        </tr>
+      </thead>
+      <!--tr...-->
+    </table>
+  </div>
+  <br><br>
+</section>
+
+
+<!--my scripts-->
+<script defer async type="text/javascript" src="logged_request_script.js"></script>
