@@ -801,9 +801,11 @@ $(document).ready(function () {
     _hide_elements_on_load();
     _render_body_content();
 
-    /*$('.form-check-input').on('click', function(event){
-        if (event.target == this) $(this).closest('.dropdown-menu').dropdown('toggle');
-    });*/
+    document.querySelectorAll('[name=cart-menu-modal-container]').forEach(function(parentDiv) {
+        const observer = new MutationObserver(mutations => $('div[name=cart-menu-modal-footer]').find('.btn').attr('disabled', document.querySelectorAll('[name=cart-item-info-container]').length < 1));
+        // observe changes to the DOM within the parent container
+        observer.observe(parentDiv, { subtree: true, childList: true });
+    });
 
     document.querySelectorAll('[name=top-nav-prev]').forEach((e) => {console.log(e)});
     _render_card_swipe_btns('[name=top-nav-prev]', '[name=top-nav-nxt]', $('span[name=top-nav-prev]'), $('span[name=top-nav-nxt]'), '[name=in-page-nav-menu-container]', 0.2);

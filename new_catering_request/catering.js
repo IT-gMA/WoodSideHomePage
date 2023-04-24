@@ -793,6 +793,13 @@ $(document).ready(function () {
     $('html, body').scrollTop(0);
     _hide_elements_on_load();
     _render_body_content();
+
+    document.querySelectorAll('[name=cart-menu-modal-container]').forEach(function(parentDiv) {
+        const observer = new MutationObserver(mutations => $('div[name=cart-menu-modal-footer]').find('.btn').attr('disabled', document.querySelectorAll('[name=cart-item-info-container]').length < 1));
+        // observe changes to the DOM within the parent container
+        observer.observe(parentDiv, { subtree: true, childList: true });
+    });
+
     $(document).on('keyup', 'input[name=item-quantity-input]', function (e) {
         //!DIGIT_REGEX.test($(this).val()) ? $(this).val(null) : null;
         !DIGIT_REGEX.test($(this).val()) ? $(this).val(extract_integers($(this).val())) : null;
