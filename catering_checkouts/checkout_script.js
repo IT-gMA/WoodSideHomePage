@@ -8,7 +8,20 @@ const USER_ID = get_user_id();
 let SITE_LOCATIONS = [];
 let MY_CART = [];
 
-let valid_datetime = false;
+let valid_dt = {
+    'valid_function_datetime': false,
+    'valid_weekly_datetime': false,
+    'valid_consumable_datetime': false,
+    'valid_priority_datetime': false,
+}
+
+const menu_type_dt_map = {
+    'weekly': ['baba4017-5f64-ed11-9561-0022489624ee', 'cO9ecc2d-f29c-ed11-aad1-002248114fd7', 'c19ecc2d-f29c-ed11-aad1-002248114fd7', 'c29ecc2d-f29c-ed11-aad1-002248114fd7'],
+    'consumable': ['85f8652d-5f64-ed11-9561-000d3acc166b'],
+    'function': ['674bdf21-5f64-ed11-9561-0022489334d1', 'db7c2127-564-ed11-9561-002248933ec4', '83158147-85cf-ed11-a7c7-002248117628'],
+    'priority': ['fe298b2a-5f64-ed11-9561-000d3aca76e9'],
+}
+
 let valid_request_title = false;
 let selected_site_location = null;
 let selected_site_location_name = null;
@@ -45,7 +58,8 @@ function _append_cart_item(cart_item){
                                     data-totalprice='${cart_item['total_price']}'
                                     data-price='${cart_item['price']}'
                                     data-quantity='${cart_item['ordered_quantity']}'
-                                    data-minquantity='${cart_item['min_quantity']}'>
+                                    data-minquantity='${cart_item['min_quantity']}'
+                                    data-cateringmenuname="${cart_item['menu_type']}">
                                 <div class='img-container cart-item'>
                                     <img src='${cart_item['img_url']}'>
                                 </div>          <!--0-->
@@ -324,11 +338,36 @@ function _render_body_content(){
             });
             if (!response['is_function']){
                 $('#function-menu-pref-time-input').parent().parent().remove();
-                valid_datetime = true;
+                valid_dt['valid_function_datetime'] = true;
+            }else{
+                _render_datetime_input_field('function-menu-pref-time-input', 'function-menu-time-input-clear', 'valid_function_datetime', 1);
             }
-            $('input[name=catering-title-request-input]').val(`Catering order--${format_datetime_now_standard()}: ${response['catering_cart_items'].length} item${response['catering_cart_items'].length > 1 ? 's' : ''} from ${response['user_contact_info']['yomifullname']}`);
+            
+            if (!response['is_consumable']){
+                $('#consumable-menu-pref-time-input').parent().parent().remove();
+                valid_dt['valid_consumable_datetime'] = true;
+            }else{
+                _render_datetime_input_field('consumable-menu-pref-time-input', 'consumable-menu-time-input-clear', 'valid_consumable_datetime', 1);
+            }
+
+            if (!response['is_priority']){
+                $('#priority-menu-pref-time-input').parent().parent().remove();
+                valid_dt['valid_priority_datetime'] = true;
+            }else{
+                _render_datetime_input_field('priority-menu-pref-time-input', 'priority-menu-time-input-clear', 'valid_priority_datetime', 2);
+            }
+
+            if (!response['is_weekly']){
+                $('#weekly-menu-pref-time-input').parent().parent().remove();
+                valid_dt['valid_weekly_datetime'] = true;
+            }else{
+                _render_datetime_input_field('weekly-menu-pref-time-input', 'weekly-menu-time-input-clear', 'valid_weekly_datetime');
+            }
+
+            //$('input[name=catering-title-request-input]').val(`-SR-${format_datetime_now_standard()}: ${response['catering_cart_items'].length} item${response['catering_cart_items'].length > 1 ? 's' : ''} from ${response['user_contact_info']['yomifullname']}`);
+            $('input[name=catering-title-request-input]').val(`-SR-${format_datetime_now_standard()} from ${response['user_contact_info']['yomifullname']}`);
             _render_site_location_modal(response['site_locations']);
-            _render_datetime_input_field();
+            
             auto_fill_personal_data_fields(response['user_contact_info'])
             _construct_cart_popup_modal(MY_CART);
             _quick_ui_styling();
@@ -365,8 +404,8 @@ function process_modal_section_render(modal, show=true){
 
 
 function enable_submit_button(){
-    $('button[name=submit-form-btn]').attr('disabled', selected_site_location == null || !valid_building ||
-                                                        valid_request_title || !valid_datetime ||
+    $('button[name=submit-form-btn]').attr('disabled', selected_site_location == null || !valid_building || $('div[name=cart-menu-table]').find('.cart-item-info-container').length < 1 ||
+                                                        valid_request_title || !Object.values(valid_dt).every(Boolean) ||
                                                         !valid_email || !valid_name || !valid_phonenum || !valid_cost_code);
 }
 
@@ -377,6 +416,11 @@ $(document).ready(function(){
 
     // Submit button action
     $('button[name=submit-form-btn]').click(function(event){
+        $(this).attr('disabled', true);
+        $(this).empty();
+        $(this).append(BUTTON_LOADING_SPINNER);
+        const _this_btn_dom = $(this);
+
         let cart_values = [];
         $('div[name=cart-item-info-container]').each(function(idx, cart_item){
             console.log($(this));
@@ -394,9 +438,39 @@ $(document).ready(function(){
                 'cart_item': $(this).attr('data-cateringitem'),
                 'quantity': _curr_quantity,
                 'catering_menu': $(this).attr('data-cateringmenu'),
+                'menu_name': $(this).attr('data-cateringmenuname'),
+                'min_quantity': _min_quantity,
                 'menu_type': $(this).attr('data-menusection'),
             });
         });
+
+        const grouped_values = cart_values.reduce((accumulator, curr_item) => {
+            const common_menu_type = String(curr_item.catering_menu);
+            if (!accumulator[common_menu_type]) {
+                let catering_menu_dt = '';
+                let catering_menu_name = '--';
+                for (const key in menu_type_dt_map){
+                    if (menu_type_dt_map[key].includes(common_menu_type)){
+                        catering_menu_dt = String($(`#${key}-menu-pref-time-input`).val());
+                        catering_menu_name = key;
+                        break;
+                    }
+                }
+                accumulator[common_menu_type] = {
+                    'catering_menu': common_menu_type,
+                    'catering_menu_name': catering_menu_name,
+                    'cart_items': [],
+                    'pref_dt': catering_menu_dt,
+                };
+            }
+            accumulator[common_menu_type]['cart_items'].push(curr_item);
+            return accumulator
+        }, {});
+        let new_values = [];
+        for (const key in grouped_values){
+            new_values.push(grouped_values[key]);
+        }
+        console.log(new_values);
         let _data = {
             'catering_request_title': clean_white_space($('input[name=catering-title-request-input]').val(), false),
             'user_id': USER_ID,
@@ -404,18 +478,33 @@ $(document).ready(function(){
             'user_mobile': clean_white_space($('input[name=phone-num-input]').val(), false),
             'user_email': clean_white_space($('input[name=email-input]').val(), false),
             'cost_code': $('input[name=cost-code-input]').val(),
-            'values': cart_values,
+            'values': new_values,
             'site_location': selected_site_location,
             'building_room': clean_white_space($('input[name=building-num-input]').val(), false),
         };
         if ($('textarea[name=catering-remark-input]').val()) _data['extra_remarks'] = $('textarea[name=catering-remark-input]').val();
         if ($('textarea[name=catering-instruction-input]').val()) _data['delivery_instruction'] = $('textarea[name=catering-instruction-input]').val();
         if ($('textarea[name=catering-dietary-input]').val()) _data['dietary'] = $('textarea[name=catering-dietary-input]').val();
-        if (document.querySelectorAll('[name=datetime-input]').length > 0){
-            _data['pref_datetime'] = String($('#function-menu-pref-time-input').val());
-        }
         console.log(_data);
-        const _json_data = JSON.stringify(_data);
+        console.log(JSON.stringify(_data));
+        $.ajax({
+            type: 'POST',
+            url: 'https://prod-23.australiasoutheast.logic.azure.com:443/workflows/3f38c13eb3174e20966bc3a9cc1ac993/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xUyKMez9XVqmg046xtFXBH7mzIhlseG5Ttiptc3OVZQ',
+            contentType: 'application/json',
+            accept: 'application/json;odata=verbose',
+            data: JSON.stringify(_data),
+            complete: function(response){
+                _this_btn_dom.empty();
+                _this_btn_dom.append('Submit');
+                if ([200].includes(response.status)){
+                    alert(`New catering request ${$('input[name=catering-title-request-input]').val()} has been made`);
+                    //return window.location = `${window.location.origin}/request-submitted/`;
+                }else{
+                    alert('Failed to submit a catering request at this time');
+                }
+                location.reload();
+            }
+        })
     });
 
     $(document).on('keyup', 'input[name=item-quantity-input]', function (e) {

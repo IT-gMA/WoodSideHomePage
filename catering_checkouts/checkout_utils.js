@@ -29,44 +29,50 @@ function check_word_limit(input_str, max_word_count=25){
     return clean_white_space(input_str, false).split(' ').length <= max_word_count;
 }
 
-function _render_datetime_input_field(){
+function _render_datetime_input_field(datetime_input_field_id, clear_dt_input_btn_id, valid_dt_bool, min_day_apart=-1){
     let curr_datetime = new Date();
     let two_months_later = new Date();
 
     // Earliest is 9am
     let min_time = convert_to_datetime(curr_datetime);
-    /*if (min_time.getHours() > LATEST){
-        min_time.setDate(min_time.getDate() + 1);
-    }*/
-    min_time.setDate(min_time.getDate() + 1);
-    //min_time.setHours(EARLIEST, 0, 0, 0);
+    if (min_day_apart < 0){
+        if (min_time.getHours() > LATEST * 0.6) min_time.setDate(min_time.getDate() + 1);
+        //min_time.setDate(min_time.getDate() + 1);
+    }else{
+        min_time.setDate(min_time.getDate() + min_day_apart);
+        /*if (min_time.getHours() > LATEST * 0.85) {
+            min_time.setDate(min_time.getDate() + min_day_apart + 1);
+        }else{
+            min_time.setDate(min_time.getDate() + min_day_apart);
+        }*/
+    }
 
     // Latest time is 9pm
     let max_time = convert_to_datetime(curr_datetime);
     max_time.setMonth(max_time.getMonth() + 2);
     max_time.setHours(LATEST, 0, 0, 0);
-    console.log(`currdate:${curr_datetime}\nmin_time: ${min_time}\nmax_time: ${max_time}`);
+    //console.log(`currdate:${curr_datetime}\nmin_time: ${min_time}\nmax_time: ${max_time}`);
 
     _datetime_input.attr('min', min_time.toISOString().slice(0, 16));
     _datetime_input.attr('max', max_time.toISOString().slice(0, 16));
-    $(document).on('keyup change', 'input[name=datetime-input]', function(e){
+    $(document).on('keyup change', `#${datetime_input_field_id}`, function(e){
         if ($(this).val() == null || !$(this).val()){
-            valid_datetime = true;
+            valid_dt[valid_dt_bool] = true;
         }else{
             const entered_datetime = convert_to_datetime($(this).val());
-            valid_datetime = !(min_time > entered_datetime || entered_datetime > max_time || entered_datetime.getHours() < EARLIEST || entered_datetime.getHours() + entered_datetime.getMinutes()/60 + entered_datetime.getSeconds()/3600 > LATEST);
-            $(this).closest('.input-field-container').find('.input-err-msg').css('opacity', `${valid_datetime ? '0' : '1'}`);
+            valid_dt[valid_dt_bool] = !(min_time > entered_datetime || entered_datetime > max_time || entered_datetime.getHours() < EARLIEST || entered_datetime.getHours() + entered_datetime.getMinutes()/60 + entered_datetime.getSeconds()/3600 > LATEST);
+            $(this).closest('.input-field-container').find('.input-err-msg').css('opacity', `${valid_dt[valid_dt_bool] ? '0' : '1'}`);
             //console.log(`valid_datetime: ${!(min_time > entered_datetime || entered_datetime > max_time)}`);
             //console.log(`valid_hours: ${!(entered_datetime.getHours() < EARLIEST || entered_datetime.getHours() > LATEST)}`);
         }
-        //enable_submit_button();
+        enable_submit_button();
     });
 
-    $(document).on('click', 'span[name=clear-datetime-input-btn]', function(event){
-        $('input[name=datetime-input]').val(null);
-        valid_datetime = true;
-        $(this).closest('.input-field-container').find('.input-err-msg').css('opacity', `${valid_datetime ? '0' : '1'}`);
-        //enable_submit_button();
+    $(document).on('click', `#${clear_dt_input_btn_id}`, function(event){
+        $(this).closest('.input-field-container').find('[name=datetime-input]').val(null);
+        valid_dt[valid_dt_bool] = false;
+        $(this).closest('.input-field-container').find('.input-err-msg').css('opacity', '0');
+        enable_submit_button();
     });
 }
 

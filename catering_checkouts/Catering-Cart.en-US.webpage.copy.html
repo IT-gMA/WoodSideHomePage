@@ -159,12 +159,12 @@
               </div>
               <h6 class='input-err-msg'>Build/Room code must not be empty</h6>
             </span>
-            <br>
+            <br><hr>
             <div class='disclaimer-content'>
               <p>Requested delivery date and time<br>Please note the following minimum order notice periods per menu type:</p>
               <li>Function Deliveries 24 Hours notice</li>
               <li>Priority - Cyclone Food Deliveries 48 Hours notice</li>
-              <li>Consumable Deliveries 24 Hours notice</li>
+              <li>Consumable Deliveries 24 Hours notice<br></li>
             </div>
             <span class='input-field-container'>
               <label>Function Menu Preferred Delivery Date</label>
@@ -174,12 +174,54 @@
                   <span class='material-symbols-outlined modal-btn' name='open-modal-btn'>frame_inspect</span>
                 </div>-->
                 <div>
-                  <span class='material-symbols-outlined clear-input' name='clear-datetime-input-btn'>delete</span>
+                  <span class='material-symbols-outlined clear-input' name='clear-datetime-input-btn' id="function-menu-time-input-clear">delete</span>
+                </div>
+              </div>
+              <h6 class='input-err-msg'>Must be between 9am and 5pm within 1 day & 2 months from now</h6>
+            </span>
+
+            <span class='input-field-container'>
+              <label>Consumable Menu Preferred Delivery Date</label>
+              <div class='input-field-content'>
+                <input type='datetime-local' name='datetime-input' min='' max='' value='' required id="consumable-menu-pref-time-input">
+                <!--<div>
+                  <span class='material-symbols-outlined modal-btn' name='open-modal-btn'>frame_inspect</span>
+                </div>-->
+                <div>
+                  <span class='material-symbols-outlined clear-input' name='clear-datetime-input-btn' id="consumable-menu-time-input-clear">delete</span>
+                </div>
+              </div>
+              <h6 class='input-err-msg'>Must be between 9am and 5pm within 1 day & 2 months from now</h6>
+            </span>
+
+            <span class='input-field-container'>
+              <label>Priority Preferred Delivery Date</label>
+              <div class='input-field-content'>
+                <input type='datetime-local' name='datetime-input' min='' max='' value='' required id="priority-menu-pref-time-input">
+                <!--<div>
+                  <span class='material-symbols-outlined modal-btn' name='open-modal-btn'>frame_inspect</span>
+                </div>-->
+                <div>
+                  <span class='material-symbols-outlined clear-input' name='clear-datetime-input-btn' id="priority-menu-time-input-clear">delete</span>
+                </div>
+              </div>
+              <h6 class='input-err-msg'>Must be between 9am and 5pm within 2 days & 2 months from now</h6>
+            </span>
+
+            <span class='input-field-container'>
+              <label>Weekly Preferred Delivery Date</label>
+              <div class='input-field-content'>
+                <input type='datetime-local' name='datetime-input' min='' max='' value='' required id="weekly-menu-pref-time-input">
+                <!--<div>
+                  <span class='material-symbols-outlined modal-btn' name='open-modal-btn'>frame_inspect</span>
+                </div>-->
+                <div>
+                  <span class='material-symbols-outlined clear-input' name='clear-datetime-input-btn' id="weekly-menu-time-input-clear">delete</span>
                 </div>
               </div>
               <h6 class='input-err-msg'>Must be between 9am and 5pm within 2 months from now</h6>
             </span>
-            <br>
+            <hr><br>
             <span class='input-field-container'>
               <label>Extra Remark</label>
               <div class='input-field-content'>

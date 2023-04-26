@@ -94,7 +94,7 @@ button, a, input, i{
 
 body{
     width: 100vw !important;
-    background-color: white !important;
+    background-color: var(--clr-off-white-primary) !important;
 }
 
 section{
@@ -186,6 +186,8 @@ section{
     border: solid var(--clr-programmed-light-grey) !important;
     border-radius: 2em !important;
     padding: .1em .2em !important;
+
+    background-color: white !important;
 }
 
 .search-filter-container .search-bar-container .search-text-field{
@@ -852,4 +854,300 @@ table tr td{
 /*Search and filter*/
 .search-filter-container{
     color: var(--clr-programmed-charcoal-400) !important;
+}
+
+@media (max-width: 780px) {
+    /*Form header text*/
+    .body-content-section .form-header h2{
+        font-size: 1.75em !important;
+        letter-spacing: .0065ch !important;
+    }
+
+    .body-content-section .form-header, .body-content-section .form-header span{
+        padding: 0 1em !important;
+    }
+
+    .hrz-line{
+        height: .1em !important;
+    }
+
+    /*cart item display styling*/
+    .body-content-section.cart-item-section .form-body{
+        margin: auto !important;
+        padding: 0 1.5em !important;
+    }
+
+    .cart-item-info-container{
+        grid-template-columns: auto 75% !important;
+        grid-gap: 1em !important;
+        padding: .15em !important;
+    }
+
+    .cart-item-info-container .cart-item-info-content .cart-item-desc-content p{
+        font-size: .79em !important;
+    }
+    .cart-item-info-container .cart-item-info-content .cart-item-desc-content h5, .cart-item-info-container .cart-item-price-content h6{
+        font-size: 1.1em;
+    }
+    .cart-item-info-container .cart-item-info-content .cart-item-desc-content h6{
+        font-size: .95em !important;
+    }
+
+    .cart-item-info-container .cart-item-price-content, .cart-item-info-container .cart-item-price-content div{
+        padding: .5em .1em !important;
+    }
+    
+    .cart-item-info-container .cart-item-price-content{
+        grid-template-columns: 20% auto;
+    }
+
+    .cart-item-info-container .cart-item-price-content div{
+        display: grid !important;
+        grid-template-columns: auto 55% auto !important;
+        font-size: small !important;
+    }
+    .cart-item-info-container .cart-item-price-content div input{
+        text-align: left !important;
+        font-size: small !important;
+    }
+    .cart-item-info-container .cart-item-price-content div span{
+        font-size: 1.5em !important;
+    }
+
+    .cart-item-info-container .cart-item-info-content .cart-item-info-content-inner{
+        grid-template-columns: 90% auto;
+    }
+
+    .cart-item-info-container .cart-item-info-content .remove-cart-item-btn{
+        font-size: 1.5em !important;
+        padding: .1em;
+    }
+
+    /*Cart footer & buttons styling*/
+    .modal-section .modal-content .modal-footer{
+        padding: .15em 1em !important;
+    }
+
+    .modal-section .modal-content .modal-footer button, #cart-modal-checkout-btn{
+        font-size: small !important;
+    }
+    /*End of cart footer styling*/
+
+    /*Service request form*/
+    .form-content-container .form-container .overflow{
+        order: 2 !important;
+    }
+    .form-content-container .form-container .img-container {
+        order: 1 !important;
+    }
+  
+    .form-container{
+        display: flex !important;
+        flex-direction: column !important;
+        height: unset !important;
+    }
+  
+    .form-header, .form-container{
+        width: 95% !important;
+    }
+
+    .form-container .img-container img{
+        content: url('https://i.ibb.co/P6K0vrY/catering-checkout-thumbnail-mobile.webp');
+        border-radius: var(--top-rounded-border-radius) !important;
+        aspect-ratio: 8 / 2 !important;
+    }
+
+    form{
+        position: relative !important;
+        max-height: auto !important;
+        overflow-y: auto !important;
+        width: 100% !important;
+    }
+
+    .form-container .overflow form{
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .form-component .input-field-content, .search-filter-container{
+        width: unset !important;
+    }
+
+    /*Modal styling*/
+    .modal-section .modal-content{
+        overflow-y: scroll !important;
+        width: 90% !important;
+    }
+
+    .modal-section .modal-content .modal-header{
+        grid-template-columns: 90% auto !important;
+    }
+
+    .modal-hz-divider{
+        height: .025rem !important;
+    }
+
+    /*Search and filter*/
+    .search-bar-container{
+        grid-gap: 1em !important;
+        padding: .1em .3em !important;
+    }
+}
+
+@media (max-width: 451px) {
+    /*Form header text*/
+    .body-content-section .form-header h2{
+        font-size: 1.15em !important;
+        letter-spacing: unset !important;
+    }
+    .body-content-section .form-header, .body-content-section .form-header span{
+        padding: 0 .5em !important;
+    }
+    .hrz-line{
+        height: .085em !important;
+    }
+
+    .body-content-section.cart-item-section .form-body .table-container .overflow-scroll{
+        max-height: clamp(40em, 12.5vh, 250px) !important;
+        
+        grid-gap: .45em !important;
+        padding: .45em !important;
+    }
+
+    .body-content-section.cart-item-section .form-body{
+        margin: auto !important;
+        padding: 0 .75em !important;
+    }
+
+    .cart-item-info-container{
+        grid-template-columns: auto 65% !important;
+        grid-gap: .5em !important;
+        padding: .05em !important;
+    }
+
+    .cart-item-info-container .cart-item-info-content .cart-item-desc-content p{
+        font-size: .6em !important;
+    }
+    .cart-item-info-container .cart-item-info-content .cart-item-desc-content h5, .cart-item-info-container .cart-item-price-content h6{
+        font-size: .95em;
+    }
+    .cart-item-info-container .cart-item-info-content .cart-item-desc-content h6{
+        font-size: .7em !important;
+    }
+
+    .cart-item-info-container .img-container.cart-item{
+        height: auto !important;
+        min-height: auto !important;
+    }
+
+    .cart-item-info-container .cart-item-price-content{
+        grid-template-columns: auto auto !important;
+        grid-gap: 1em !important;
+    }
+    .cart-item-info-container .cart-item-price-content h6{
+        margin-right: .2em !important;
+    }
+
+    .cart-item-info-container .cart-item-price-content div{
+        grid-template-columns: auto auto auto !important;
+        font-size: x-small !important;
+    }
+    .cart-item-info-container .cart-item-price-content div input{
+        font-size: x-small !important;
+        max-width: 12ch !important;
+    }
+    .cart-item-info-container .cart-item-price-content div span{
+        font-size: small !important;
+    }
+
+    .cart-item-info-container .cart-item-info-content .remove-cart-item-btn{
+        font-size: 1em !important;
+        padding: .05em;
+    }
+
+    h4{
+        font-size: large !important;
+    }
+    /*Text font styling*/
+    h5, h6, p, label, button, a, input, i, li,
+    .input-field-container .input-err-msg, .form-component input, .form-component textarea, 
+    .table-container .overflow-scroll, table tr, .input-field-container .input-field-content .checkbox-field-content .form-check label{
+        font-size: smaller !important;
+    }
+
+    /*Form components*/
+    .form-component input, .form-component textarea,
+    .form-component input:hover, .form-component textarea:hover, 
+    .form-component .input-field-content div .clear-input, .form-component .input-field-content div .modal-btn,
+    .form-component .input-field-content div:hover > .modal-btn, .form-component .input-field-content div:hover > .clear-input,
+    .form-component .input-field-content div span,
+    .form-component .input-field-content div:hover > span,
+    .form-component .input-field-content div:active > span,
+    .form-component input:active, .form-component textarea:active, .form-component input:focus, .form-component textarea:focus, .search-bar-container:focus,
+    .search-bar-container, .search-bar-container:hover, .search-bar-container:active, .search-bar-container:focus
+    {
+        border-width: .03rem !important;
+    }
+
+    /*Modal styling*/
+    .modal-section .modal-content .modal-body{
+        padding: .5em !important;
+    }
+}
+
+@media (max-width: 400px) {
+    /*Text font styling*/
+    h5, h6, p, label, button, a, input, i, 
+    .input-field-container .input-err-msg, .form-component input, .form-component textarea, 
+    .table-container .overflow-scroll, table tr, .input-field-container .input-field-content .checkbox-field-content .form-check label{
+        font-size: x-small !important;
+    }
+
+    /*Form components*/
+    .form-component .input-field-content, .search-filter-container{
+        grid-template-columns: 70% auto auto !important;
+        grid-gap: 1rem !important;
+    }
+
+    .form-component .input-field-content span{
+        font-size: 1em !important;
+    }
+
+    /*Modal styling*/
+    .modal-section .modal-content{
+        width: 92.5% !important;
+    }
+
+    .modal-section .modal-content .modal-header{
+        grid-template-columns: 88% auto !important;
+    }
+}
+
+@media (max-width: 350px) {
+    /*cart item display styling*/
+    .cart-item-info-container{
+        grid-template-columns: auto 65% !important;
+        grid-gap: .25em !important;
+        padding: .05em !important;
+    }
+
+    .cart-item-info-container .cart-item-info-content .cart-item-desc-content p{
+        font-size: .45em !important;
+    }
+    .cart-item-info-container .cart-item-info-content .cart-item-desc-content h5, .cart-item-info-container .cart-item-price-content h6{
+        font-size: .85em;
+    }
+    .cart-item-info-container .cart-item-info-content .cart-item-desc-content h6{
+        font-size: .6em !important;
+    }
+
+    .cart-item-info-container .cart-item-info-content .remove-cart-item-btn{
+        font-size: .85em !important;
+        padding: .05em;
+    }
+
+    /*table styling*/
+    .table-container .overflow-scroll{
+        max-height: clamp(25em, 10vh, 250px) !important;
+    }
 }

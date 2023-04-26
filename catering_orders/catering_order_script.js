@@ -931,6 +931,10 @@ $(document).ready(function () {
         multi_update_user_cart_table(updated_cart_items);
     });
 
+    $(document).on('click', 'button[name=cart-checkout-btn]', function(event){
+        return window.location = `${window.location.origin}/Catering-Cart/`;
+    });
+
     // Search function
     $(document).on('keyup', '.search-text-field', function(){
         let _parent_div_class = '.modal-body';
